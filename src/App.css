@@ -6,9 +6,27 @@
   box-sizing: border-box;
 }
 
-.top-bar {
-  /* position: fixed; */
+.wrapper {
+  border: 2px solid black;
+}
+
+.inner-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
-  height: 5vh;
+  height: 100%;
+}
+
+.main-content {
+  background-color: #eee;
+  width: 100%;
+  height: 100%;
+  padding: 2em 1em;
+}
+
+.top-bar {
+  width: 100%;
+  height: 8vh;
   background-color: #0288d1;
 }
