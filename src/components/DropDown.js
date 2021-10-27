@@ -11,7 +11,12 @@ const DropDown = ({ id, items, name, setValue }) => {
 
   //   }, [data, setValue]);
   return (
-    <FormControl style={{ width: "200px" }}>
+    <FormControl
+      sx={{
+        m: 1,
+        width: "30ch",
+      }}
+    >
       <InputLabel id={`${id}-label`}>{name}</InputLabel>
       <Select
         labelId={`${id}-label`}

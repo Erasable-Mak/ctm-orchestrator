@@ -1,7 +1,7 @@
 import React from "react";
 
 function AddBank() {
-  return <div>Add bank</div>;
+  return <></>;
 }
 
 export default AddBank;

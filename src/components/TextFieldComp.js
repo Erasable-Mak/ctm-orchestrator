@@ -13,6 +13,10 @@ const TextFieldComp = ({ id, name, setValue }) => {
 
   return (
     <TextField
+      sx={{
+        m: 1,
+        width: "30ch",
+      }}
       id={id}
       label={name}
       variant="outlined"

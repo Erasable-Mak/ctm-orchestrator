@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextareaAutosize } from "@mui/core";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 
 const TextArea = ({ id, placeholder, setValue }) => {
   const [data, setData] = useState("");
