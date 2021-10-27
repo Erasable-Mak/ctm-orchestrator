@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-
-import CreateCase from "./CreateCase";
-import UpdateUser from "./UpdateUser";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
 import AddBank from "./AddBank";
+import CreateCase from "./CreateCase";
 import CreateUser from "./CreateUser";
+import UpdateUser from "./UpdateUser";
 
 const drawerWidth = 240;
 
@@ -57,37 +53,37 @@ export default function ClippedDrawer() {
             <ListItem
               button
               onClick={() => {
-                changeContent("Create case");
+                changeContent("Create Case");
               }}
             >
-              <ListItemText primary="Create case" />
+              <ListItemText primary="Create Case" />
             </ListItem>
             <Divider />
             <ListItem
               button
               onClick={() => {
-                changeContent("Create user");
+                changeContent("Create User");
               }}
             >
-              <ListItemText primary="Create user" />
+              <ListItemText primary="Create User" />
             </ListItem>
             <Divider />
             <ListItem
               button
               onClick={() => {
-                changeContent("Update user");
+                changeContent("Update User");
               }}
             >
-              <ListItemText primary="Update user" />
+              <ListItemText primary="Update User" />
             </ListItem>
             <Divider />
             <ListItem
               button
               onClick={() => {
-                changeContent("Add bank details");
+                changeContent("Add Bank Details");
               }}
             >
-              <ListItemText primary="Add bank details" />
+              <ListItemText primary="Add Bank Details" />
             </ListItem>
             <Divider />
           </List>
@@ -95,10 +91,10 @@ export default function ClippedDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-        {contentName === "Create case" && <CreateCase />}
-        {contentName === "Create user" && <CreateUser />}
-        {contentName === "Update user" && <UpdateUser />}
-        {contentName === "Add bank details" && <AddBank />}
+        {contentName === "Create Case" && <CreateCase />}
+        {contentName === "Create User" && <CreateUser />}
+        {contentName === "Update User" && <UpdateUser />}
+        {contentName === "Add Bank Details" && <AddBank />}
       </Box>
     </Box>
   );

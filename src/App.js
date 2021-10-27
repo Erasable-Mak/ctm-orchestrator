@@ -11,11 +11,12 @@ function App() {
       <div>
         <Switch>
           <Route exact path="/">
-            <Login />
-          </Route>
-          <Route exact path="/Home/:Username">
+            {/* <Login /> */}
             <Home />
           </Route>
+          {/* <Route exact path="/Home/:Username">
+            <Home />
+          </Route> */}
         </Switch>
       </div>
     </Router>

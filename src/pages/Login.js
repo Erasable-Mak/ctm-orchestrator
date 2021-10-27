@@ -24,7 +24,7 @@ function Login() {
     const data = new FormData(event.currentTarget);
     const username = data.get("username");
     const password = data.get("password");
-    if (username == "" || password == "") {
+    if (username === "" || password === "") {
       toast.error("Enter all the fields", {
         autoClose: 5000,
       });
