@@ -7,9 +7,6 @@ const DropDown = ({ id, items, name, setValue }) => {
     setData(e.target.value);
     setValue(e.target.value);
   };
-  //   useEffect(() => {
-
-  //   }, [data, setValue]);
   return (
     <FormControl
       sx={{

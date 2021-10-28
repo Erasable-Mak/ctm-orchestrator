@@ -65,7 +65,7 @@ export default function CreateUser() {
   const [formData, setFormData] = useState(initialState);
   const [reload, setReload] = useState(false);
 
-  useEffect(() => {}, [formData]);
+  // useEffect(() => {}, [formData]);
 
   const handleSubmit = async () => {
     const { loginEmail, loginPassword } = formData;
@@ -117,37 +117,37 @@ export default function CreateUser() {
         <TextFieldComp
           id="name"
           name="Name"
-          defaultValue=""
+          value={formData.name}
           setValue={(value) => setFormData({ ...formData, name: value })}
         />
         <TextFieldComp
           id="email"
           name="Email"
-          defaultValue=""
+          value={formData.email}
           setValue={(value) => setFormData({ ...formData, email: value })}
         />
         <TextFieldComp
           id="aadhar-no"
           name="Aadhar number"
-          defaultValue=""
+          value={formData.aadharNo}
           setValue={(value) => setFormData({ ...formData, aadharNo: value })}
         />
         <TextFieldComp
           id="age"
           name="Age"
-          defaultValue=""
+          value={formData.age}
           setValue={(value) => setFormData({ ...formData, age: value })}
         />
         <TextFieldComp
           id="phone-no"
           name="Phone number"
-          defaultValue=""
+          value={formData.phoneNo}
           setValue={(value) => setFormData({ ...formData, phoneNo: value })}
         />
         <TextFieldComp
           id="phone-no-2"
           name="Another phone number"
-          defaultValue=""
+          value={formData.phoneNo2}
           setValue={(value) => setFormData({ ...formData, phoneNo2: value })}
         />
 
@@ -166,19 +166,19 @@ export default function CreateUser() {
         <TextFieldComp
           id="address"
           name="Address"
-          defaultValue=""
+          value={formData.address}
           setValue={(value) => setFormData({ ...formData, address: value })}
         />
         <TextFieldComp
           id="latitude"
           name="Latitude"
-          defaultValue=""
+          value={formData.latitude}
           setValue={(value) => setFormData({ ...formData, latitude: value })}
         />
         <TextFieldComp
           id="longitude"
           name="Longitude"
-          defaultValue=""
+          value={formData.longitude}
           setValue={(value) => setFormData({ ...formData, longitude: value })}
         />
         <Divider style={{ margin: "5px" }} textAlign="left">
@@ -200,13 +200,13 @@ export default function CreateUser() {
         <TextFieldComp
           id="login-email"
           name="Login Email"
-          defaultValue=""
+          value={formData.loginEmail}
           setValue={(value) => setFormData({ ...formData, loginEmail: value })}
         />
         <TextFieldComp
           id="login-password"
           name="Login password"
-          defaultValue=""
+          value={formData.loginPassword}
           setValue={(value) =>
             setFormData({ ...formData, loginPassword: value })
           }
