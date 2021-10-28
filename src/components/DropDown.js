@@ -5,11 +5,8 @@ const DropDown = ({ id, items, name, setValue }) => {
   const [data, setData] = useState(items[0].value || "");
   const handleChange = (e) => {
     setData(e.target.value);
-    setValue(data);
+    setValue(e.target.value);
   };
-  //   useEffect(() => {
-
-  //   }, [data, setValue]);
   return (
     <FormControl
       sx={{

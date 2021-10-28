@@ -1,11 +1,11 @@
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
 
-const TextFieldComp = ({ id, name, isMultilined, setValue }) => {
-  const [data, setData] = useState("");
+const TextFieldComp = ({ id, name, value, isMultilined, setValue }) => {
+  // const [data, setData] = useState(defaultValue);
   const handleChange = (e) => {
-    setData(e.target.value);
-    setValue(data);
+    // setData(e.target.value);
+    setValue(e.target.value); //changes
   };
 
   return (
@@ -15,6 +15,7 @@ const TextFieldComp = ({ id, name, isMultilined, setValue }) => {
         width: "30ch",
       }}
       id={id}
+      value={value}
       label={name}
       variant="outlined"
       onChange={handleChange}

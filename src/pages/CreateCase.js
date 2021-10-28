@@ -51,7 +51,7 @@ const jobBranch = [...bankEmployeeNames];
 function CreateCase() {
   const [formData, setFormData] = useState({
     bankName: "",
-    bankBranchName: "",
+    bankBranchName: bankBranchNames[0].value,
     bankEmployeeName: "",
     loanAcNo: "",
     borrowerName: "",
