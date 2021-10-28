@@ -19,6 +19,7 @@ const TextFieldComp = ({ id, name, defaultValue, setValue }) => {
       }}
       id={id}
       label={name}
+      value={data}
       variant="outlined"
       onChange={handleChange}
     ></TextField>

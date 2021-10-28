@@ -63,6 +63,7 @@ const typeofUserOptions = [
 
 export default function CreateUser() {
   const [formData, setFormData] = useState(initialState);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {}, [formData]);
 
@@ -95,7 +96,10 @@ export default function CreateUser() {
 
   const clearForm = () => {
     setFormData(initialState);
+    setReload(true);
   };
+
+  useEffect(() => {}, [reload]);
 
   return (
     <Box
