@@ -5,7 +5,7 @@ const TextArea = ({ id, placeholder, setValue }) => {
   const [data, setData] = useState("");
   const handleChange = (e) => {
     setData(e.target.value);
-    setValue(data);
+    setValue(e.target.value);
   };
   return (
     <TextareaAutosize

@@ -1,11 +1,11 @@
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
 
-const TextFieldComp = ({ id, name, setValue }) => {
-  const [data, setData] = useState("");
+const TextFieldComp = ({ id, name, defaultValue, setValue }) => {
+  const [data, setData] = useState(defaultValue);
   const handleChange = (e) => {
     setData(e.target.value);
-    setValue(data);
+    setValue(e.target.value); //changes
   };
   //   useEffect(() => {
 

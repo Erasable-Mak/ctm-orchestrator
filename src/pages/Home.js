@@ -1,14 +1,18 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
+
+import {
+  AppBar,
+  Box,
+  CssBaseline,
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+
 import AddBank from "./AddBank";
 import CreateCase from "./CreateCase";
 import CreateUser from "./CreateUser";
@@ -51,6 +55,7 @@ export default function ClippedDrawer() {
         <Box sx={{ overflow: "auto" }}>
           <List>
             <ListItem
+              selected={contentName === "Create Case"}
               button
               onClick={() => {
                 changeContent("Create Case");
@@ -60,6 +65,7 @@ export default function ClippedDrawer() {
             </ListItem>
             <Divider />
             <ListItem
+              selected={contentName === "Create User"}
               button
               onClick={() => {
                 changeContent("Create User");
@@ -69,6 +75,7 @@ export default function ClippedDrawer() {
             </ListItem>
             <Divider />
             <ListItem
+              selected={contentName === "Update User"}
               button
               onClick={() => {
                 changeContent("Update User");
@@ -78,6 +85,7 @@ export default function ClippedDrawer() {
             </ListItem>
             <Divider />
             <ListItem
+              selected={contentName === "Add Bank Details"}
               button
               onClick={() => {
                 changeContent("Add Bank Details");
