@@ -1,15 +1,12 @@
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
 
-const TextFieldComp = ({ id, name, setValue }) => {
+const TextFieldComp = ({ id, name, isMultilined, setValue }) => {
   const [data, setData] = useState("");
   const handleChange = (e) => {
     setData(e.target.value);
     setValue(data);
   };
-  //   useEffect(() => {
-
-  //   }, [data, setValue]);
 
   return (
     <TextField
@@ -21,6 +18,7 @@ const TextFieldComp = ({ id, name, setValue }) => {
       label={name}
       variant="outlined"
       onChange={handleChange}
+      multiline={isMultilined}
     ></TextField>
   );
 };
