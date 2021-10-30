@@ -7,6 +7,7 @@ import {
 
 import { Box, Divider, Stack, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
@@ -16,6 +17,8 @@ export default function AddUserData({
   setFormData,
   handleSubmit,
   clearForm,
+  submitLoading,
+  setSubmitLoading,
 }) {
   return (
     <Box>
@@ -130,9 +133,15 @@ export default function AddUserData({
           spacing={2}
           style={{ margin: "20px" }}
         >
-          <Button variant="contained" color="success" onClick={handleSubmit}>
+          <LoadingButton
+            onClick={handleSubmit}
+            loading={submitLoading}
+            loadingIndicator="wait..."
+            variant="contained"
+            color="success"
+          >
             Submit
-          </Button>
+          </LoadingButton>
           <Button
             variant="contained"
             color="error"
