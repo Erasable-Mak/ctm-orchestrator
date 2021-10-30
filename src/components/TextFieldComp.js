@@ -17,7 +17,6 @@ const TextFieldComp = ({ id, name, value, isMultilined, setValue }) => {
       id={id}
       value={value}
       label={name}
-      value={data}
       variant="outlined"
       onChange={handleChange}
       multiline={isMultilined}

@@ -13,14 +13,17 @@ import {
   Typography,
   Container,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 toast.configure();
 
 function Login() {
+  const [loading, setLoading] = React.useState(false);
   const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
@@ -28,6 +31,7 @@ function Login() {
       toast.error("Enter all the fields", {
         autoClose: 5000,
       });
+      setLoading(false);
       return;
     } else {
       console.log(email, password);
@@ -49,23 +53,6 @@ function Login() {
           });
         });
     }
-
-    // const docRef = doc(db, "Users", username);
-    // const docSnap = await getDoc(docRef);
-
-    // if (docSnap.exists()) {
-    //   console.log("Document data:", docSnap.data());
-    //   if (docSnap.data().password === password) {
-    //     toast.success("Logged in Successfully", { autoClose: 5000 });
-    //     history.push(`Home/${data.get("username")}`);
-    //   } else {
-    //     toast.warning("Password didn't match", { autoClose: 5000 });
-    //   }
-    // } else {
-    //   toast.error("No such user exists!", {
-    //     autoClose: 5000,
-    //   });
-    // }
   };
 
   return (
@@ -103,7 +90,7 @@ function Login() {
             id="password"
             autoComplete="off"
           />
-
+          {/* 
           <Button
             type="submit"
             fullWidth
@@ -111,7 +98,16 @@ function Login() {
             sx={{ mt: 3, mb: 2 }}
           >
             Sign In
-          </Button>
+          </Button> */}
+          <LoadingButton
+            type="submit"
+            fullWidth
+            loading={loading}
+            loadingIndicator="Loading..."
+            variant="contained"
+          >
+            Sign In
+          </LoadingButton>
         </Box>
       </Box>
     </Container>

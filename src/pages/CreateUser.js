@@ -4,14 +4,20 @@ import { auth, db } from "../firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
-import Box from "@mui/material/Box";
-import { Divider, Input, Button, Stack } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import DropDown from "../components/DropDown";
-import TextFieldComp from "../components/TextFieldComp";
+import {
+  Box,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+} from "@mui/material";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import AddUserData from "./AddUserData";
+import UploadDocuments from "./UploadDocuments";
 
 const initialState = {
   name: "",
@@ -28,55 +34,52 @@ const initialState = {
   loginEmail: "",
   loginPassword: "",
   type: "",
-  setImage: "",
+  aadhar: "",
+  panCard: "",
+  nationality: "",
+  addressProof: "",
+  resume: "",
 };
 
-const maritalStatusOptions = [
-  {
-    id: "single (never married)",
-    value: "single (never married)",
-  },
-  {
-    id: "married",
-    value: "married",
-  },
-  {
-    id: "widowed and not remarried",
-    value: "widowed and not remarried",
-  },
-  {
-    id: "divorced and not remarried",
-    value: "divorced and not remarried",
-  },
-  {
-    id: "married but separated",
-    value: "married but separated",
-  },
-];
-
-const typeofUserOptions = [
-  { id: "Admin", value: "Admin" },
-  { id: "TypeWrite", value: "TypeWrite" },
-  { id: "Checker", value: "Checker" },
-  { id: "Field Visit Officer", value: "Field Visit Officer" },
-];
+const steps = ["Add data", "upload documents"];
 
 export default function CreateUser() {
+  const [activeStep, setActiveStep] = useState(0);
+  const [newUserId, setNewUserId] = useState(null);
+
+  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState(initialState);
   const [reload, setReload] = useState(false);
 
-  // useEffect(() => {}, [formData]);
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
+
+  const clearForm = () => {
+    setFormData(initialState);
+    setReload(true);
+  };
 
   const handleSubmit = async () => {
     const { loginEmail, loginPassword } = formData;
     console.log(loginEmail + loginPassword);
+    // creating new user in auth table
     createUserWithEmailAndPassword(auth, loginEmail, loginPassword)
       .then(async (userCredential) => {
         const user = userCredential.user;
         console.log(user.uid);
         try {
+          //adding this user with obtained id and filled data to Users table
           await setDoc(doc(db, "Users", user.uid), formData);
           toast.success("New User added successfully", { autoClose: 5000 });
+          //after adding user clear form and go to file upload step
+          clearForm();
+          setNewUserId(user.uid);
+          handleNext();
         } catch (error) {
           toast.error(`${error}`, {
             autoClose: 5000,
@@ -94,151 +97,62 @@ export default function CreateUser() {
       });
   };
 
-  const clearForm = () => {
-    setFormData(initialState);
-    setReload(true);
-  };
-
-  useEffect(() => {}, [reload]);
-
   return (
-    <Box
-      component="form"
-      sx={{
-        "& .MuiTextField-root": { m: 1, width: "30ch" },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-        <Divider style={{ margin: "5px" }} textAlign="left">
-          General information
-        </Divider>
-        <TextFieldComp
-          id="name"
-          name="Name"
-          value={formData.name}
-          setValue={(value) => setFormData({ ...formData, name: value })}
-        />
-        <TextFieldComp
-          id="email"
-          name="Email"
-          value={formData.email}
-          setValue={(value) => setFormData({ ...formData, email: value })}
-        />
-        <TextFieldComp
-          id="aadhar-no"
-          name="Aadhar number"
-          value={formData.aadharNo}
-          setValue={(value) => setFormData({ ...formData, aadharNo: value })}
-        />
-        <TextFieldComp
-          id="age"
-          name="Age"
-          value={formData.age}
-          setValue={(value) => setFormData({ ...formData, age: value })}
-        />
-        <TextFieldComp
-          id="phone-no"
-          name="Phone number"
-          value={formData.phoneNo}
-          setValue={(value) => setFormData({ ...formData, phoneNo: value })}
-        />
-        <TextFieldComp
-          id="phone-no-2"
-          name="Another phone number"
-          value={formData.phoneNo2}
-          setValue={(value) => setFormData({ ...formData, phoneNo2: value })}
-        />
-
-        <DropDown
-          id="Marital-status"
-          items={maritalStatusOptions}
-          name="Marital status"
-          setValue={(value) =>
-            setFormData({ ...formData, maritalStatus: value })
-          }
-        />
-
-        <Divider style={{ margin: "5px" }} textAlign="left">
-          Address
-        </Divider>
-        <TextFieldComp
-          id="address"
-          name="Address"
-          value={formData.address}
-          setValue={(value) => setFormData({ ...formData, address: value })}
-        />
-        <TextFieldComp
-          id="latitude"
-          name="Latitude"
-          value={formData.latitude}
-          setValue={(value) => setFormData({ ...formData, latitude: value })}
-        />
-        <TextFieldComp
-          id="longitude"
-          name="Longitude"
-          value={formData.longitude}
-          setValue={(value) => setFormData({ ...formData, longitude: value })}
-        />
-        <Divider style={{ margin: "5px" }} textAlign="left">
-          Upload documents
-        </Divider>
-
-        <Input
-          accept="image/*"
-          id="contained-button-file"
-          multiple
-          type="file"
-        />
-        <Button variant="contained" component="span">
-          Upload
-        </Button>
-        <Divider style={{ margin: "5px" }} textAlign="left">
-          Login Credentials
-        </Divider>
-        <TextFieldComp
-          id="login-email"
-          name="Login Email"
-          value={formData.loginEmail}
-          setValue={(value) => setFormData({ ...formData, loginEmail: value })}
-        />
-        <TextFieldComp
-          id="login-password"
-          name="Login password"
-          value={formData.loginPassword}
-          setValue={(value) =>
-            setFormData({ ...formData, loginPassword: value })
-          }
-        />
-        <DropDown
-          id="type-of-user"
-          items={typeofUserOptions}
-          name="Type of user"
-          setValue={(value) => setFormData({ ...formData, type: value })}
-        />
-
-        <Divider style={{ margin: "5px" }}></Divider>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="flex-start"
-          spacing={2}
-          style={{ margin: "20px" }}
-        >
-          <Button variant="contained" color="success" onClick={handleSubmit}>
-            Submit
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            startIcon={<DeleteIcon />}
-            onClick={clearForm}
-          >
-            Delete
-          </Button>
-        </Stack>
-      </div>
+    <Box sx={{ width: "100%" }}>
+      <Stepper activeStep={activeStep} alternativeLabel>
+        {steps.map((label, index) => {
+          return (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      {activeStep === steps.length ? (
+        <React.Fragment>
+          <Typography sx={{ mt: 2, mb: 1 }}>
+            All steps completed - you&apos;re finished
+          </Typography>
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            <Box sx={{ flex: "1 1 auto" }} />
+            <Button onClick={handleReset}>Reset</Button>
+          </Box>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <Box>
+            <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+            <Box
+              component="form"
+              sx={{
+                "& .MuiTextField-root": { m: 1, width: "30ch" },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <div>
+                {/* content comes here */}
+                {activeStep + 1 === 1 && (
+                  <AddUserData
+                    formData={formData}
+                    setFormData={setFormData}
+                    handleSubmit={handleSubmit}
+                    clearForm={clearForm}
+                  />
+                )}
+                {activeStep + 1 === 2 && (
+                  <UploadDocuments
+                    formData={formData}
+                    setFormData={setFormData}
+                    handleReset={handleReset}
+                    uid={newUserId}
+                  />
+                )}
+              </div>
+            </Box>
+          </Box>
+        </React.Fragment>
+      )}
     </Box>
   );
 }

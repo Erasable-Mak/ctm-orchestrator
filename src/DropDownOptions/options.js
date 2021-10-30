@@ -20,3 +20,10 @@ export const maritalStatusOptions = [
     value: "married but separated",
   },
 ];
+
+export const typeofUserOptions = [
+  { id: "Admin", value: "Admin" },
+  { id: "TypeWrite", value: "TypeWrite" },
+  { id: "Checker", value: "Checker" },
+  { id: "Field Visit Officer", value: "Field Visit Officer" },
+];
