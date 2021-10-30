@@ -47,9 +47,9 @@ export default function CreateUser() {
   const [activeStep, setActiveStep] = useState(0);
   const [newUserId, setNewUserId] = useState(null);
 
-  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState(initialState);
-  const [reload, setReload] = useState(false);
+
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -61,10 +61,10 @@ export default function CreateUser() {
 
   const clearForm = () => {
     setFormData(initialState);
-    setReload(true);
   };
 
   const handleSubmit = async () => {
+    setSubmitLoading(true);
     const { loginEmail, loginPassword } = formData;
     console.log(loginEmail + loginPassword);
     // creating new user in auth table
@@ -80,13 +80,16 @@ export default function CreateUser() {
           clearForm();
           setNewUserId(user.uid);
           handleNext();
+          setSubmitLoading(false);
         } catch (error) {
+          setSubmitLoading(false);
           toast.error(`${error}`, {
             autoClose: 5000,
           });
         }
       })
       .catch((error) => {
+        setSubmitLoading(false);
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode);
@@ -138,6 +141,8 @@ export default function CreateUser() {
                     setFormData={setFormData}
                     handleSubmit={handleSubmit}
                     clearForm={clearForm}
+                    submitLoading={submitLoading}
+                    setSubmitLoading={setSubmitLoading}
                   />
                 )}
                 {activeStep + 1 === 2 && (

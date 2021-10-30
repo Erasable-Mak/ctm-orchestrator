@@ -51,6 +51,7 @@ function Login() {
           toast.error("Either email of password didnt match", {
             autoClose: 5000,
           });
+          setLoading(false);
         });
     }
   };
