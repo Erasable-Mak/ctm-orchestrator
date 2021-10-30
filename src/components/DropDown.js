@@ -1,10 +1,8 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
-const DropDown = ({ id, items, name, setValue }) => {
-  const [data, setData] = useState(items[0].value || "");
+const DropDown = ({ id, items, value, name, setValue }) => {
   const handleChange = (e) => {
-    setData(e.target.value);
     setValue(e.target.value);
   };
   return (
@@ -18,13 +16,10 @@ const DropDown = ({ id, items, name, setValue }) => {
       <Select
         labelId={`${id}-label`}
         id={id}
-        value={data}
+        value={value}
         label={name}
         onChange={handleChange}
       >
-        {/* <MenuItem value={10}>Ten</MenuItem>
-        <MenuItem value={20}>Twenty</MenuItem>
-        <MenuItem value={30}>Thirty</MenuItem> */}
         {items.map((ele) => {
           return (
             <MenuItem key={ele.id} value={ele.value}>

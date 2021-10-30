@@ -1,10 +1,8 @@
 import { TextField } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 
 const TextFieldComp = ({ id, name, value, isMultilined, setValue }) => {
-  // const [data, setData] = useState(defaultValue);
   const handleChange = (e) => {
-    // setData(e.target.value);
     setValue(e.target.value); //changes
   };
 
