@@ -1,6 +1,8 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import Icon from "@mui/material/Icon";
+import { Box } from "@mui/system";
 import React from "react";
 import TextFieldComp from "./TextFieldComp";
 
@@ -22,51 +24,55 @@ const EmployeeInfoForm = ({ fields, setFields }) => {
       {fields.map((field, idx) => {
         return (
           <div key={idx}>
-            <TextFieldComp
-              id={`${idx}-emp-name`}
-              name="Employee Name"
-              value={field.empName}
-              isMultilined={false}
-              setValue={(value, i = idx) => {
-                const values = [...fields];
-                values[i].empName = value;
-                setFields(values);
-              }}
-            />
-            <TextFieldComp
-              id={`${idx}-emp-email`}
-              name="Employee Email"
-              value={field.empEmail}
-              isMultilined={false}
-              setValue={(value, i = idx) => {
-                const values = [...fields];
-                values[i].empEmail = value;
-                setFields(values);
-              }}
-            />
-            <TextFieldComp
-              id={`${idx}-emp-phone-no`}
-              name="Phone No"
-              value={field.empPhoneNo}
-              setValue={(value, i = idx) => {
-                const values = [...fields];
-                values[i].empPhoneNo = value;
-                setFields(values);
-              }}
-            />
-            <Button
-              variant="text"
-              color="error"
-              onClick={() => handleRemove(idx)}
-            >
-              <DeleteIcon />
-            </Button>
+            <Stack direction="row">
+              <TextFieldComp
+                id={`${idx}-emp-name`}
+                name="Employee Name"
+                value={field.empName}
+                isMultilined={false}
+                setValue={(value, i = idx) => {
+                  const values = [...fields];
+                  values[i].empName = value;
+                  setFields(values);
+                }}
+              />
+              <TextFieldComp
+                id={`${idx}-emp-email`}
+                name="Employee Email"
+                value={field.empEmail}
+                isMultilined={false}
+                setValue={(value, i = idx) => {
+                  const values = [...fields];
+                  values[i].empEmail = value;
+                  setFields(values);
+                }}
+              />
+              <TextFieldComp
+                id={`${idx}-emp-phone-no`}
+                name="Phone No"
+                value={field.empPhoneNo}
+                setValue={(value, i = idx) => {
+                  const values = [...fields];
+                  values[i].empPhoneNo = value;
+                  setFields(values);
+                }}
+              />
+              <Button
+                variant="text"
+                color="error"
+                onClick={() => handleRemove(idx)}
+              >
+                <DeleteIcon />
+              </Button>
+            </Stack>
           </div>
         );
       })}
-      <Button variant="text" onClick={() => handleAdd()}>
-        <Icon color="primary">add_circle</Icon>
-      </Button>
+      <Stack>
+        <Button variant="text" onClick={() => handleAdd()}>
+          <Icon color="primary">add_circle</Icon>
+        </Button>
+      </Stack>
     </>
   );
 };

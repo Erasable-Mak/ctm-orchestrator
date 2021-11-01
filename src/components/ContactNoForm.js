@@ -1,4 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import Icon from "@mui/material/Icon";
 import React from "react";
@@ -22,30 +23,34 @@ const BorrowerNameForm = ({ fields, setFields }) => {
       {fields.map((field, idx) => {
         return (
           <div key={idx}>
-            <TextFieldComp
-              id={`${idx}-contact-no-textfield`}
-              name="Contact No"
-              value={field}
-              isMultilined={false}
-              setValue={(value, i = idx) => {
-                const values = [...fields];
-                values[i] = value;
-                setFields(values);
-              }}
-            />
-            <Button
-              variant="text"
-              color="error"
-              onClick={() => handleRemove(idx)}
-            >
-              <DeleteIcon />
-            </Button>
+            <Stack direction="row">
+              <TextFieldComp
+                id={`${idx}-contact-no-textfield`}
+                name="Contact No"
+                value={field}
+                isMultilined={false}
+                setValue={(value, i = idx) => {
+                  const values = [...fields];
+                  values[i] = value;
+                  setFields(values);
+                }}
+              />
+              <Button
+                variant="text"
+                color="error"
+                onClick={() => handleRemove(idx)}
+              >
+                <DeleteIcon />
+              </Button>
+            </Stack>
           </div>
         );
       })}
-      <Button variant="text" onClick={() => handleAdd()}>
-        <Icon color="primary">add_circle</Icon>
-      </Button>
+      <Stack>
+        <Button variant="text" onClick={() => handleAdd()}>
+          <Icon color="primary">add_circle</Icon>
+        </Button>
+      </Stack>
     </>
   );
 };

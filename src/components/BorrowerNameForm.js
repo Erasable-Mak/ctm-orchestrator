@@ -1,4 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import Icon from "@mui/material/Icon";
 import React from "react";
@@ -23,44 +24,48 @@ const BorrowerNameForm = ({ fields, setFields }) => {
       {fields.map((field, idx) => {
         return (
           <div key={idx}>
-            <DropDown
-              id={`${idx}-borrower-name-title-dropdown`}
-              items={[
-                { id: `${idx}-Mr`, value: "Mr" },
-                { id: `${idx}-Mrs`, value: "Mrs" },
-              ]}
-              value={field.title}
-              name="Title"
-              setValue={(value, i = idx) => {
-                const values = [...fields];
-                values[i].title = value;
-                setFields(values);
-              }}
-            />
-            <TextFieldComp
-              id={`${idx}-borrower-name-fullname-textfield`}
-              name="Full Name"
-              value={field.fullName}
-              isMultilined={false}
-              setValue={(value, i = idx) => {
-                const values = [...fields];
-                values[i].fullName = value;
-                setFields(values);
-              }}
-            />
-            <Button
-              variant="text"
-              color="error"
-              onClick={() => handleRemove(idx)}
-            >
-              <DeleteIcon />
-            </Button>
+            <Stack direction="row">
+              <DropDown
+                id={`${idx}-borrower-name-title-dropdown`}
+                items={[
+                  { id: `${idx}-Mr`, value: "Mr" },
+                  { id: `${idx}-Mrs`, value: "Mrs" },
+                ]}
+                value={field.title}
+                name="Title"
+                setValue={(value, i = idx) => {
+                  const values = [...fields];
+                  values[i].title = value;
+                  setFields(values);
+                }}
+              />
+              <TextFieldComp
+                id={`${idx}-borrower-name-fullname-textfield`}
+                name="Full Name"
+                value={field.fullName}
+                isMultilined={false}
+                setValue={(value, i = idx) => {
+                  const values = [...fields];
+                  values[i].fullName = value;
+                  setFields(values);
+                }}
+              />
+              <Button
+                variant="text"
+                color="error"
+                onClick={() => handleRemove(idx)}
+              >
+                <DeleteIcon />
+              </Button>
+            </Stack>
           </div>
         );
       })}
-      <Button variant="text" onClick={() => handleAdd()}>
-        <Icon color="primary">add_circle</Icon>
-      </Button>
+      <Stack>
+        <Button variant="text" onClick={() => handleAdd()}>
+          <Icon color="primary">add_circle</Icon>
+        </Button>
+      </Stack>
     </>
   );
 };
