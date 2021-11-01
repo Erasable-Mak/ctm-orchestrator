@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { storage, db } from "../firebase-config";
 import { doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import Box from "@mui/material/Box";
-import { Divider, Input, Button, Stack } from "@mui/material";
+import { Divider, Input, Button, Stack, Grid, Typography } from "@mui/material";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LinearProgressWithLabel from "../components/LinearProgressWithLabel";
 
 const initialState = {
   aadhar: "",
@@ -26,8 +27,24 @@ export default function UploadDocuments({
 }) {
   const [docs, setDocs] = useState(initialState);
 
+  const [uploadPercent, setUploadPercent] = useState({
+    aadhar: 0,
+    panCard: 0,
+    nationality: 0,
+    addressProof: 0,
+    resume: 0,
+  });
+
   const uploadDoc = async (typeOfDoc) => {
     const storageRef = ref(storage, `userDocuments/${uid}/${typeOfDoc}`);
+
+    // if file is not choosen return
+    if (docs[typeOfDoc] === "") {
+      toast.error("You have not choosen file!", {
+        autoClose: 5000,
+      });
+      return;
+    }
 
     const uploadTask = uploadBytesResumable(storageRef, docs[typeOfDoc]);
 
@@ -39,6 +56,43 @@ export default function UploadDocuments({
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
+        switch (typeOfDoc) {
+          case "aadhar": {
+            setUploadPercent((prev) => ({ ...prev, aadhar: progress }));
+            break;
+          }
+          case "panCard": {
+            setUploadPercent((prev) => ({
+              ...prev,
+              panCard: progress,
+            }));
+            break;
+          }
+          case "nationality": {
+            setUploadPercent((prev) => ({
+              ...prev,
+              nationality: progress,
+            }));
+            break;
+          }
+          case "addressProof": {
+            setUploadPercent((prev) => ({
+              ...prev,
+              addressProof: progress,
+            }));
+            break;
+          }
+          case "resume": {
+            setUploadPercent((prev) => ({
+              ...prev,
+              resume: progress,
+            }));
+            break;
+          }
+          default: {
+            break;
+          }
+        }
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -119,92 +173,200 @@ export default function UploadDocuments({
       </Divider>
 
       <Box style={{ marginBottom: "10px" }}>
-        <Input
-          accept="image/*"
-          type="file"
-          onChange={(e) => setDocs({ ...docs, aadhar: e.target.files[0] })}
-        />
-        <Button
-          style={{ marginLeft: "20px" }}
-          variant="contained"
-          component="span"
-          onClick={() => {
-            uploadDoc("aadhar");
-          }}
-        >
-          Aadhar card
-        </Button>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={12} md={4}>
+            <Typography marginLeft="20px">Aadhar Card</Typography>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Input
+              accept="image/*"
+              type="file"
+              onChange={(e) => setDocs({ ...docs, aadhar: e.target.files[0] })}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Button
+              style={{ marginLeft: "20px" }}
+              variant="contained"
+              component="span"
+              disabled={
+                uploadPercent.aadhar === 0 || uploadPercent.aadhar === 100
+                  ? false
+                  : true
+              }
+              onClick={() => {
+                uploadDoc("aadhar");
+              }}
+            >
+              Upload
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            {uploadPercent.aadhar !== 0 && (
+              <LinearProgressWithLabel value={uploadPercent.aadhar} />
+            )}
+          </Grid>
+        </Grid>
       </Box>
+      <Divider />
+
       <Box style={{ marginBottom: "10px" }}>
-        <Input
-          accept="image/*"
-          type="file"
-          onChange={(e) => setDocs({ ...docs, panCard: e.target.files[0] })}
-        />
-        <Button
-          style={{ marginLeft: "20px" }}
-          variant="contained"
-          component="span"
-          onClick={() => {
-            uploadDoc("panCard");
-          }}
-        >
-          Pan card
-        </Button>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={12} md={4}>
+            <Typography marginLeft="20px">Pan Card</Typography>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Input
+              accept="image/*"
+              type="file"
+              onChange={(e) => setDocs({ ...docs, panCard: e.target.files[0] })}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Button
+              style={{ marginLeft: "20px" }}
+              variant="contained"
+              component="span"
+              disabled={
+                uploadPercent.panCard === 0 || uploadPercent.panCard === 100
+                  ? false
+                  : true
+              }
+              onClick={() => {
+                uploadDoc("panCard");
+              }}
+            >
+              Upload
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            {uploadPercent.panCard !== 0 && (
+              <LinearProgressWithLabel value={uploadPercent.panCard} />
+            )}
+          </Grid>
+        </Grid>
       </Box>
+      <Divider />
+
       <Box style={{ marginBottom: "10px" }}>
-        <Input
-          accept="image/*"
-          type="file"
-          onChange={(e) => setDocs({ ...docs, nationality: e.target.files[0] })}
-        />
-        <Button
-          style={{ marginLeft: "20px" }}
-          variant="contained"
-          component="span"
-          onClick={() => {
-            uploadDoc("nationality");
-          }}
-        >
-          Nationality/Domicile
-        </Button>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={12} md={4}>
+            <Typography marginLeft="20px">Nationality/Domicile</Typography>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Input
+              accept="image/*"
+              type="file"
+              onChange={(e) =>
+                setDocs({ ...docs, nationality: e.target.files[0] })
+              }
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Button
+              style={{ marginLeft: "20px" }}
+              variant="contained"
+              component="span"
+              disabled={
+                uploadPercent.nationality === 0 ||
+                uploadPercent.nationality === 100
+                  ? false
+                  : true
+              }
+              onClick={() => {
+                uploadDoc("nationality");
+              }}
+            >
+              Upload
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            {uploadPercent.nationality !== 0 && (
+              <LinearProgressWithLabel value={uploadPercent.nationality} />
+            )}
+          </Grid>
+        </Grid>
       </Box>
+      <Divider />
+
       <Box style={{ marginBottom: "10px" }}>
-        <Input
-          accept="image/*"
-          type="file"
-          onChange={(e) =>
-            setDocs({ ...docs, addressProof: e.target.files[0] })
-          }
-        />
-        <Button
-          style={{ marginLeft: "20px" }}
-          variant="contained"
-          component="span"
-          onClick={() => {
-            uploadDoc("addressProof");
-          }}
-        >
-          Address proof
-        </Button>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={12} md={4}>
+            <Typography marginLeft="20px">Address proof</Typography>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Input
+              accept="image/*"
+              type="file"
+              onChange={(e) =>
+                setDocs({ ...docs, addressProof: e.target.files[0] })
+              }
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Button
+              style={{ marginLeft: "20px" }}
+              variant="contained"
+              component="span"
+              disabled={
+                uploadPercent.addressProof === 0 ||
+                uploadPercent.addressProof === 100
+                  ? false
+                  : true
+              }
+              onClick={() => {
+                uploadDoc("addressProof");
+              }}
+            >
+              Upload
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            {uploadPercent.addressProof !== 0 && (
+              <LinearProgressWithLabel value={uploadPercent.addressProof} />
+            )}
+          </Grid>
+        </Grid>
       </Box>
+      <Divider />
+
       <Box style={{ marginBottom: "10px" }}>
-        <Input
-          accept="image/*"
-          type="file"
-          onChange={(e) => setDocs({ ...docs, resume: e.target.files[0] })}
-        />
-        <Button
-          style={{ marginLeft: "20px" }}
-          variant="contained"
-          component="span"
-          onClick={() => {
-            uploadDoc("resume");
-          }}
-        >
-          Resume or bio-data
-        </Button>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={12} md={4}>
+            <Typography marginLeft="20px">Resume or bio-data</Typography>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            <Input
+              accept="image/*"
+              type="file"
+              onChange={(e) => setDocs({ ...docs, resume: e.target.files[0] })}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Button
+              style={{ marginLeft: "20px" }}
+              variant="contained"
+              component="span"
+              disabled={
+                uploadPercent.resume === 0 || uploadPercent.resume === 100
+                  ? false
+                  : true
+              }
+              onClick={() => {
+                uploadDoc("resume");
+              }}
+            >
+              Upload
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={8}>
+            {uploadPercent.resume !== 0 && (
+              <LinearProgressWithLabel value={uploadPercent.resume} />
+            )}
+          </Grid>
+        </Grid>
       </Box>
+      <Divider />
 
       <Box>
         <Stack

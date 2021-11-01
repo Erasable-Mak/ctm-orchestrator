@@ -18,7 +18,6 @@ export default function AddUserData({
   handleSubmit,
   clearForm,
   submitLoading,
-  setSubmitLoading,
 }) {
   return (
     <Box>
