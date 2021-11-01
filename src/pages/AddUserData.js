@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import {
   maritalStatusOptions,
   typeofUserOptions,
+  religionOptions,
 } from "../DropDownOptions/options";
 
 import { Box, Divider, Stack, Button } from "@mui/material";
@@ -62,7 +63,6 @@ export default function AddUserData({
           value={formData.phoneNo2}
           setValue={(value) => setFormData({ ...formData, phoneNo2: value })}
         />
-
         <DropDown
           id="Marital-status"
           items={maritalStatusOptions}
@@ -70,6 +70,12 @@ export default function AddUserData({
           setValue={(value) =>
             setFormData({ ...formData, maritalStatus: value })
           }
+        />
+        <DropDown
+          id="Religion"
+          items={religionOptions}
+          name="Religion"
+          setValue={(value) => setFormData({ ...formData, religion: value })}
         />
       </Box>
       {/* Address box */}

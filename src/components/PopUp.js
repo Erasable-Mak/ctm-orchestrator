@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Button } from "@mui/material";
 import BorrowerNameForm from "./BorrowerNameForm";
@@ -35,8 +35,8 @@ const PopUp = ({ title, popUp, openPopUp, value, setValue }) => {
 
   return (
     <Dialog open={popUp} maxWidth="md">
-      <DialogTitle>
-        {title}
+      <DialogTitle style={{ minWidth: "200px" }} sx={{ m: 0, p: 2 }}>
+        <Typography>{title}</Typography>
         {popUp ? (
           <IconButton
             aria-label="close"
