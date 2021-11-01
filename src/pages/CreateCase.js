@@ -77,6 +77,7 @@ function CreateCase() {
     try {
       await addDoc(collection(db, "Cases"), formData);
       toast.success("New Case added successfully", { autoClose: 5000 });
+      clearForm();
     } catch (error) {
       toast.error(`${error}`, {
         autoClose: 5000,
