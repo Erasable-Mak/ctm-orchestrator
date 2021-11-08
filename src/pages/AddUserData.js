@@ -4,6 +4,7 @@ import {
   maritalStatusOptions,
   typeofUserOptions,
   religionOptions,
+  stateOptions,
 } from "../DropDownOptions/options";
 
 import { Box, Divider, Stack, Button } from "@mui/material";
@@ -88,6 +89,31 @@ export default function AddUserData({
           name="Address"
           value={formData.address}
           setValue={(value) => setFormData({ ...formData, address: value })}
+        />
+        <DropDown
+          id="state"
+          items={stateOptions}
+          name="State"
+          setValue={(value) => setFormData({ ...formData, state: value })}
+        />
+        <TextFieldComp
+          id="district"
+          name="District"
+          value={formData.district}
+          setValue={(value) => setFormData({ ...formData, district: value })}
+        />
+
+        <TextFieldComp
+          id="locality"
+          name="Locality"
+          value={formData.locality}
+          setValue={(value) => setFormData({ ...formData, locality: value })}
+        />
+        <TextFieldComp
+          id="pincode"
+          name="Pincode"
+          value={formData.pincode}
+          setValue={(value) => setFormData({ ...formData, pincode: value })}
         />
         <TextFieldComp
           id="latitude"

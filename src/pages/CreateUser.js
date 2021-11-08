@@ -29,6 +29,10 @@ const initialState = {
   religion: "",
   maritalStatus: "",
   address: "",
+  state: "",
+  district: "",
+  locality: "",
+  pincode: "",
   latitude: "",
   longitude: "",
   loginEmail: "",
@@ -74,7 +78,15 @@ export default function CreateUser() {
         console.log(user.uid);
         try {
           //adding this user with obtained id and filled data to Users table
-          await setDoc(doc(db, "Users", user.uid), formData);
+          await setDoc(doc(db, "Users", user.uid), {
+            name: formData.name,
+            email: formData.email,
+            phoneNo: formData.phoneNo,
+            phoneNo2: formData.phoneNo2,
+            typeOfUser: formData.type,
+          });
+
+          await setDoc(doc(db, "UserData", user.uid), {});
           toast.success("New User added successfully", { autoClose: 5000 });
           //after adding user clear form and go to file upload step
           clearForm();
@@ -82,6 +94,7 @@ export default function CreateUser() {
           handleNext();
           setSubmitLoading(false);
         } catch (error) {
+          console.log(error);
           setSubmitLoading(false);
           toast.error(`${error}`, {
             autoClose: 5000,

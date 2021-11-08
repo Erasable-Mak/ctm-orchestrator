@@ -17,6 +17,7 @@ import AddBank from "./AddBank";
 import CreateCase from "./CreateCase";
 import CreateUser from "./CreateUser";
 import UpdateUser from "./UpdateUser";
+import AssignTask from "./AssignTask";
 
 const drawerWidth = 240;
 
@@ -94,6 +95,16 @@ export default function ClippedDrawer() {
               <ListItemText primary="Add Bank Details" />
             </ListItem>
             <Divider />
+            <ListItem
+              selected={contentName === "Assign Task"}
+              button
+              onClick={() => {
+                changeContent("Assign Task");
+              }}
+            >
+              <ListItemText primary="Assign Task" />
+            </ListItem>
+            <Divider />
           </List>
         </Box>
       </Drawer>
@@ -103,6 +114,7 @@ export default function ClippedDrawer() {
         {contentName === "Create User" && <CreateUser />}
         {contentName === "Update User" && <UpdateUser />}
         {contentName === "Add Bank Details" && <AddBank />}
+        {contentName === "Assign Task" && <AssignTask />}
       </Box>
     </Box>
   );

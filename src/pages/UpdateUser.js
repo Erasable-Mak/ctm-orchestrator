@@ -49,14 +49,16 @@ export default function SingleUserInfo() {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                name
+                Hrushikesh
               </TableCell>
-              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">
+                hrushikeshmalshikare710@gmail.com
+              </TableCell>
               <TableCell align="left">phone</TableCell>
               <TableCell align="left">address</TableCell>
               <TableCell align="left">type of user</TableCell>
               <TableCell align="left">
-                <Button variant="contained">Contained</Button>
+                <Button variant="contained">Update</Button>
               </TableCell>
               <TableCell align="left">
                 <IconButton aria-label="delete" size="large">
