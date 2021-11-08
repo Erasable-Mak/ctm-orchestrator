@@ -58,3 +58,66 @@ export const religionOptions = [
   { id: "primal-indigenous", value: "primal-indigenous" },
   { id: "Other", value: "Other" },
 ];
+
+export const stateOptions = [
+  { id: "Andhra Pradesh", value: "Andhra Pradesh" },
+  { id: "Andaman and Nicobar Islands", value: "Andaman and Nicobar Islands" },
+  { id: "Arunachal Pradesh", value: "Arunachal Pradesh" },
+  { id: "Assam", value: "Assam" },
+  { id: "Bihar", value: "Bihar" },
+  { id: "Chandigarh", value: "Chandigarh" },
+  { id: "Chhattisgarh", value: "Chhattisgarh" },
+  { id: "Dadar and Nagar Haveli", value: "Dadar and Nagar Haveli" },
+  { id: "Daman and Diu", value: "Daman and Diu" },
+  { id: "Delhi", value: "Delhi" },
+  { id: "Lakshadweep", value: "Lakshadweep" },
+  { id: "Puducherry", value: "Puducherry" },
+  { id: "Goa", value: "Goa" },
+  { id: "Gujarat", value: "Gujarat" },
+  { id: "Haryana", value: "Haryana" },
+  { id: "Himachal Pradesh", value: "Himachal Pradesh" },
+  { id: "Jammu and Kashmir", value: "Jammu and Kashmir" },
+  { id: "Jharkhand", value: "Jharkhand" },
+  { id: "Karnataka", value: "Karnataka" },
+  { id: "Kerala", value: "Kerala" },
+  { id: "Madhya Pradesh", value: "Madhya Pradesh" },
+  { id: "Maharashtra", value: "Maharashtra" },
+  { id: "Manipur", value: "Manipur" },
+  { id: "Meghalaya", value: "Meghalaya" },
+  { id: "Mizoram", value: "Mizoram" },
+  { id: "Nagaland", value: "Nagaland" },
+  { id: "Odisha", value: "Odisha" },
+  { id: "Punjab", value: "Punjab" },
+  { id: "Rajasthan", value: "Rajasthan" },
+  { id: "Sikkim", value: "Sikkim" },
+  { id: "Tamil Nadu", value: "Tamil Nadu" },
+  { id: "Telangana", value: "Telangana" },
+  { id: "Tripura", value: "Tripura" },
+  { id: "Uttar Pradesh", value: "Uttar Pradesh" },
+  { id: "Uttarakhand", value: "Uttarakhand" },
+  { id: "West Bengal", value: "West Bengal" },
+  { id: "Other", value: "Other" },
+];
+
+export const valuerOptions = [
+  {
+    id: "Susan",
+    value: "susan",
+  },
+  {
+    id: "john",
+    value: "john",
+  },
+  {
+    id: "david",
+    value: "david",
+  },
+  {
+    id: "james",
+    value: "james",
+  },
+  {
+    id: "angela",
+    value: "angela",
+  },
+];

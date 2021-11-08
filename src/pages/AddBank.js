@@ -42,6 +42,7 @@ function AddBank() {
 
   const handleSubmit = async () => {
     try {
+      // add code here
       await addDoc(collection(db, "Banks"), formData);
       toast.success("New Bank Data added successfully", { autoClose: 5000 });
       clearForm();
