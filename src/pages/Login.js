@@ -1,25 +1,24 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase-config";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
-  Button,
+  Box,
+  Container,
   CssBaseline,
   TextField,
-  Box,
   Typography,
-  Container,
 } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../contexts/AuthContext";
 
 toast.configure();
 
 function Login() {
   const [loading, setLoading] = React.useState(false);
   const history = useHistory();
+
+  const { login } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,11 +34,10 @@ function Login() {
       return;
     } else {
       console.log(email, password);
-      signInWithEmailAndPassword(auth, email, password)
+      login(email, password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user.uid);
           toast.success("Logged in Successfully", { autoClose: 5000 });
           history.push(`Home/${user.uid}`);
         })
@@ -48,7 +46,7 @@ function Login() {
           const errorMessage = error.message;
           console.log("errorCode - " + errorCode);
           console.log("errorMessage - " + errorMessage);
-          toast.error("Either email of password didnt match", {
+          toast.error("Either email or password didnt match", {
             autoClose: 5000,
           });
           setLoading(false);

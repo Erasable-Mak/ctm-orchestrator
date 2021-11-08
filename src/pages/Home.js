@@ -11,17 +11,22 @@ import {
   ListItemText,
   Toolbar,
   Typography,
+  Button,
 } from "@mui/material";
 
 import AddBank from "./AddBank";
 import CreateCase from "./CreateCase";
 import CreateUser from "./CreateUser";
 import UpdateUser from "./UpdateUser";
+import { useAuth } from "../contexts/AuthContext";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const drawerWidth = 240;
 
 export default function ClippedDrawer() {
   const [contentName, setcontentName] = useState("Create User");
+
+  const { currentUser, logout } = useAuth();
 
   const changeContent = (value) => {
     setcontentName(value);
@@ -38,6 +43,17 @@ export default function ClippedDrawer() {
           <Typography variant="h6" noWrap component="div">
             Makarand Rajendra
           </Typography>
+          <Typography variant="h6" noWrap component="div">
+            {currentUser?.email}
+          </Typography>
+          <Button
+            variant="contained"
+            color="error"
+            startIcon={<LogoutIcon />}
+            onClick={() => logout()}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
