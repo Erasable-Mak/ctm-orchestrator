@@ -43,6 +43,9 @@ function AddBank() {
   const handleSubmit = async () => {
     try {
       // add code here
+      if (formData.instituteType === "" ) {
+        throw new Error("Please select institute type");
+      }
       await addDoc(collection(db, "Banks"), formData);
       toast.success("New Bank Data added successfully", { autoClose: 5000 });
       clearForm();
