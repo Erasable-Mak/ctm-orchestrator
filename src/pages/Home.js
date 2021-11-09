@@ -13,12 +13,15 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import AddBank from "./AddBank";
 import CreateCase from "./CreateCase";
 import CreateUser from "./CreateUser";
 import UpdateUser from "./UpdateUser";
 import AssignTask from "./AssignTask";
+
+import { useAuth } from "../contexts/AuthContext";
 
 const drawerWidth = 240;
 
