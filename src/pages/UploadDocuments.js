@@ -124,7 +124,13 @@ export default function UploadDocuments({
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           console.log("File available at", downloadURL);
-          const documentRef = doc(db, "Users", uid);
+          const documentRef = doc(
+            db,
+            "Users",
+            uid,
+            "Documents Links",
+            "doc_links"
+          );
           switch (typeOfDoc) {
             case "aadhar": {
               await updateDoc(documentRef, {

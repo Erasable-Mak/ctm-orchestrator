@@ -45,17 +45,21 @@ export default function ClippedDrawer() {
           <Typography variant="h6" noWrap component="div">
             Makarand Rajendra
           </Typography>
-          <Typography variant="h6" noWrap component="div">
-            {currentUser?.email}
-          </Typography>
-          <Button
-            variant="contained"
-            color="error"
-            startIcon={<LogoutIcon />}
-            onClick={() => logout()}
-          >
-            Logout
-          </Button>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "flex" } }}>
+            <Typography variant="h6" noWrap component="div">
+              {currentUser?.email}
+            </Typography>
+            <Button
+              style={{ marginLeft: "10px" }}
+              variant="contained"
+              color="error"
+              startIcon={<LogoutIcon />}
+              onClick={() => logout()}
+            >
+              Logout
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer

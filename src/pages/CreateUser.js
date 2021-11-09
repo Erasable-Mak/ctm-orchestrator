@@ -75,9 +75,9 @@ export default function CreateUser() {
     createUserWithEmailAndPassword(auth, loginEmail, loginPassword)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        console.log(user.uid);
+        // console.log(user.uid);
         try {
-          //adding this user with obtained id and filled data to Users table
+          //adding general information document information
           await setDoc(doc(db, "Users", user.uid), {
             name: formData.name,
             email: formData.email,
@@ -86,7 +86,31 @@ export default function CreateUser() {
             typeOfUser: formData.type,
           });
 
-          await setDoc(doc(db, "UserData", user.uid), {});
+          //adding personal information
+          await setDoc(
+            doc(db, "Users", user.uid, "Personal information", "personal_info"),
+            {
+              aadharNo: formData.aadharNo,
+              age: formData.age,
+              religion: formData.religion,
+              maritalStatus: formData.maritalStatus,
+            }
+          );
+
+          //adding address information
+          await setDoc(
+            doc(db, "Users", user.uid, "Address information", "address_info"),
+            {
+              address: formData.address,
+              state: formData.state,
+              district: formData.district,
+              locality: formData.locality,
+              pincode: formData.pincode,
+              latitude: formData.latitude,
+              longitude: formData.longitude,
+            }
+          );
+
           toast.success("New User added successfully", { autoClose: 5000 });
           //after adding user clear form and go to file upload step
           clearForm();

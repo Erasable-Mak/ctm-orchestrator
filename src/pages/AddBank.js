@@ -42,10 +42,30 @@ function AddBank() {
 
   const handleSubmit = async () => {
     try {
-      // add code here
-      if (formData.instituteType === "" ) {
+      if (formData.instituteType === "") {
         throw new Error("Please select institute type");
       }
+      if (formData.bankName === "") {
+        throw new Error("Please select bank name");
+      }
+      if (formData.bankBranchName === "") {
+        throw new Error("Please select bank branch name");
+      }
+      if (formData.branchType === "") {
+        throw new Error("Please select branch type");
+      }
+      if (formData.bankaddress === "") {
+        throw new Error("Please select bank address");
+      }
+
+      if (!formData.bankemail) {
+        throw new Error("Please select bank email");
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formData.bankemail)
+      ) {
+        throw new Error("Invalid email address");
+      }
+
       await addDoc(collection(db, "Banks"), formData);
       toast.success("New Bank Data added successfully", { autoClose: 5000 });
       clearForm();

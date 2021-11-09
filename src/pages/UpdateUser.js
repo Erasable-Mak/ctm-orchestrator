@@ -1,4 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { db } from "../firebase-config";
+import { collection, query, getDocs } from "firebase/firestore";
+
 import {
   Table,
   TableBody,
@@ -17,17 +20,26 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 export default function SingleUserInfo() {
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    return () => {};
+    try {
+      const getdata = async () => {
+        const q = query(collection(db, "Users"));
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+
+          setData((prev) => [...prev, doc.data()]);
+        });
+      };
+
+      getdata();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (
@@ -38,25 +50,21 @@ export default function SingleUserInfo() {
             <TableCell>Name</TableCell>
             <TableCell align="left">Email</TableCell>
             <TableCell align="left">Phone no</TableCell>
-            <TableCell align="left">Address</TableCell>
             <TableCell align="left">Type Of user</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {data.map((row, index) => (
             <TableRow
-              key={row.name}
+              key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                Hrushikesh
+                {row.name}
               </TableCell>
-              <TableCell align="left">
-                hrushikeshmalshikare710@gmail.com
-              </TableCell>
-              <TableCell align="left">phone</TableCell>
-              <TableCell align="left">address</TableCell>
-              <TableCell align="left">type of user</TableCell>
+              <TableCell align="left">{row.email}</TableCell>
+              <TableCell align="left">{row.phoneNo}</TableCell>
+              <TableCell align="left">{row.typeOfUser}</TableCell>
               <TableCell align="left">
                 <Button variant="contained">Update</Button>
               </TableCell>
