@@ -67,6 +67,7 @@ export default function AddUserData({
         <DropDown
           id="Marital-status"
           items={maritalStatusOptions}
+          value={formData.maritalStatus}
           name="Marital status"
           setValue={(value) =>
             setFormData({ ...formData, maritalStatus: value })
@@ -75,6 +76,7 @@ export default function AddUserData({
         <DropDown
           id="Religion"
           items={religionOptions}
+          value={formData.religion}
           name="Religion"
           setValue={(value) => setFormData({ ...formData, religion: value })}
         />
@@ -93,6 +95,7 @@ export default function AddUserData({
         <DropDown
           id="state"
           items={stateOptions}
+          value={formData.state}
           name="State"
           setValue={(value) => setFormData({ ...formData, state: value })}
         />
@@ -150,6 +153,7 @@ export default function AddUserData({
         <DropDown
           id="type-of-user"
           items={typeofUserOptions}
+          value={formData.type}
           name="Type of user"
           setValue={(value) => setFormData({ ...formData, type: value })}
         />

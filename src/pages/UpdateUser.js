@@ -16,12 +16,12 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
 export default function SingleUserInfo() {
   const [data, setData] = useState([]);
+
+  const gotoGetDataAndUpdataPage = () => {
+    console.log("gotoGetDataAndUpdataPage called");
+  };
 
   useEffect(() => {
     try {
@@ -31,8 +31,8 @@ export default function SingleUserInfo() {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-
-          setData((prev) => [...prev, doc.data()]);
+          // console.log(doc.id);
+          setData((prev) => [...prev, { ...doc.data(), uid: doc.id }]);
         });
       };
 
@@ -66,7 +66,12 @@ export default function SingleUserInfo() {
               <TableCell align="left">{row.phoneNo}</TableCell>
               <TableCell align="left">{row.typeOfUser}</TableCell>
               <TableCell align="left">
-                <Button variant="contained">Update</Button>
+                <Button
+                  variant="contained"
+                  onClick={() => gotoGetDataAndUpdataPage()}
+                >
+                  Update
+                </Button>
               </TableCell>
               <TableCell align="left">
                 <IconButton aria-label="delete" size="large">
