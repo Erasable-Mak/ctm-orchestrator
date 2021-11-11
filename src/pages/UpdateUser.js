@@ -19,6 +19,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 export default function SingleUserInfo() {
   const [data, setData] = useState([]);
 
+  const gotoGetDataAndUpdataPage = () => {
+    console.log("gotoGetDataAndUpdataPage called");
+  };
+
   useEffect(() => {
     try {
       const getdata = async () => {
@@ -62,7 +66,12 @@ export default function SingleUserInfo() {
               <TableCell align="left">{row.phoneNo}</TableCell>
               <TableCell align="left">{row.typeOfUser}</TableCell>
               <TableCell align="left">
-                <Button variant="contained">Update</Button>
+                <Button
+                  variant="contained"
+                  onClick={() => gotoGetDataAndUpdataPage()}
+                >
+                  Update
+                </Button>
               </TableCell>
               <TableCell align="left">
                 <IconButton aria-label="delete" size="large">

@@ -70,14 +70,13 @@ export default function CreateUser() {
   const handleSubmit = async () => {
     setSubmitLoading(true);
     const { loginEmail, loginPassword } = formData;
-    console.log(loginEmail + loginPassword);
+    // console.log(loginEmail + loginPassword);
     // creating new user in auth table
     createUserWithEmailAndPassword(auth, loginEmail, loginPassword)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        // console.log(user.uid);
         try {
-          //adding general information document information
+          //adding this user with obtained id and filled data to Users table
           await setDoc(doc(db, "Users", user.uid), {
             name: formData.name,
             email: formData.email,
@@ -86,28 +85,28 @@ export default function CreateUser() {
             typeOfUser: formData.type,
           });
 
-          //adding personal information
-          await setDoc(
-            doc(db, "Users", user.uid, "Personal information", "personal_info"),
-            {
-              aadharNo: formData.aadharNo,
-              age: formData.age,
-              religion: formData.religion,
-              maritalStatus: formData.maritalStatus,
-            }
-          );
-
-          //adding address information
+          //adding address info to Address information collection
           await setDoc(
             doc(db, "Users", user.uid, "Address information", "address_info"),
             {
               address: formData.address,
-              state: formData.state,
               district: formData.district,
-              locality: formData.locality,
-              pincode: formData.pincode,
               latitude: formData.latitude,
               longitude: formData.longitude,
+              locality: formData.locality,
+              pincode: formData.pincode,
+              state: formData.state,
+            }
+          );
+
+          //adding personal info to Personal information collection
+          await setDoc(
+            doc(db, "Users", user.uid, "Personal information", "personal_info"),
+            {
+              age: formData.age,
+              aadharNo: formData.aadharNo,
+              maritalStatus: formData.maritalStatus,
+              religion: formData.religion,
             }
           );
 
@@ -127,11 +126,11 @@ export default function CreateUser() {
       })
       .catch((error) => {
         setSubmitLoading(false);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-        toast.error(`${errorCode}`, {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // console.log(errorCode);
+        // console.log(errorMessage);
+        toast.error(`${error}`, {
           autoClose: 5000,
         });
       });

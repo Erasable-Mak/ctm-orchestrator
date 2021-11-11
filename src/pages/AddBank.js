@@ -30,9 +30,7 @@ const initialState = {
   bankBranchName: "",
   branchType: "",
   bankaddress: "",
-
   bankemail: "",
-
   employeeInfo: [],
 };
 

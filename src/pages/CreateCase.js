@@ -77,6 +77,45 @@ function CreateCase() {
 
   const handleSubmit = async () => {
     try {
+      if (formData.bankName === "") {
+        throw new Error("Please enter bank name");
+      }
+      if (formData.bankBranchName === "") {
+        throw new Error("Please enter bank branch name");
+      }
+
+      if (formData.loanAcNo === "") {
+        throw new Error("Please enter  loan account mumber");
+      }
+
+      if (formData.borrowerNames === "") {
+        throw new Error("Please enter  borrower name");
+      }
+      if (formData.typeOfAsset === "") {
+        throw new Error("Please enter type of asset");
+      }
+      if (formData.purposeOfValuation === "") {
+        throw new Error("Please enter  purpose of valuation");
+      }
+      if (formData.contactNo === "") {
+        throw new Error("Please enter phone mumber");
+      }
+      if (formData.address === "") {
+        throw new Error("Please enter address");
+      }
+      if (formData.latitude === "") {
+        throw new Error("Please enter latitude");
+      }
+      if (formData.longitude === "") {
+        throw new Error("Please enter longitude");
+      }
+      if (formData.jobBranch === "") {
+        throw new Error("Please enter   job branch");
+      }
+      if (formData.instructions === "") {
+        throw new Error("Please enter  instruction");
+      }
+
       await addDoc(collection(db, "Cases"), formData);
       toast.success("New Case added successfully", { autoClose: 5000 });
       clearForm();

@@ -8,6 +8,7 @@ import "./App.css";
 import AuthContextProvider, { useAuth } from "./contexts/AuthContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import OtherUser from "./pages/OtherUser";
 
 require("dotenv").config();
 
@@ -19,6 +20,9 @@ export default function App() {
           <Switch>
             <Route exact path="/">
               <Login />
+            </Route>
+            <Route exact path="/OtherUser">
+              <OtherUser />
             </Route>
             <ProtectedRoute exact path="/Home/:Username">
               <Home />

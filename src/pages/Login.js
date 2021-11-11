@@ -11,6 +11,8 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../contexts/AuthContext";
+import { db } from "../firebase-config";
+import { doc, getDoc } from "firebase/firestore";
 
 toast.configure();
 
@@ -35,17 +37,49 @@ function Login() {
     } else {
       // console.log(email, password);
       login(email, password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           // Signed in
           const user = userCredential.user;
-          toast.success("Logged in Successfully", { autoClose: 5000 });
-          history.push(`Home/${user.uid}`);
+          console.log(user.uid);
+          // toast.success("Logged in Successfully", { autoClose: 5000 });
+          // history.push(`Home/${user.uid}`);
+          // history.push("/OtherUser");
+
+          try {
+            //from uid get document from firestore
+            const docRef = doc(db, "Users", user.uid);
+            const docSnap = await getDoc(docRef);
+            console.log(docSnap.data());
+            if (docSnap.exists() && docSnap.data().typeOfUser === "Admin") {
+              //only admins allowed
+              console.log("Admin");
+              toast.success("Logged in Successfully", { autoClose: 5000 });
+              history.push(`Home/${user.uid}`);
+            } else if (
+              docSnap.exists() &&
+              docSnap.data().typeOfUser !== "Admin"
+            ) {
+              //any one other than admin comes here
+              console.log("user is not an admin");
+              toast.success("Logged in Successfully", { autoClose: 5000 });
+              history.push(`OtherUser`);
+            } else {
+              console.log("Unexpected happened");
+            }
+          } catch (error) {
+            console.log(error);
+          }
+
+          //checking for type of user here
+          // if (user !== null) {
+          //
+          // }
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log("errorCode - " + errorCode);
-          console.log("errorMessage - " + errorMessage);
+          // const errorCode = error.code;
+          // const errorMessage = error.message;
+          // console.log("errorCode - " + errorCode);
+          // console.log("errorMessage - " + errorMessage);
           toast.error("Either email or password didnt match", {
             autoClose: 5000,
           });
@@ -89,15 +123,6 @@ function Login() {
             id="password"
             autoComplete="off"
           />
-          {/* 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button> */}
           <LoadingButton
             type="submit"
             fullWidth
