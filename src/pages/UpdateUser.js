@@ -16,10 +16,6 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
 export default function SingleUserInfo() {
   const [data, setData] = useState([]);
 
@@ -31,8 +27,8 @@ export default function SingleUserInfo() {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-
-          setData((prev) => [...prev, doc.data()]);
+          // console.log(doc.id);
+          setData((prev) => [...prev, { ...doc.data(), uid: doc.id }]);
         });
       };
 

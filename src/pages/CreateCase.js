@@ -7,6 +7,7 @@ import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
 import { db } from "../firebase-config";
+import DatePicker from "../components/DatePicker";
 
 const bankNames = [
   {
@@ -67,6 +68,7 @@ const initialState = {
   longitude: "",
   jobBranch: "",
   instructions: "",
+  dateOfInspection: new Date(),
 };
 
 function CreateCase() {
@@ -157,6 +159,15 @@ function CreateCase() {
           name="Contact No"
           value={formData.contactNo}
           setValue={(value) => setFormData({ ...formData, contactNo: value })}
+        />
+        {/* // Date of Inspection */}
+        <DatePicker
+          id="date-of-inspection"
+          name="Date of Inspection"
+          value={formData.dateOfInspection}
+          setValue={(value) =>
+            setFormData({ ...formData, dateOfInspection: value })
+          }
         />
         <Divider textAlign="left">Address</Divider>
         <TextFieldComp
