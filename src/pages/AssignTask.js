@@ -68,6 +68,7 @@ export default function AssignTask({
                 <DropDown
                   id="valuer-Options"
                   items={valuerOptions}
+                  value={null}
                   name="Valuer-Options"
                   setValue={(value) =>
                     setFormData({ ...formData, ValuerOptions: value })
