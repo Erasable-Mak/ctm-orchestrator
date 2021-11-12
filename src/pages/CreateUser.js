@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { auth, db } from "../firebase-config";
+import { secondaryAuth, db } from "../firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -59,12 +59,13 @@ export default function CreateUser() {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   const clearForm = () => {
     setFormData(initialState);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+    clearForm();
   };
 
   const handleSubmit = async () => {
@@ -72,7 +73,7 @@ export default function CreateUser() {
     const { loginEmail, loginPassword } = formData;
     // console.log(loginEmail + loginPassword);
     // creating new user in auth table
-    createUserWithEmailAndPassword(auth, loginEmail, loginPassword)
+    createUserWithEmailAndPassword(secondaryAuth, loginEmail, loginPassword)
       .then(async (userCredential) => {
         const user = userCredential.user;
         try {
@@ -138,6 +139,7 @@ export default function CreateUser() {
 
   return (
     <Box sx={{ width: "100%" }}>
+      {/* stepper comp. adds stepper at top of page */}
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label, index) => {
           return (
@@ -147,53 +149,33 @@ export default function CreateUser() {
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
-        <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Box>
-            <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "30ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <div>
-                {/* content comes here */}
-                {activeStep + 1 === 1 && (
-                  <AddUserData
-                    formData={formData}
-                    setFormData={setFormData}
-                    handleSubmit={handleSubmit}
-                    clearForm={clearForm}
-                    submitLoading={submitLoading}
-                    setSubmitLoading={setSubmitLoading}
-                  />
-                )}
-                {activeStep + 1 === 2 && (
-                  <UploadDocuments
-                    formData={formData}
-                    setFormData={setFormData}
-                    handleReset={handleReset}
-                    uid={newUserId}
-                  />
-                )}
-              </div>
-            </Box>
-          </Box>
-        </React.Fragment>
-      )}
+      {
+        <Box noValidate sx={{ mt: 1 }}>
+          <div>
+            {/* content comes here */}
+            {/* if activeStep === 0, addUserData comp. is rendered
+                if activeStep === 1, uploadDocuments comp. is rendered  */}
+            {activeStep + 1 === 1 && (
+              <AddUserData
+                formData={formData}
+                setFormData={setFormData}
+                handleSubmit={handleSubmit}
+                clearForm={clearForm}
+                submitLoading={submitLoading}
+                setSubmitLoading={setSubmitLoading}
+              />
+            )}
+            {activeStep + 1 === 2 && (
+              <UploadDocuments
+                formData={formData}
+                setFormData={setFormData}
+                uid={newUserId}
+                handleReset={handleReset}
+              />
+            )}
+          </div>
+        </Box>
+      }
     </Box>
   );
 }

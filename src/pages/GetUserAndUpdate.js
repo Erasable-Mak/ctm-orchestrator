@@ -47,36 +47,44 @@ function GetUserAndUpdate({ uid, setFlag }) {
 
   const handleUpdate = async () => {
     setUpdateLoading(true);
-    //updating general details of user
-    await setDoc(doc(db, "Users", uid), {
-      name: formData.name,
-      email: formData.email,
-      phoneNo: formData.phoneNo,
-      phoneNo2: formData.phoneNo2,
-      typeOfUser: formData.typeOfUser,
-    });
 
-    //updating address info to Address information collection
-    await setDoc(doc(db, "Users", uid, "Address information", "address_info"), {
-      address: formData.address,
-      district: formData.district,
-      latitude: formData.latitude,
-      longitude: formData.longitude,
-      locality: formData.locality,
-      pincode: formData.pincode,
-      state: formData.state,
-    });
+    try {
+      //updating general details of user
+      await setDoc(doc(db, "Users", uid), {
+        name: formData.name,
+        email: formData.email,
+        phoneNo: formData.phoneNo,
+        phoneNo2: formData.phoneNo2,
+        typeOfUser: formData.typeOfUser,
+      });
 
-    //updating personal info to Personal information collection
-    await setDoc(
-      doc(db, "Users", uid, "Personal information", "personal_info"),
-      {
-        age: formData.age,
-        aadharNo: formData.aadharNo,
-        maritalStatus: formData.maritalStatus,
-        religion: formData.religion,
-      }
-    );
+      //updating address info to Address information collection
+      await setDoc(
+        doc(db, "Users", uid, "Address information", "address_info"),
+        {
+          address: formData.address,
+          district: formData.district,
+          latitude: formData.latitude,
+          longitude: formData.longitude,
+          locality: formData.locality,
+          pincode: formData.pincode,
+          state: formData.state,
+        }
+      );
+
+      //updating personal info to Personal information collection
+      await setDoc(
+        doc(db, "Users", uid, "Personal information", "personal_info"),
+        {
+          age: formData.age,
+          aadharNo: formData.aadharNo,
+          maritalStatus: formData.maritalStatus,
+          religion: formData.religion,
+        }
+      );
+    } catch (err) {
+      //do error handling
+    }
     setUpdateLoading(false);
   };
 
@@ -124,9 +132,9 @@ function GetUserAndUpdate({ uid, setFlag }) {
 
   return (
     <div>
-      <h1>GetUserAndUpdate</h1>
-      <h1>{uid}</h1>
-      <button onClick={() => setFlag(true)}>Go back</button>
+      <Button variant="contained" onClick={() => setFlag(true)}>
+        Go back
+      </Button>
       <Box>
         {/* general information */}
         <Box>
@@ -241,12 +249,30 @@ function GetUserAndUpdate({ uid, setFlag }) {
           <Divider style={{ margin: "5px" }} textAlign="left">
             Login Credentials
           </Divider>
+          <TextFieldComp
+            id="login-email"
+            name="Login Email"
+            value={formData.loginEmail}
+            setValue={(value) =>
+              setFormData({ ...formData, loginEmail: value })
+            }
+          />
+          <TextFieldComp
+            id="login-password"
+            name="Login password"
+            value={formData.loginPassword}
+            setValue={(value) =>
+              setFormData({ ...formData, loginPassword: value })
+            }
+          />
           <DropDown
             id="type-of-user"
             items={typeofUserOptions}
             value={formData.typeOfUser}
             name="Type of user"
-            setValue={(value) => setFormData({ ...formData, type: value })}
+            setValue={(value) =>
+              setFormData({ ...formData, typeOfUser: value })
+            }
           />
         </Box>
         <Divider style={{ margin: "5px" }}></Divider>

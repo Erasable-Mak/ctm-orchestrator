@@ -22,8 +22,8 @@ const initialState = {
 export default function UploadDocuments({
   formData,
   setFormData,
-  handleReset,
   uid,
+  handleReset,
 }) {
   const [docs, setDocs] = useState(initialState);
 

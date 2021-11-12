@@ -152,7 +152,7 @@ export default function AddUserData({
           items={typeofUserOptions}
           value={formData.typeOfUser}
           name="Type of user"
-          setValue={(value) => setFormData({ ...formData, type: value })}
+          setValue={(value) => setFormData({ ...formData, typeOfUser: value })}
         />
       </Box>
       <Divider style={{ margin: "5px" }}></Divider>
