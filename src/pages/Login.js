@@ -40,19 +40,14 @@ function Login() {
         .then(async (userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user.uid);
-          // toast.success("Logged in Successfully", { autoClose: 5000 });
-          // history.push(`Home/${user.uid}`);
-          // history.push("/OtherUser");
 
           try {
             //from uid get document from firestore
             const docRef = doc(db, "Users", user.uid);
             const docSnap = await getDoc(docRef);
-            console.log(docSnap.data());
+
             if (docSnap.exists() && docSnap.data().typeOfUser === "Admin") {
               //only admins allowed
-              console.log("Admin");
               toast.success("Logged in Successfully", { autoClose: 5000 });
               history.push(`Home/${user.uid}`);
             } else if (
@@ -64,25 +59,30 @@ function Login() {
               toast.success("Logged in Successfully", { autoClose: 5000 });
               history.push(`OtherUser`);
             } else {
-              console.log("Unexpected happened");
+              //ideally this case shouls never happen but may happen if user have no internet connection
+              throw new Error("User not found");
             }
           } catch (error) {
-            console.log(error);
+            toast.error(
+              "Either email or password didnt match OR you have poor internet connection",
+              {
+                autoClose: 5000,
+              }
+            );
+            setLoading(false);
           }
-
-          //checking for type of user here
-          // if (user !== null) {
-          //
-          // }
         })
         .catch((error) => {
           // const errorCode = error.code;
           // const errorMessage = error.message;
           // console.log("errorCode - " + errorCode);
           // console.log("errorMessage - " + errorMessage);
-          toast.error("Either email or password didnt match", {
-            autoClose: 5000,
-          });
+          toast.error(
+            "Either email or password didnt match or you have poor internet connection",
+            {
+              autoClose: 5000,
+            }
+          );
           setLoading(false);
         });
     }

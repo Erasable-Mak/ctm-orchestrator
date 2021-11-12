@@ -37,7 +37,7 @@ const initialState = {
   longitude: "",
   loginEmail: "",
   loginPassword: "",
-  type: "",
+  typeOfUser: "",
   aadhar: "",
   panCard: "",
   nationality: "",
@@ -82,7 +82,7 @@ export default function CreateUser() {
             email: formData.email,
             phoneNo: formData.phoneNo,
             phoneNo2: formData.phoneNo2,
-            typeOfUser: formData.type,
+            typeOfUser: formData.typeOfUser,
           });
 
           //adding address info to Address information collection

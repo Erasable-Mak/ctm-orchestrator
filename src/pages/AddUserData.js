@@ -150,7 +150,7 @@ export default function AddUserData({
         <DropDown
           id="type-of-user"
           items={typeofUserOptions}
-          value={formData.type}
+          value={formData.typeOfUser}
           name="Type of user"
           setValue={(value) => setFormData({ ...formData, type: value })}
         />

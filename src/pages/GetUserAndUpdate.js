@@ -1,9 +1,276 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-function GetUserAndUpdate() {
+import { db } from "../firebase-config";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+
+import {
+  maritalStatusOptions,
+  typeofUserOptions,
+  religionOptions,
+  stateOptions,
+} from "../DropDownOptions/options";
+
+import { Box, Divider, Stack, Button } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+
+import DropDown from "../components/DropDown";
+import TextFieldComp from "../components/TextFieldComp";
+
+const initialState = {
+  name: "",
+  email: "",
+  aadharNo: "",
+  age: "",
+  phoneNo: "",
+  phoneNo2: "",
+  religion: "",
+  maritalStatus: "",
+  address: "",
+  state: "",
+  district: "",
+  locality: "",
+  pincode: "",
+  latitude: "",
+  longitude: "",
+  typeOfUser: "",
+  aadhar: "",
+  panCard: "",
+  nationality: "",
+  addressProof: "",
+  resume: "",
+};
+
+function GetUserAndUpdate({ uid, setFlag }) {
+  const [data, setData] = useState(null);
+  const [formData, setFormData] = useState(initialState);
+  const [updateLoading, setUpdateLoading] = useState(false);
+
+  const handleUpdate = async () => {
+    setUpdateLoading(true);
+    //updating general details of user
+    await setDoc(doc(db, "Users", uid), {
+      name: formData.name,
+      email: formData.email,
+      phoneNo: formData.phoneNo,
+      phoneNo2: formData.phoneNo2,
+      typeOfUser: formData.typeOfUser,
+    });
+
+    //updating address info to Address information collection
+    await setDoc(doc(db, "Users", uid, "Address information", "address_info"), {
+      address: formData.address,
+      district: formData.district,
+      latitude: formData.latitude,
+      longitude: formData.longitude,
+      locality: formData.locality,
+      pincode: formData.pincode,
+      state: formData.state,
+    });
+
+    //updating personal info to Personal information collection
+    await setDoc(
+      doc(db, "Users", uid, "Personal information", "personal_info"),
+      {
+        age: formData.age,
+        aadharNo: formData.aadharNo,
+        maritalStatus: formData.maritalStatus,
+        religion: formData.religion,
+      }
+    );
+    setUpdateLoading(false);
+  };
+
+  useEffect(() => {
+    setData([]);
+    try {
+      const getdata = async () => {
+        //here we get the data from actual document
+        console.log("get data called");
+        const docRef = doc(db, "Users", uid);
+        const docSnap = await getDoc(docRef);
+        setFormData((prev) => ({ ...prev, ...docSnap.data() }));
+
+        //here we get the data from subcollection named Address information that contain document with id address_info
+        const addressRef = doc(
+          db,
+          "Users",
+          uid,
+          "Address information",
+          "address_info"
+        );
+        const addressSnap = await getDoc(addressRef);
+        setFormData((prev) => ({ ...prev, ...addressSnap.data() }));
+
+        //here we get the data from subcollection named Personal information that contain document with id personal_info
+        const personalRef = doc(
+          db,
+          "Users",
+          uid,
+          "Personal information",
+          "personal_info"
+        );
+        const personalSnap = await getDoc(personalRef);
+        setFormData((prev) => ({ ...prev, ...personalSnap.data() }));
+      };
+
+      getdata();
+    } catch (err) {
+      console.log(err);
+    }
+    return () => {
+      setData(null);
+    };
+  }, []);
+
   return (
     <div>
       <h1>GetUserAndUpdate</h1>
+      <h1>{uid}</h1>
+      <button onClick={() => setFlag(true)}>Go back</button>
+      <Box>
+        {/* general information */}
+        <Box>
+          <Divider style={{ margin: "5px" }} textAlign="left">
+            General information
+          </Divider>
+          <TextFieldComp
+            id="name"
+            name="Name"
+            value={formData.name}
+            setValue={(value) => setFormData({ ...formData, name: value })}
+          />
+          <TextFieldComp
+            id="email"
+            name="Email"
+            value={formData.email}
+            setValue={(value) => setFormData({ ...formData, email: value })}
+          />
+          <TextFieldComp
+            id="aadhar-no"
+            name="Aadhar number"
+            value={formData.aadharNo}
+            setValue={(value) => setFormData({ ...formData, aadharNo: value })}
+          />
+          <TextFieldComp
+            id="age"
+            name="Age"
+            value={formData.age}
+            setValue={(value) => setFormData({ ...formData, age: value })}
+          />
+          <TextFieldComp
+            id="phone-no"
+            name="Phone number"
+            value={formData.phoneNo}
+            setValue={(value) => setFormData({ ...formData, phoneNo: value })}
+          />
+          <TextFieldComp
+            id="phone-no-2"
+            name="Another phone number"
+            value={formData.phoneNo2}
+            setValue={(value) => setFormData({ ...formData, phoneNo2: value })}
+          />
+          <DropDown
+            id="Marital-status"
+            items={maritalStatusOptions}
+            value={formData.maritalStatus}
+            name="Marital status"
+            setValue={(value) =>
+              setFormData({ ...formData, maritalStatus: value })
+            }
+          />
+          <DropDown
+            id="Religion"
+            items={religionOptions}
+            value={formData.religion}
+            name="Religion"
+            setValue={(value) => setFormData({ ...formData, religion: value })}
+          />
+        </Box>
+        {/* Address box */}
+        <Box>
+          <Divider style={{ margin: "5px" }} textAlign="left">
+            Address
+          </Divider>
+          <TextFieldComp
+            id="address"
+            name="Address"
+            value={formData.address}
+            setValue={(value) => setFormData({ ...formData, address: value })}
+          />
+          <DropDown
+            id="state"
+            items={stateOptions}
+            value={formData.state}
+            name="State"
+            setValue={(value) => setFormData({ ...formData, state: value })}
+          />
+          <TextFieldComp
+            id="district"
+            name="District"
+            value={formData.district}
+            setValue={(value) => setFormData({ ...formData, district: value })}
+          />
+
+          <TextFieldComp
+            id="locality"
+            name="Locality"
+            value={formData.locality}
+            setValue={(value) => setFormData({ ...formData, locality: value })}
+          />
+          <TextFieldComp
+            id="pincode"
+            name="Pincode"
+            value={formData.pincode}
+            setValue={(value) => setFormData({ ...formData, pincode: value })}
+          />
+          <TextFieldComp
+            id="latitude"
+            name="Latitude"
+            value={formData.latitude}
+            setValue={(value) => setFormData({ ...formData, latitude: value })}
+          />
+          <TextFieldComp
+            id="longitude"
+            name="Longitude"
+            value={formData.longitude}
+            setValue={(value) => setFormData({ ...formData, longitude: value })}
+          />
+        </Box>
+        {/* Login credentials */}
+        <Box>
+          <Divider style={{ margin: "5px" }} textAlign="left">
+            Login Credentials
+          </Divider>
+          <DropDown
+            id="type-of-user"
+            items={typeofUserOptions}
+            value={formData.typeOfUser}
+            name="Type of user"
+            setValue={(value) => setFormData({ ...formData, type: value })}
+          />
+        </Box>
+        <Divider style={{ margin: "5px" }}></Divider>
+        {/* upload and clear buttons */}
+        <Box>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="flex-start"
+            spacing={2}
+            style={{ margin: "20px" }}
+          >
+            <LoadingButton
+              onClick={handleUpdate}
+              loading={updateLoading}
+              loadingIndicator="wait..."
+              variant="contained"
+              color="success"
+            >
+              Update
+            </LoadingButton>
+          </Stack>
+        </Box>
+      </Box>
     </div>
   );
 }
