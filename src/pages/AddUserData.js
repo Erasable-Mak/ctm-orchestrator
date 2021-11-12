@@ -10,6 +10,8 @@ import {
   stateOptions,
   typeofUserOptions,
 } from "../DropDownOptions/options";
+import DatePicker from "../components/DatePicker";
+import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
 
 export default function AddUserData({
   formData,
@@ -43,13 +45,13 @@ export default function AddUserData({
           value={formData.aadharNo}
           setValue={(value) => setFormData({ ...formData, aadharNo: value })}
         />
-        <TextFieldComp
+        {/* <TextFieldComp
           id="age"
           name="Age"
           value={formData.age}
           setValue={(value) => setFormData({ ...formData, age: value })}
-        />
-        <TextFieldComp
+        /> */}
+        {/* <TextFieldComp
           id="phone-no"
           name="Phone number"
           value={formData.phoneNo}
@@ -60,6 +62,12 @@ export default function AddUserData({
           name="Another phone number"
           value={formData.phoneNo2}
           setValue={(value) => setFormData({ ...formData, phoneNo2: value })}
+        /> */}
+        <ClickableTextFieldComp
+          id="contact-no"
+          name="Contact No"
+          value={formData.contactNo}
+          setValue={(value) => setFormData({ ...formData, contactNo: value })}
         />
         <DropDown
           id="Marital-status"
@@ -76,6 +84,12 @@ export default function AddUserData({
           value={formData.religion}
           name="Religion"
           setValue={(value) => setFormData({ ...formData, religion: value })}
+        />
+        <DatePicker
+          id="dob"
+          name="Date of Birth"
+          value={formData.dateOfBirth}
+          setValue={(value) => setFormData({ ...formData, dateOfBirth: value })}
         />
       </Box>
       {/* Address box */}

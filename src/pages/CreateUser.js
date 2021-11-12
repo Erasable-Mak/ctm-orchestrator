@@ -23,9 +23,8 @@ const initialState = {
   name: "",
   email: "",
   aadharNo: "",
-  age: "",
-  phoneNo: "",
-  phoneNo2: "",
+  dateOfBirth: null,
+  contactNo: [],
   religion: "",
   maritalStatus: "",
   address: "",
@@ -158,41 +157,37 @@ export default function CreateUser() {
           </Box>
         </React.Fragment>
       ) : (
-        <React.Fragment>
-          <Box>
-            <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "30ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <div>
-                {/* content comes here */}
-                {activeStep + 1 === 1 && (
-                  <AddUserData
-                    formData={formData}
-                    setFormData={setFormData}
-                    handleSubmit={handleSubmit}
-                    clearForm={clearForm}
-                    submitLoading={submitLoading}
-                    setSubmitLoading={setSubmitLoading}
-                  />
-                )}
-                {activeStep + 1 === 2 && (
-                  <UploadDocuments
-                    formData={formData}
-                    setFormData={setFormData}
-                    handleReset={handleReset}
-                    uid={newUserId}
-                  />
-                )}
-              </div>
-            </Box>
-          </Box>
-        </React.Fragment>
+        <Box noValidate sx={{ mt: 1 }}>
+          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          {/* <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "30ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          > */}
+          {/* content comes here */}
+          {activeStep + 1 === 1 && (
+            <AddUserData
+              formData={formData}
+              setFormData={setFormData}
+              handleSubmit={handleSubmit}
+              clearForm={clearForm}
+              submitLoading={submitLoading}
+              setSubmitLoading={setSubmitLoading}
+            />
+          )}
+          {activeStep + 1 === 2 && (
+            <UploadDocuments
+              formData={formData}
+              setFormData={setFormData}
+              handleReset={handleReset}
+              uid={newUserId}
+            />
+          )}
+        </Box>
+        // </Box>
       )}
     </Box>
   );
