@@ -68,7 +68,7 @@ const initialState = {
   longitude: "",
   jobBranch: "",
   instructions: "",
-  dateOfInspection: new Date(),
+  dateOfInspection: null,
 };
 
 function CreateCase() {

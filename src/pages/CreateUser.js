@@ -23,9 +23,8 @@ const initialState = {
   name: "",
   email: "",
   aadharNo: "",
-  age: "",
-  phoneNo: "",
-  phoneNo2: "",
+  dateOfBirth: null,
+  contactNo: [],
   religion: "",
   maritalStatus: "",
   address: "",
@@ -81,8 +80,7 @@ export default function CreateUser() {
           await setDoc(doc(db, "Users", user.uid), {
             name: formData.name,
             email: formData.email,
-            phoneNo: formData.phoneNo,
-            phoneNo2: formData.phoneNo2,
+            contactNo: formData.contactNo,
             typeOfUser: formData.typeOfUser,
           });
 
@@ -104,7 +102,7 @@ export default function CreateUser() {
           await setDoc(
             doc(db, "Users", user.uid, "Personal information", "personal_info"),
             {
-              age: formData.age,
+              dateOfBirth: formData.dateOfBirth,
               aadharNo: formData.aadharNo,
               maritalStatus: formData.maritalStatus,
               religion: formData.religion,
@@ -151,29 +149,27 @@ export default function CreateUser() {
       </Stepper>
       {
         <Box noValidate sx={{ mt: 1 }}>
-          <div>
-            {/* content comes here */}
-            {/* if activeStep === 0, addUserData comp. is rendered
+          {/* content comes here */}
+          {/* if activeStep === 0, addUserData comp. is rendered
                 if activeStep === 1, uploadDocuments comp. is rendered  */}
-            {activeStep + 1 === 1 && (
-              <AddUserData
-                formData={formData}
-                setFormData={setFormData}
-                handleSubmit={handleSubmit}
-                clearForm={clearForm}
-                submitLoading={submitLoading}
-                setSubmitLoading={setSubmitLoading}
-              />
-            )}
-            {activeStep + 1 === 2 && (
-              <UploadDocuments
-                formData={formData}
-                setFormData={setFormData}
-                uid={newUserId}
-                handleReset={handleReset}
-              />
-            )}
-          </div>
+          {activeStep + 1 === 1 && (
+            <AddUserData
+              formData={formData}
+              setFormData={setFormData}
+              handleSubmit={handleSubmit}
+              clearForm={clearForm}
+              submitLoading={submitLoading}
+              setSubmitLoading={setSubmitLoading}
+            />
+          )}
+          {activeStep + 1 === 2 && (
+            <UploadDocuments
+              formData={formData}
+              setFormData={setFormData}
+              uid={newUserId}
+              handleReset={handleReset}
+            />
+          )}
         </Box>
       }
     </Box>

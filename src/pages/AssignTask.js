@@ -8,6 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material";
 import { collection, getDocs, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -28,7 +29,7 @@ export default function AssignTask() {
       value.map((ele) => values.push(ele));
     }
 
-    return values.join("/");
+    return values.join("\n");
   };
 
   useEffect(() => {
@@ -84,8 +85,10 @@ export default function AssignTask() {
               {/* <TableCell component="th" scope="row"></TableCell> */}
               <TableCell align="left">{row.bankName}</TableCell>
               <TableCell align="left">
+                {/* <Typography variant="bold">Names</Typography> */}
                 {displayValue("Borrower Names", row.borrowerNames)}
                 <br />
+                {/* <Typography variant="bold">Contact No.</Typography> */}
                 {displayValue("Contact No", row.contactNo)}
               </TableCell>
               <TableCell align="left">{row.bankBranchName}</TableCell>
