@@ -79,8 +79,7 @@ export default function CreateUser() {
           await setDoc(doc(db, "Users", user.uid), {
             name: formData.name,
             email: formData.email,
-            phoneNo: formData.phoneNo,
-            phoneNo2: formData.phoneNo2,
+            contactNo: formData.contactNo,
             typeOfUser: formData.typeOfUser,
           });
 
@@ -102,7 +101,7 @@ export default function CreateUser() {
           await setDoc(
             doc(db, "Users", user.uid, "Personal information", "personal_info"),
             {
-              age: formData.age,
+              dateOfBirth: formData.dateOfBirth,
               aadharNo: formData.aadharNo,
               maritalStatus: formData.maritalStatus,
               religion: formData.religion,

@@ -9,12 +9,20 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { collection, getDocs, query } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  getDocs,
+  query,
+  addDoc,
+  DocumentReference,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import DatePicker from "../components/DatePicker";
 import DropDown from "../components/DropDown";
 import { valuerOptions } from "../DropDownOptions/options";
 import { db } from "../firebase-config";
+import { toast } from "react-toastify";
 
 export default function AssignTask() {
   const [data, setData] = useState([]);
@@ -45,7 +53,7 @@ export default function AssignTask() {
             ...prev,
             {
               ...doc.data(),
-              uid: doc.id,
+              caseId: doc.id,
               valuer: "",
               dateOfOutward: new Date(),
             },
@@ -58,6 +66,24 @@ export default function AssignTask() {
       console.log(err);
     }
   }, []);
+
+  const handleSubmit = async (idx) => {
+    try {
+      // setData({ ...data, valuer: "YuwMRMFVinSaRsonWJmOwcDV89q2" });
+      const finalData = {
+        caseId: doc(db, "Cases", data[idx].caseId),
+        valuer: doc(db, "Users", "YuwMRMFVinSaRsonWJmOwcDV89q2"),
+        dateOfOutward: data[idx].dateOfOutward,
+      };
+      await addDoc(collection(db, "assigned_cases"), finalData);
+      toast.success("New Case assigned successfully", { autoClose: 5000 });
+      // clearForm();
+    } catch (error) {
+      toast.error(`${error}`, {
+        autoClose: 5000,
+      });
+    }
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -127,7 +153,13 @@ export default function AssignTask() {
               <TableCell align="left">{row.instructions}</TableCell>
 
               <TableCell align="left">
-                <IconButton aria-label="edit" size="large">
+                <IconButton
+                  aria-label="edit"
+                  size="large"
+                  onClick={() => {
+                    handleSubmit(idx);
+                  }}
+                >
                   <EditIcon fontSize="inherit" />
                 </IconButton>
               </TableCell>
