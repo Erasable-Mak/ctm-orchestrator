@@ -45,24 +45,6 @@ export default function AddUserData({
           value={formData.aadharNo}
           setValue={(value) => setFormData({ ...formData, aadharNo: value })}
         />
-        {/* <TextFieldComp
-          id="age"
-          name="Age"
-          value={formData.age}
-          setValue={(value) => setFormData({ ...formData, age: value })}
-        /> */}
-        {/* <TextFieldComp
-          id="phone-no"
-          name="Phone number"
-          value={formData.phoneNo}
-          setValue={(value) => setFormData({ ...formData, phoneNo: value })}
-        />
-        <TextFieldComp
-          id="phone-no-2"
-          name="Another phone number"
-          value={formData.phoneNo2}
-          setValue={(value) => setFormData({ ...formData, phoneNo2: value })}
-        /> */}
         <ClickableTextFieldComp
           id="contact-no"
           name="Contact No"

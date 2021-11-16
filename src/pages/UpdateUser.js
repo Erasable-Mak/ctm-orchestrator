@@ -12,6 +12,9 @@ import {
   Paper,
   Button,
   IconButton,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -71,7 +74,18 @@ export default function SingleUserInfo() {
                     {row.name}
                   </TableCell>
                   <TableCell align="left">{row.email}</TableCell>
-                  <TableCell align="left">{row.phoneNo}</TableCell>
+                  <TableCell align="left">
+                    <List dense="true">
+                      {row.contactNo.map((phoneno) => {
+                        return (
+                          <ListItem>
+                            <ListItemText primary={phoneno} />
+                          </ListItem>
+                        );
+                      })}
+                    </List>
+                  </TableCell>
+
                   <TableCell align="left">{row.typeOfUser}</TableCell>
                   <TableCell align="left">
                     <Button

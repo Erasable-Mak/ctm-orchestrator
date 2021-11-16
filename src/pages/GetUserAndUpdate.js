@@ -15,14 +15,15 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
+import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
+import DatePicker from "../components/DatePicker";
 
 const initialState = {
   name: "",
   email: "",
   aadharNo: "",
   age: "",
-  phoneNo: "",
-  phoneNo2: "",
+  contactNo: [],
   religion: "",
   maritalStatus: "",
   address: "",
@@ -53,8 +54,7 @@ function GetUserAndUpdate({ uid, setFlag }) {
       await setDoc(doc(db, "Users", uid), {
         name: formData.name,
         email: formData.email,
-        phoneNo: formData.phoneNo,
-        phoneNo2: formData.phoneNo2,
+        contactNo: formData.contactNo,
         typeOfUser: formData.typeOfUser,
       });
 
@@ -159,23 +159,11 @@ function GetUserAndUpdate({ uid, setFlag }) {
             value={formData.aadharNo}
             setValue={(value) => setFormData({ ...formData, aadharNo: value })}
           />
-          <TextFieldComp
-            id="age"
-            name="Age"
-            value={formData.age}
-            setValue={(value) => setFormData({ ...formData, age: value })}
-          />
-          <TextFieldComp
-            id="phone-no"
-            name="Phone number"
-            value={formData.phoneNo}
-            setValue={(value) => setFormData({ ...formData, phoneNo: value })}
-          />
-          <TextFieldComp
-            id="phone-no-2"
-            name="Another phone number"
-            value={formData.phoneNo2}
-            setValue={(value) => setFormData({ ...formData, phoneNo2: value })}
+          <ClickableTextFieldComp
+            id="contact-no"
+            name="Contact No"
+            value={formData.contactNo}
+            setValue={(value) => setFormData({ ...formData, contactNo: value })}
           />
           <DropDown
             id="Marital-status"
@@ -192,6 +180,14 @@ function GetUserAndUpdate({ uid, setFlag }) {
             value={formData.religion}
             name="Religion"
             setValue={(value) => setFormData({ ...formData, religion: value })}
+          />
+          <DatePicker
+            id="dob"
+            name="Date of Birth"
+            value={formData.dateOfBirth}
+            setValue={(value) =>
+              setFormData({ ...formData, dateOfBirth: value })
+            }
           />
         </Box>
         {/* Address box */}
