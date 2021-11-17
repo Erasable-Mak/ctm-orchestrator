@@ -17,6 +17,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import AddBank from "./AddBank";
 import CreateCase from "./CreateCase";
+import UpdateCase from "./UpdateCase";
 import CreateUser from "./CreateUser";
 import UpdateUser from "./UpdateUser";
 import AssignTask from "./AssignTask";
@@ -87,6 +88,16 @@ export default function ClippedDrawer() {
             </ListItem>
             <Divider />
             <ListItem
+              selected={contentName === "Update Case"}
+              button
+              onClick={() => {
+                changeContent("Update Case");
+              }}
+            >
+              <ListItemText primary="Update Case" />
+            </ListItem>
+            <Divider />
+            <ListItem
               selected={contentName === "Create User"}
               button
               onClick={() => {
@@ -132,6 +143,7 @@ export default function ClippedDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         {contentName === "Create Case" && <CreateCase />}
+        {contentName === "Update Case" && <UpdateCase />}
         {contentName === "Create User" && <CreateUser />}
         {contentName === "Update User" && <UpdateUser />}
         {contentName === "Add Bank Details" && <AddBank />}
