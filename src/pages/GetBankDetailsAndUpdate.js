@@ -18,21 +18,20 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
 
-
 const instituteType = [
-    {
-      id: "NBNR",
-      value: "NBNR",
-    },
-    {
-      id: "CF",
-      value: "CF",
-    },
-    {
-      id: "APF",
-      value: "APF",
-    },
-  ];
+  {
+    id: "NBNR",
+    value: "NBNR",
+  },
+  {
+    id: "CF",
+    value: "CF",
+  },
+  {
+    id: "APF",
+    value: "APF",
+  },
+];
 
 const initialState = {
   instituteType: "",
@@ -55,7 +54,7 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
       bankBranchName: formData.bankBranchName,
       bankaddress: formData.bankaddress,
     });
-    
+
     setUpdateLoading(false);
   };
 
@@ -103,9 +102,9 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
 
   return (
     <div>
-      <h1>GetBankDetailsAndUpdate</h1>
-      <h1>{uid}</h1>
-      <button onClick={() => setFlag(true)}>Go back</button>
+      <Button variant="contained" onClick={() => setFlag(true)}>
+        Go back
+      </Button>
       <Box>
         {/* bank information */}
         <Box>
@@ -113,13 +112,14 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
             Bank information Update
           </Divider>
           <DropDown
-          id="institute-type"
-          items={instituteType}
-          value={formData.instituteType}
-          name="Institute Type"
-            setValue={(value) => setFormData({ ...formData, instituteType: value })}
-
-        />
+            id="institute-type"
+            items={instituteType}
+            value={formData.instituteType}
+            name="Institute Type"
+            setValue={(value) =>
+              setFormData({ ...formData, instituteType: value })
+            }
+          />
 
           <TextFieldComp
             id="bank-name"
@@ -131,13 +131,17 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
             id="bank-branch-name"
             name="Branch Name"
             value={formData.bankBranchName}
-            setValue={(value) => setFormData({ ...formData, bankBranchName: value })}
+            setValue={(value) =>
+              setFormData({ ...formData, bankBranchName: value })
+            }
           />
           <TextFieldComp
             id="bank-address"
             name="Bank Address"
             value={formData.bankaddress}
-            setValue={(value) => setFormData({ ...formData, bankaddress: value })}
+            setValue={(value) =>
+              setFormData({ ...formData, bankaddress: value })
+            }
           />
         </Box>
         {/* upload and clear buttons */}
@@ -158,11 +162,9 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
             >
               Update
             </LoadingButton>
-
           </Stack>
         </Box>
       </Box>
-    
     </div>
   );
 }

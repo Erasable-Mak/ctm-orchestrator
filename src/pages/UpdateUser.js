@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../firebase-config";
+import { db, functions } from "../firebase-config";
 import { collection, query, getDocs } from "firebase/firestore";
+import { httpsCallable } from "@firebase/functions";
 
 import {
   Table,
@@ -31,6 +32,27 @@ export default function SingleUserInfo() {
     console.log("gotoGetDataAndUpdataPage called" + uid);
     setSelectedUser(uid);
     setFlag(false);
+  };
+
+  const deleteFunction = (uid) => {
+    // this is how we call callable functions
+    // const helloWorld = httpsCallable(functions, "helloWorld");
+    // helloWorld({ uid: uid })
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    const userDeleteFunction = httpsCallable(functions, "userDeleteFunction");
+    userDeleteFunction({ uid: uid })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log("hi" + error);
+      });
   };
 
   useEffect(() => {
@@ -75,10 +97,10 @@ export default function SingleUserInfo() {
                   </TableCell>
                   <TableCell align="left">{row.email}</TableCell>
                   <TableCell align="left">
-                    <List dense="true">
-                      {row.contactNo.map((phoneno) => {
+                    <List>
+                      {row.contactNo.map((phoneno, index) => {
                         return (
-                          <ListItem>
+                          <ListItem style={{ padding: "0px" }} key={index}>
                             <ListItemText primary={phoneno} />
                           </ListItem>
                         );
@@ -87,7 +109,7 @@ export default function SingleUserInfo() {
                   </TableCell>
 
                   <TableCell align="left">{row.typeOfUser}</TableCell>
-                  <TableCell align="left">
+                  <TableCell align="left" style={{ padding: "0px" }}>
                     <Button
                       variant="contained"
                       onClick={() => gotoGetDataAndUpdataPage(row.uid)}
@@ -95,8 +117,14 @@ export default function SingleUserInfo() {
                       Update
                     </Button>
                   </TableCell>
-                  <TableCell align="left">
-                    <IconButton aria-label="delete" size="large">
+                  <TableCell align="left" style={{ padding: "0px" }}>
+                    <IconButton
+                      aria-label="delete"
+                      size="large"
+                      onClick={() => {
+                        deleteFunction(row.uid);
+                      }}
+                    >
                       <DeleteIcon fontSize="inherit" />
                     </IconButton>
                   </TableCell>

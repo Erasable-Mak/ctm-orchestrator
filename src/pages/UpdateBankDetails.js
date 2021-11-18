@@ -17,7 +17,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import GetUserAndUpdate from "./GetBankDetailsAndUpdate";
 
-export default function SingleUserInfo() {
+export default function UpdateBankDetails() {
   const [data, setData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -73,7 +73,7 @@ export default function SingleUserInfo() {
                   <TableCell align="left">{row.bankName}</TableCell>
                   <TableCell align="left">{row.bankBranchName}</TableCell>
                   <TableCell align="left">{row.bankaddress}</TableCell>
-                  <TableCell align="left">
+                  <TableCell align="left" style={{ padding: "0px" }}>
                     <Button
                       variant="contained"
                       onClick={() => gotoGetDataAndUpdataPage(row.uid)}
@@ -81,7 +81,7 @@ export default function SingleUserInfo() {
                       Update
                     </Button>
                   </TableCell>
-                  <TableCell align="left">
+                  <TableCell align="left" style={{ padding: "0px" }}>
                     <IconButton aria-label="delete" size="large">
                       <DeleteIcon fontSize="inherit" />
                     </IconButton>
@@ -94,7 +94,6 @@ export default function SingleUserInfo() {
         </TableContainer>
       )}
       {!flag && <GetUserAndUpdate uid={selectedUser} setFlag={setFlag} />}
- 
     </div>
   );
 }

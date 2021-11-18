@@ -13,6 +13,9 @@ import {
   Paper,
   Button,
   IconButton,
+  List,
+  ListItem,
+  ListItemText,
 } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -22,15 +25,15 @@ export default function SingleUserInfo() {
   const [data, setData] = useState([]);
   const [selectedCase, setSelectedCase] = useState(null);
 
-  //when flag is true it will render list of users and on false it will render selected user's data
+  //when flag is true it will render list of cases and on false it will render selected case's data
   const [flag, setFlag] = useState(true);
 
   const gotoGetDataAndUpdataPage = (uid) => {
-    console.log("gotoGetDataAndUpdataPage called" + uid);
+    // console.log("gotoGetDataAndUpdataPage called" + uid);
     setSelectedCase(uid);
     setFlag(false);
   };
-  
+
   const displayValue = (name, value) => {
     const values = [];
 
@@ -53,24 +56,22 @@ export default function SingleUserInfo() {
           setData((prev) => [...prev, { ...doc.data(), uid: doc.id }]);
         });
       };
-
       getdata();
     } catch (err) {
       console.log(err);
     }
   }, []);
 
-    return (
-    
+  return (
     <div>
-    {/* {console.log(data)} */}
+      {/* {console.log(data)} */}
       {flag && (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Bank Name</TableCell>
-                <TableCell align="left">Borrow Details</TableCell>
+                <TableCell align="left">Borrower Details</TableCell>
                 <TableCell align="left">Contact</TableCell>
                 <TableCell align="left">Address</TableCell>
               </TableRow>
@@ -85,14 +86,35 @@ export default function SingleUserInfo() {
                     {row.bankName}
                   </TableCell>
                   <TableCell align="left">
-                  {displayValue("Borrower Names", row.borrowerNames)}
-                    <br />
-                    {console.log(row)}
-                    {displayValue("Contact No", row.contactNo)}
+                    <List>
+                      {row.borrowerNames.map((borrower, index) => {
+                        return (
+                          <ListItem
+                            style={{ margin: "0px", padding: "0px" }}
+                            key={index}
+                          >
+                            <ListItemText primary={borrower.fullName} />
+                          </ListItem>
+                        );
+                      })}
+                    </List>
                   </TableCell>
-                  <TableCell align="left">{row.phoneNo}</TableCell>
-                  <TableCell align="left">{row.address}</TableCell>
                   <TableCell align="left">
+                    <List>
+                      {row.contactNo.map((contact, index) => {
+                        return (
+                          <ListItem
+                            style={{ margin: "0px", padding: "0px" }}
+                            key={index}
+                          >
+                            <ListItemText primary={contact} />
+                          </ListItem>
+                        );
+                      })}
+                    </List>
+                  </TableCell>
+                  <TableCell align="left">{row.address}</TableCell>
+                  <TableCell align="left" style={{ padding: "0px" }}>
                     <Button
                       variant="contained"
                       onClick={() => gotoGetDataAndUpdataPage(row.uid)}
@@ -100,7 +122,7 @@ export default function SingleUserInfo() {
                       Update
                     </Button>
                   </TableCell>
-                  <TableCell align="left">
+                  <TableCell align="left" style={{ padding: "0px" }}>
                     <IconButton aria-label="delete" size="large">
                       <DeleteIcon fontSize="inherit" />
                     </IconButton>

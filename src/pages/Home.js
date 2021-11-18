@@ -21,6 +21,7 @@ import UpdateCase from "./UpdateCase";
 import CreateUser from "./CreateUser";
 import UpdateUser from "./UpdateUser";
 import AssignTask from "./AssignTask";
+import UpdateBankDetails from "./UpdateBankDetails";
 
 import { useAuth } from "../contexts/AuthContext";
 
@@ -137,6 +138,16 @@ export default function ClippedDrawer() {
               <ListItemText primary="Assign Task" />
             </ListItem>
             <Divider />
+            <ListItem
+              selected={contentName === "Update Banks"}
+              button
+              onClick={() => {
+                changeContent("Update Banks");
+              }}
+            >
+              <ListItemText primary="Update Banks" />
+            </ListItem>
+            <Divider />
           </List>
         </Box>
       </Drawer>
@@ -148,6 +159,7 @@ export default function ClippedDrawer() {
         {contentName === "Update User" && <UpdateUser />}
         {contentName === "Add Bank Details" && <AddBank />}
         {contentName === "Assign Task" && <AssignTask />}
+        {contentName === "Update Banks" && <UpdateBankDetails />}
       </Box>
     </Box>
   );
