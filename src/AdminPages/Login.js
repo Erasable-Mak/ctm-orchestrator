@@ -49,7 +49,14 @@ function Login() {
             if (docSnap.exists() && docSnap.data().typeOfUser === "Admin") {
               //only admins allowed
               toast.success("Logged in Successfully", { autoClose: 5000 });
-              history.push(`Home/${user.uid}`);
+              history.push(`AdminHome/${user.uid}`);
+            } else if (
+              docSnap.exists() &&
+              docSnap.data().typeOfUser === "TypeWriter"
+            ) {
+              //only typewriters allowed
+              toast.success("Logged in Successfully", { autoClose: 5000 });
+              history.push(`TypeWriterHome/${user.uid}`);
             } else if (
               docSnap.exists() &&
               docSnap.data().typeOfUser !== "Admin"
