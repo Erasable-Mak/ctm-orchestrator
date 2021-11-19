@@ -6,9 +6,10 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import AuthContextProvider, { useAuth } from "./contexts/AuthContext";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import OtherUser from "./pages/OtherUser";
+import AdminHome from "./AdminPages/Home";
+import TypeWriterHome from "./TypeWriterPages/Home";
+import Login from "./AdminPages/Login";
+import OtherUser from "./AdminPages/OtherUser";
 
 require("dotenv").config();
 
@@ -24,8 +25,11 @@ export default function App() {
             <Route exact path="/OtherUser">
               <OtherUser />
             </Route>
-            <ProtectedRoute exact path="/Home/:Username">
-              <Home />
+            <ProtectedRoute exact path="/AdminHome/:Username">
+              <AdminHome />
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/TypeWriterHome/:Username">
+              <TypeWriterHome />
             </ProtectedRoute>
           </Switch>
         </div>

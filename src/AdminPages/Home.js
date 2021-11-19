@@ -27,7 +27,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 const drawerWidth = 240;
 
-export default function ClippedDrawer() {
+export default function Home() {
   const [contentName, setcontentName] = useState("Create User");
 
   const { currentUser, logout } = useAuth();
