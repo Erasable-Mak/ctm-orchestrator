@@ -64,31 +64,9 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
       const getdata = async () => {
         //here we get the data from actual document
         console.log("get data called");
-        const docRef = doc(db, "Users", uid);
+        const docRef = doc(db, "Banks", uid);
         const docSnap = await getDoc(docRef);
         setFormData((prev) => ({ ...prev, ...docSnap.data() }));
-
-        //here we get the data from subcollection named Address information that contain document with id address_info
-        const addressRef = doc(
-          db,
-          "Users",
-          uid,
-          "Address information",
-          "address_info"
-        );
-        const addressSnap = await getDoc(addressRef);
-        setFormData((prev) => ({ ...prev, ...addressSnap.data() }));
-
-        //here we get the data from subcollection named Personal information that contain document with id personal_info
-        const personalRef = doc(
-          db,
-          "Users",
-          uid,
-          "Personal information",
-          "personal_info"
-        );
-        const personalSnap = await getDoc(personalRef);
-        setFormData((prev) => ({ ...prev, ...personalSnap.data() }));
       };
 
       getdata();

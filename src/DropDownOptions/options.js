@@ -23,7 +23,7 @@ export const maritalStatusOptions = [
 
 export const typeofUserOptions = [
   { id: "Admin", value: "Admin" },
-  { id: "TypeWrite", value: "TypeWrite" },
+  { id: "TypeWriter", value: "TypeWriter" },
   { id: "Checker", value: "Checker" },
   { id: "Field Visit Officer", value: "Field Visit Officer" },
 ];
