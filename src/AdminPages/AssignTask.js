@@ -120,12 +120,13 @@ export default function AssignTask() {
               <TableCell align="left">{row.bankBranchName}</TableCell>
               <TableCell align="left">{row.address}</TableCell>
               <TableCell align="left">
-                {new Date(
-                  row.dateOfInspection.seconds * 1000 +
-                    row.dateOfInspection.nanoseconds / 1000000
-                )
-                  .toISOString()
-                  .slice(0, 10)}
+                {row.dateOfInspection &&
+                  new Date(
+                    row.dateOfInspection.seconds * 1000 +
+                      row.dateOfInspection.nanoseconds / 1000000
+                  )
+                    .toISOString()
+                    .slice(0, 10)}
               </TableCell>
               <TableCell align="left">
                 <DatePicker
