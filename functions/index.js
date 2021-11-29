@@ -8,8 +8,9 @@ exports.helloWorld = functions.https.onCall((data, context) => {
   return { result: "Hello World + data.uid" };
 });
 
+//to delete user from auth
 exports.userDeleteFunction = functions.https.onCall((data, context) => {
-  admin
+  return admin
     .auth()
     .deleteUser(data.uid)
     .then(() => {
@@ -22,18 +23,50 @@ exports.userDeleteFunction = functions.https.onCall((data, context) => {
     });
 });
 
-exports.deleteUserFromFirestore = functions.auth.user().onDelete((user) => {
-  return admin
-    .firestore()
-    .collection("users")
-    .doc(user.uid)
-    .delete()
-    .then(() => {
-      console.log("Successfully deleted user from Firestore");
-      return { result: "Successfully deleted user from Firestore" };
-    })
-    .catch((error) => {
-      console.log("Error deleting user from Firestore:", error);
-      return { result: "Error deleting user from Firestore" };
-    });
-});
+//this is called when user is deleted from auth
+//here user is deleted from Users collection
+exports.deleteUserFromFirestore = functions.auth
+  .user()
+  .onDelete(async (user) => {
+    return await admin
+      .firestore()
+      .collection("Users")
+      .doc(user.uid)
+      .collection("Personal information")
+      .doc("personal_info")
+      .delete()
+      .then(() => {
+        console.log("Successfully deleted personal information");
+        admin
+          .firestore()
+          .collection("Users")
+          .doc(user.uid)
+          .collection("Address information")
+          .doc("address_info")
+          .delete()
+          .then(() => {
+            console.log("Successfully deleted address information");
+            admin
+              .firestore()
+              .collection("Users")
+              .doc(user.uid)
+              .delete()
+              .then(() => {
+                console.log("Successfully deleted basic information");
+                return { response: "User deleted Successfully" };
+              })
+              .catch((error) => {
+                console.log("this is error - " + error);
+                return { response: "Error deleting user's basic info" };
+              });
+          })
+          .catch((error) => {
+            console.log("this is error - " + error);
+            return { response: "Error deleting user's address info" };
+          });
+      })
+      .catch((error) => {
+        console.log("this is error - " + error);
+        return { response: "Error deleting user's personal info" };
+      });
+  });
