@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import DefaultPage from "./DefaultPage";
+import TechInitiation from "./TechInitiation";
+import Images from "./Images";
+import Valuation from "./Valuation";
 
 import {
   AppBar,
@@ -21,7 +23,7 @@ import { useAuth } from "../contexts/AuthContext";
 const drawerWidth = 240;
 
 export default function Home() {
-  const [contentName, setcontentName] = useState("Default Page");
+  const [contentName, setcontentName] = useState("Tech Initiation");
 
   const { currentUser, logout } = useAuth();
 
@@ -72,13 +74,33 @@ export default function Home() {
         <Box sx={{ overflow: "auto" }}>
           <List>
             <ListItem
-              selected={contentName === "Default Page"}
+              selected={contentName === "Tech Initiation"}
               button
               onClick={() => {
-                changeContent("Default Page");
+                changeContent("Tech Initiation");
               }}
             >
-              <ListItemText primary="Default Page" />
+              <ListItemText primary="Tech Initiation" />
+            </ListItem>
+            <Divider />
+            <ListItem
+              selected={contentName === "Images"}
+              button
+              onClick={() => {
+                changeContent("Images");
+              }}
+            >
+              <ListItemText primary="Images" />
+            </ListItem>
+            <Divider />
+            <ListItem
+              selected={contentName === "Valuation"}
+              button
+              onClick={() => {
+                changeContent("Valuation");
+              }}
+            >
+              <ListItemText primary="Valuation" />
             </ListItem>
             <Divider />
           </List>
@@ -86,7 +108,9 @@ export default function Home() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-        {contentName === "Default Page" && <DefaultPage />}
+        {contentName === "Tech Initiation" && <TechInitiation />}
+        {contentName === "Images" && <Images />}
+        {contentName === "Valuation" && <Valuation />}
       </Box>
     </Box>
   );
