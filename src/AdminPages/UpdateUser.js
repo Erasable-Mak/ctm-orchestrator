@@ -35,16 +35,6 @@ export default function SingleUserInfo() {
   };
 
   const deleteFunction = (uid) => {
-    // this is how we call callable functions
-    // const helloWorld = httpsCallable(functions, "helloWorld");
-    // helloWorld({ uid: uid })
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
     const userDeleteFunction = httpsCallable(functions, "userDeleteFunction");
     userDeleteFunction({ uid: uid })
       .then((result) => {

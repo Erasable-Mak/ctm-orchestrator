@@ -9,6 +9,11 @@ import TextFieldComp from "../components/TextFieldComp";
 import { db } from "../firebase-config";
 import DatePicker from "../components/DatePicker";
 
+import {
+  purposeOfValuationOptions,
+  typeOfAssetOptions,
+} from "../DropDownOptions/options";
+
 const bankNames = [
   {
     id: "HDFC",
@@ -50,8 +55,6 @@ const bankEmployeeNames = [
   },
 ];
 
-const typeOfAsset = [...bankEmployeeNames];
-const purposeOfValuation = [...bankEmployeeNames];
 const jobBranch = [...bankEmployeeNames];
 
 const initialState = {
@@ -179,14 +182,14 @@ function CreateCase() {
         />
         <DropDown
           id="type-of-asset"
-          items={typeOfAsset}
+          items={typeOfAssetOptions}
           name="Type Of Asset"
           value={formData.typeOfAsset}
           setValue={(value) => setFormData({ ...formData, typeOfAsset: value })}
         />
         <DropDown
           id="purpose-of-valuation"
-          items={purposeOfValuation}
+          items={purposeOfValuationOptions}
           name="Purpose Of Valuation"
           value={formData.purposeOfValuation}
           setValue={(value) =>

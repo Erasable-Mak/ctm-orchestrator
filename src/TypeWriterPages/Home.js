@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import DefaultPage from "./DefaultPage";
 import DocumentReferred from "./DocumentReferred";
-// import {MMSheet1} from "./MMSheet1";
 import MMSheet from "./MMSheet"
+// import TechInitiation from "./TechInitiation";
+// import Images from "./Images";
+// import Valuation from "./Valuation";
+import Demo from "./Demo";
 
 import {
   AppBar,
@@ -24,7 +27,7 @@ import { useAuth } from "../contexts/AuthContext";
 const drawerWidth = 240;
 
 export default function Home() {
-  const [contentName, setcontentName] = useState("Default Page");
+  const [contentName, setcontentName] = useState("Demo");
 
   const { currentUser, logout } = useAuth();
 
@@ -75,13 +78,13 @@ export default function Home() {
         <Box sx={{ overflow: "auto" }}>
           <List>
             <ListItem
-              selected={contentName === "Default Page"}
+              selected={contentName === "Demo"}
               button
               onClick={() => {
-                changeContent("Default Page");
+                changeContent("Demo");
               }}
             >
-              <ListItemText primary="Default Page" />
+              <ListItemText primary="Demo" />
             </ListItem>
             <Divider />
             <ListItem
@@ -112,6 +115,7 @@ export default function Home() {
         {contentName === "Default Page" && <DefaultPage />}
         {contentName === "Document Referred" && <DocumentReferred />}
         {contentName === "MM Sheet" && <MMSheet />}
+        {contentName === "Demo" && <Demo />}
       </Box>
     </Box>
   );

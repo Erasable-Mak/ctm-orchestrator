@@ -22,7 +22,7 @@ const initialState = {
   name: "",
   email: "",
   aadharNo: "",
-  age: "",
+  dateOfBirth: "",
   contactNo: [],
   religion: "",
   maritalStatus: "",

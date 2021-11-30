@@ -70,6 +70,7 @@ function Login() {
               throw new Error("User not found");
             }
           } catch (error) {
+            console.log(error);
             toast.error(
               "Either email or password didnt match OR you have poor internet connection",
               {

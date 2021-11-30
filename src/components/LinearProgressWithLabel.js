@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 
 const LinearProgressWithLabel = (props) => {
+  //Liner progress bar is used to show the progress of a task.
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ width: "100%", mr: 1 }}>
