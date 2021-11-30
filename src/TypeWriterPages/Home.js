@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import TechInitiation from "./TechInitiation";
-import Images from "./Images";
-import Valuation from "./Valuation";
+// import TechInitiation from "./TechInitiation";
+// import Images from "./Images";
+// import Valuation from "./Valuation";
+import Demo from "./Demo";
 
 import {
   AppBar,
@@ -23,7 +24,7 @@ import { useAuth } from "../contexts/AuthContext";
 const drawerWidth = 240;
 
 export default function Home() {
-  const [contentName, setcontentName] = useState("Tech Initiation");
+  const [contentName, setcontentName] = useState("Demo");
 
   const { currentUser, logout } = useAuth();
 
@@ -74,33 +75,13 @@ export default function Home() {
         <Box sx={{ overflow: "auto" }}>
           <List>
             <ListItem
-              selected={contentName === "Tech Initiation"}
+              selected={contentName === "Demo"}
               button
               onClick={() => {
-                changeContent("Tech Initiation");
+                changeContent("Demo");
               }}
             >
-              <ListItemText primary="Tech Initiation" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Images"}
-              button
-              onClick={() => {
-                changeContent("Images");
-              }}
-            >
-              <ListItemText primary="Images" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Valuation"}
-              button
-              onClick={() => {
-                changeContent("Valuation");
-              }}
-            >
-              <ListItemText primary="Valuation" />
+              <ListItemText primary="Demo" />
             </ListItem>
             <Divider />
           </List>
@@ -108,9 +89,7 @@ export default function Home() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-        {contentName === "Tech Initiation" && <TechInitiation />}
-        {contentName === "Images" && <Images />}
-        {contentName === "Valuation" && <Valuation />}
+        {contentName === "Demo" && <Demo />}
       </Box>
     </Box>
   );
