@@ -121,3 +121,27 @@ export const valuerOptions = [
     value: "angela",
   },
 ];
+
+export const purposeOfValuationOptions = [
+  { id: "Income tax", value: "Income tax" },
+  { id: "Banking/Financial institute", value: "Banking/Financial institute" },
+  {
+    id: "Banking (Auction/Settlement of dues)",
+    value: "Banking (Auction/Settlement of dues)",
+  },
+  { id: "Visa purpose", value: "Visa purpose" },
+  { id: "Personal Purpose", value: "Personal Purpose" },
+];
+
+export const typeOfAssetOptions = [
+  { id: "Residential flat", value: "Residential flat" },
+  { id: "Residential building", value: "Residential building" },
+  { id: "Residential Row House", value: "Residential Row House" },
+  { id: "Commercial shop", value: "Commercial shop" },
+  { id: "Commercial complex", value: "Commercial complex" },
+  { id: "Commercial office", value: "Commercial office" },
+  { id: "Open plot/land", value: "Open plot/land" },
+  { id: "Industrial unit", value: "Industrial unit" },
+  { id: "Plant & Machinery", value: "Plant & Machinery" },
+  { id: "Vehicle", value: "Vehicle" },
+];
