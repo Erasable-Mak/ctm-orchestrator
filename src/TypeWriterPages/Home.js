@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import DefaultPage from "./DefaultPage";
+import DocumentReferred from "./DocumentReferred";
+// import {MMSheet1} from "./MMSheet1";
+import MMSheet from "./MMSheet"
 
 import {
   AppBar,
@@ -81,12 +84,34 @@ export default function Home() {
               <ListItemText primary="Default Page" />
             </ListItem>
             <Divider />
+            <ListItem
+              selected={contentName === "Document Referred"}
+              button
+              onClick={() => {
+                changeContent("Document Referred");
+              }}
+            >
+              <ListItemText primary="Document Referred" />
+            </ListItem>
+            <Divider />
+            <ListItem
+              selected={contentName === "MM Sheet"}
+              button
+              onClick={() => {
+                changeContent("MM Sheet");
+              }}
+            >
+              <ListItemText primary="MM Sheet" />
+            </ListItem>
+            <Divider />
           </List>
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
         {contentName === "Default Page" && <DefaultPage />}
+        {contentName === "Document Referred" && <DocumentReferred />}
+        {contentName === "MM Sheet" && <MMSheet />}
       </Box>
     </Box>
   );

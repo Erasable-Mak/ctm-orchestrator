@@ -10,7 +10,6 @@ import DatePicker from "../components/DatePicker";
 
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
-import { red } from "@mui/material/colors";
 
 const bankNames = [
   {
