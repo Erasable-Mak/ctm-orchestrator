@@ -1,3 +1,13 @@
+import React, { useEffect, useState } from "react";
+import {
+  doc,
+  collection,
+  getDocs,
+  query,
+  addDoc,
+  where,
+} from "firebase/firestore";
+import { db } from "../firebase-config";
 import EditIcon from "@mui/icons-material/Edit";
 import {
   IconButton,
@@ -8,25 +18,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
-import {
-  doc,
-  collection,
-  getDocs,
-  query,
-  addDoc,
-  DocumentReference,
-} from "firebase/firestore";
-import React, { useEffect, useState } from "react";
 import DatePicker from "../components/DatePicker";
 import DropDown from "../components/DropDown";
-import { valuerOptions } from "../DropDownOptions/options";
-import { db } from "../firebase-config";
 import { toast } from "react-toastify";
 
 export default function AssignTask() {
-  const [data, setData] = useState([]);
+  const [caseData, setCaseData] = useState([]);
+  const [valuers, setValuers] = useState([]);
+  const [valuerOptions, setValuerOptions] = useState([]);
 
   const displayValue = (name, value) => {
     const values = [];
@@ -41,16 +41,17 @@ export default function AssignTask() {
   };
 
   useEffect(() => {
-    setData([]);
+    setCaseData([]);
+    setValuers([]);
+    setValuerOptions([]);
     try {
       const getdata = async () => {
+        //getting data of all cases on page load
         const q = query(collection(db, "Cases"));
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          // console.log(doc.id);
-          setData((prev) => [
+          setCaseData((prev) => [
             ...prev,
             {
               ...doc.data(),
@@ -60,9 +61,24 @@ export default function AssignTask() {
             },
           ]);
         });
+
+        //getting data of all valuers/field visit officers only, on page load
+        const q2 = query(
+          collection(db, "Users"),
+          where("typeOfUser", "==", "Field Visit Officer")
+        );
+        const querySnapshot2 = await getDocs(q2);
+        querySnapshot2.forEach((doc) => {
+          setValuers((prev) => [...prev, { ...doc.data(), userId: doc.id }]);
+          setValuerOptions((prev) => [
+            ...prev,
+            { id: doc.id, value: doc.data().name },
+          ]);
+        });
       };
 
       getdata();
+      console.log(valuerOptions);
     } catch (err) {
       console.log(err);
     }
@@ -70,11 +86,10 @@ export default function AssignTask() {
 
   const handleSubmit = async (idx) => {
     try {
-      // setData({ ...data, valuer: "YuwMRMFVinSaRsonWJmOwcDV89q2" });
       const finalData = {
-        caseId: doc(db, "Cases", data[idx].caseId),
+        caseId: doc(db, "Cases", caseData[idx].caseId),
         valuer: doc(db, "Users", "YuwMRMFVinSaRsonWJmOwcDV89q2"),
-        dateOfOutward: data[idx].dateOfOutward,
+        dateOfOutward: caseData[idx].dateOfOutward,
       };
       await addDoc(collection(db, "assigned_cases"), finalData);
       toast.success("New Case assigned successfully", { autoClose: 5000 });
@@ -103,7 +118,7 @@ export default function AssignTask() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, idx) => (
+          {caseData.map((row, idx) => (
             <TableRow
               key={`row-${idx}`}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -134,9 +149,9 @@ export default function AssignTask() {
                   name="Date of Outward"
                   value={row.dateOfOutward}
                   setValue={(value, i = idx) => {
-                    const values = [...data];
+                    const values = [...caseData];
                     values[i].dateOfOutward = value;
-                    setData(values);
+                    setCaseData(values);
                   }}
                 />
               </TableCell>
@@ -147,9 +162,9 @@ export default function AssignTask() {
                   value={row.valuer}
                   name="Valuer Options"
                   setValue={(value, i = idx) => {
-                    const values = [...data];
+                    const values = [...caseData];
                     values[i].valuer = value;
-                    setData(values);
+                    setCaseData(values);
                   }}
                 />
               </TableCell>

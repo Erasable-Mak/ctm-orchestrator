@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import DefaultPage from "./DefaultPage";
-import DocumentReferred from "./DocumentReferred";
-import MMSheet from "./MMSheet"
-// import TechInitiation from "./TechInitiation";
-// import Images from "./Images";
-// import Valuation from "./Valuation";
 import Demo from "./Demo";
 
 import {
@@ -27,7 +22,7 @@ import { useAuth } from "../contexts/AuthContext";
 const drawerWidth = 240;
 
 export default function Home() {
-  const [contentName, setcontentName] = useState("Demo");
+  const [contentName, setcontentName] = useState("DefaultPage");
 
   const { currentUser, logout } = useAuth();
 
@@ -88,23 +83,13 @@ export default function Home() {
             </ListItem>
             <Divider />
             <ListItem
-              selected={contentName === "Document Referred"}
+              selected={contentName === "DefaultPage"}
               button
               onClick={() => {
-                changeContent("Document Referred");
+                changeContent("DefaultPage");
               }}
             >
-              <ListItemText primary="Document Referred" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "MM Sheet"}
-              button
-              onClick={() => {
-                changeContent("MM Sheet");
-              }}
-            >
-              <ListItemText primary="MM Sheet" />
+              <ListItemText primary="DefaultPage" />
             </ListItem>
             <Divider />
           </List>
@@ -112,9 +97,7 @@ export default function Home() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-        {contentName === "Default Page" && <DefaultPage />}
-        {contentName === "Document Referred" && <DocumentReferred />}
-        {contentName === "MM Sheet" && <MMSheet />}
+        {contentName === "DefaultPage" && <DefaultPage />}
         {contentName === "Demo" && <Demo />}
       </Box>
     </Box>
