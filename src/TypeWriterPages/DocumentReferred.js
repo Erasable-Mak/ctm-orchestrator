@@ -121,6 +121,8 @@ function DocumentReferred() {
   useEffect(() => {}, [reload]);
 
   return (
+    <>
+    
     <Box noValidate m={2} component="span" sx={{ mt: 1 ,width:500}}>
       <div>
         <Divider textAlign="left">Legal Documents Details</Divider>
@@ -167,7 +169,7 @@ function DocumentReferred() {
         <TextFieldComp
           width = "50"
           id="name-of-the-reported-owner"
-          name="nameOfTheReportedOwner"
+          name="Name of The Reported Owner"
           value={formData.nameOfTheReportedOwner}
           isMultilined={false}
           setValue={(value) => setFormData({ ...formData, nameOfTheReportedOwner: value })}
@@ -175,7 +177,7 @@ function DocumentReferred() {
         <TextFieldComp
           width = "50"
           id="developer-or-name-seller-name"
-          name="developerOrNameSellerName"
+          name="Developer Or Name Seller Name"
           value={formData.developerOrNameSellerName}
           isMultilined={false}
           setValue={(value) => setFormData({ ...formData, developerOrNameSellerName: value })}
@@ -209,7 +211,7 @@ function DocumentReferred() {
         <TextFieldComp
           width = "50"
           id="commencement-certificate-details"
-          name="commencementCertificateDetails"
+          name="Commencement Certificate Details"
           value={formData.commencementCertificateDetails}
           isMultilined={false}
           setValue={(value) => setFormData({ ...formData, commencementCertificateDetails: value })}
@@ -217,7 +219,7 @@ function DocumentReferred() {
         <TextFieldComp
           width = "50"
           id="sanction-plan-number"
-          name="sanctionPlanNumber"
+          name="Sanction Plan Number"
           value={formData.sanctionPlanNumber}
           isMultilined={false}
           setValue={(value) => setFormData({ ...formData, sanctionPlanNumber: value })}
@@ -225,7 +227,7 @@ function DocumentReferred() {
         <TextFieldComp
           width = "50"
           id="oc-bcc"
-          name="ocbcc"
+          name="OC / BCC"
           value={formData.ocbcc}
           isMultilined={false}
           setValue={(value) => setFormData({ ...formData, ocbcc: value })}
@@ -241,7 +243,7 @@ function DocumentReferred() {
         <TextFieldComp
           width = "50"
           id="rera-registration-number"
-          name="reraRegistrationNumber"
+          name="RERA Registration Number"
           value={formData.reraRegistrationNumber}
           isMultilined={true}
           setValue={(value) =>
@@ -269,7 +271,7 @@ function DocumentReferred() {
           </Button> */}
         </Stack>
       </div>
-    </Box>
+    </Box></>
   );
 }
 
