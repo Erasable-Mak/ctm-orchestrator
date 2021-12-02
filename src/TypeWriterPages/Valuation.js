@@ -1,10 +1,57 @@
 import React from "react";
 import { Box, Button, Divider, Stack } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import TextFieldComp from "../components/TextFieldComp";
 
 const Valuation = () => {
   return (
     <Box noValidate sx={{ mt: 1 }}>
+      <Grid
+        container
+        rowSpacing={1}
+        columnSpacing={{ sm: 1, xs: 1, md: 1, lg: 2 }}
+      >
+        <Grid item xs={6}>
+          <TextFieldComp
+            id="land-area-as-per-plan"
+            name="Land area as per Plan"
+            value={null}
+            isMultilined={false}
+            //   setValue={(value) => setFormData({ ...formData, address: value })}
+            width={50}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextFieldComp
+            id="land-area-as-per-plan"
+            name="Land area as per Plan"
+            value={null}
+            isMultilined={false}
+            //   setValue={(value) => setFormData({ ...formData, address: value })}
+            width={50}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextFieldComp
+            id="land-area-as-per-plan"
+            name="Land area as per Plan"
+            value={null}
+            isMultilined={false}
+            //   setValue={(value) => setFormData({ ...formData, address: value })}
+            width={50}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TextFieldComp
+            id="land-area-as-per-plan"
+            name="Land area as per Plan"
+            value={null}
+            isMultilined={false}
+            //   setValue={(value) => setFormData({ ...formData, address: value })}
+            width={50}
+          />
+        </Grid>
+      </Grid>
       <div>
         <Divider textAlign="left">
           Valluation by Land and Building Method

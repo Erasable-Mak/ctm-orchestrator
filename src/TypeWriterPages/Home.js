@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-// import TechInitiation from "./TechInitiation";
-// import Images from "./Images";
-// import Valuation from "./Valuation";
+import DefaultPage from "./DefaultPage";
 import Demo from "./Demo";
 
 import {
@@ -24,7 +22,7 @@ import { useAuth } from "../contexts/AuthContext";
 const drawerWidth = 240;
 
 export default function Home() {
-  const [contentName, setcontentName] = useState("Demo");
+  const [contentName, setcontentName] = useState("DefaultPage");
 
   const { currentUser, logout } = useAuth();
 
@@ -84,11 +82,22 @@ export default function Home() {
               <ListItemText primary="Demo" />
             </ListItem>
             <Divider />
+            <ListItem
+              selected={contentName === "DefaultPage"}
+              button
+              onClick={() => {
+                changeContent("DefaultPage");
+              }}
+            >
+              <ListItemText primary="DefaultPage" />
+            </ListItem>
+            <Divider />
           </List>
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
+        {contentName === "DefaultPage" && <DefaultPage />}
         {contentName === "Demo" && <Demo />}
       </Box>
     </Box>

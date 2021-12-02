@@ -99,29 +99,6 @@ export const stateOptions = [
   { id: "Other", value: "Other" },
 ];
 
-export const valuerOptions = [
-  {
-    id: "Susan",
-    value: "susan",
-  },
-  {
-    id: "john",
-    value: "john",
-  },
-  {
-    id: "david",
-    value: "david",
-  },
-  {
-    id: "james",
-    value: "james",
-  },
-  {
-    id: "angela",
-    value: "angela",
-  },
-];
-
 export const purposeOfValuationOptions = [
   { id: "Income tax", value: "Income tax" },
   { id: "Banking/Financial institute", value: "Banking/Financial institute" },
