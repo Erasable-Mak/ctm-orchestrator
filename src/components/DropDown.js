@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React from "react";
 
-const DropDown = ({ id, items, value, name, setValue }) => {
+const DropDown = ({ id, items, value, name, setValue, width }) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
@@ -9,7 +9,7 @@ const DropDown = ({ id, items, value, name, setValue }) => {
     <FormControl
       sx={{
         m: 1,
-        width: "30ch",
+        width: `${width ? width : 30}ch`,
       }}
     >
       <InputLabel id={`${id}-label`}>{name}</InputLabel>
