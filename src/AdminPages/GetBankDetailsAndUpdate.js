@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { db } from "../firebase-config";
 import { doc, setDoc, getDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 import {
   maritalStatusOptions,
@@ -17,6 +18,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
+import EmployeeInfoForm from "../components/EmployeeInfoForm";
 
 const instituteType = [
   {
@@ -37,29 +39,32 @@ const initialState = {
   instituteType: "",
   bankName: "",
   bankBranchName: "",
+  branchType: "",
   bankaddress: "",
+  bankemail: "",
+  employeeInfo: [],
 };
 
 function GetBankDetailsAndUpdate({ uid, setFlag }) {
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
   const [formData, setFormData] = useState(initialState);
   const [updateLoading, setUpdateLoading] = useState(false);
 
   const handleUpdate = async () => {
     setUpdateLoading(true);
     //updating general details of user
-    await setDoc(doc(db, "Users", uid), {
-      instituteType: formData.instituteType,
-      bankName: formData.bankName,
-      bankBranchName: formData.bankBranchName,
-      bankaddress: formData.bankaddress,
-    });
+    try {
+      await setDoc(doc(db, "Banks", uid), formData);
+      toast.success("Bank Details Updated Successfully!", { autoClose: 5000 });
+    } catch (err) {
+      toast.error(err, { autoClose: 5000 });
+    }
 
     setUpdateLoading(false);
   };
 
   useEffect(() => {
-    setData([]);
+    setFormData(initialState);
     try {
       const getdata = async () => {
         //here we get the data from actual document
@@ -74,7 +79,7 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
       console.log(err);
     }
     return () => {
-      setData(null);
+      setFormData(initialState);
     };
   }, []);
 
@@ -83,14 +88,11 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
       <Button variant="contained" onClick={() => setFlag(true)}>
         Go back
       </Button>
-      <Box>
-        {/* bank information */}
-        <Box>
-          <Divider style={{ margin: "5px" }} textAlign="left">
-            Bank information Update
-          </Divider>
+      <Box noValidate sx={{ mt: 1 }}>
+        <div>
+          <Divider textAlign="left">Bank Information</Divider>
           <DropDown
-            id="institute-type"
+            id="institute-typr"
             items={instituteType}
             value={formData.instituteType}
             name="Institute Type"
@@ -98,32 +100,55 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
               setFormData({ ...formData, instituteType: value })
             }
           />
-
           <TextFieldComp
             id="bank-name"
             name="Bank Name"
             value={formData.bankName}
+            isMultilined={false}
             setValue={(value) => setFormData({ ...formData, bankName: value })}
           />
           <TextFieldComp
             id="bank-branch-name"
             name="Branch Name"
             value={formData.bankBranchName}
+            isMultilined={false}
             setValue={(value) =>
               setFormData({ ...formData, bankBranchName: value })
+            }
+          />
+          <TextFieldComp
+            id="branch-type"
+            name="Branch Type"
+            value={formData.branchType}
+            isMultilined={false}
+            setValue={(value) =>
+              setFormData({ ...formData, branchType: value })
             }
           />
           <TextFieldComp
             id="bank-address"
             name="Bank Address"
             value={formData.bankaddress}
+            isMultilined={false}
             setValue={(value) =>
               setFormData({ ...formData, bankaddress: value })
             }
           />
-        </Box>
-        {/* upload and clear buttons */}
-        <Box>
+          <TextFieldComp
+            id="bank-email"
+            name="Bank Email"
+            value={formData.bankemail}
+            isMultilined={false}
+            setValue={(value) => setFormData({ ...formData, bankemail: value })}
+          />
+          <Divider textAlign="left">Employee Information</Divider>
+          <EmployeeInfoForm
+            fields={formData.employeeInfo}
+            setFields={(value) =>
+              setFormData({ ...formData, employeeInfo: value })
+            }
+          />
+          <Divider style={{ margin: "5px" }}></Divider>
           <Stack
             direction="row"
             justifyContent="center"
@@ -141,7 +166,7 @@ function GetBankDetailsAndUpdate({ uid, setFlag }) {
               Update
             </LoadingButton>
           </Stack>
-        </Box>
+        </div>
       </Box>
     </div>
   );
