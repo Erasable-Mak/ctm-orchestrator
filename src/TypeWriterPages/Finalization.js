@@ -1,181 +1,69 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { Box, Button, Stack} from "@mui/material";
 import Divider from '@mui/material/Divider'
-import { addDoc, collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
-import { db } from "../firebase-config";
-import DatePicker from "../components/DatePicker";
+import { TextField } from "@mui/material";
 
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import Icon from "@mui/material/Icon";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 
-const bankNames = [
+const CalculationType = [
   {
-    id: "HDFC",
-    value: "HDFC",
+    id: "Valuation by Land & Building Method",
+    value: "Valuation by Land & Building Method",
   },
   {
-    id: "SBI",
-    value: "SBI",
-  },
-  {
-    id: "ICICI",
-    value: "ICICI",
-  },
-];
-
-const bankBranchNames = [
-  {
-    id: "Pune",
-    value: "Pune",
-  },
-  {
-    id: "Mumbai",
-    value: "Mumbai",
-  },
-  {
-    id: "Nashik",
-    value: "Nashik",
+    id: "Valuation by Comparison Method",
+    value: "Valuation by Comparison Method",
   },
 ];
-
-const bankEmployeeNames = [
-  {
-    id: "ABC",
-    value: "ABC",
-  },
-  {
-    id: "DEF",
-    value: "DEF",
-  },
-];
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
-
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
-  
-
-const typeOfAsset = [...bankEmployeeNames];
-const purposeOfValuation = [...bankEmployeeNames];
-const jobBranch = [...bankEmployeeNames];
 
 const initialState = {
-  bankName: "",
-  bankBranchName: "",
-  bankEmployeeName: "",
-  loanAcNo: "",
-  borrowerNames: [],
-  typeOfAsset: "",
-  purposeOfValuation: "",
-  contactNo: [],
-  address: "",
-  latitude: "",
-  longitude: "",
-  jobBranch: "",
-  instructions: "",
-  dateOfInspection: null,
 };
 
 function Finalization() {
   const [formData, setFormData] = useState(initialState);
   const [reload, setReload] = useState(false);
 
+  const [fields, setFields] = useState([]);
+    function handleAdd() {
+    const values = [...fields];
+    values.push({
+      groupHead: "",
+      name: "",
+      sequence: 0,
+      length: "",
+      width: "",
+      area: "",
+    });
+    setFields(values);
+  }
+
+  function handleRemove(i) {
+    const values = [...fields];
+    values.splice(i, 1);
+    setFields(values);
+  }
+
+
   const handleSubmit = async () => {
-    try {
-      if (formData.bankName === "") {
-        throw new Error("Please enter bank name");
-      }
-      if (formData.bankBranchName === "") {
-        throw new Error("Please enter bank branch name");
-      }
-
-      if (formData.loanAcNo === "") {
-        throw new Error("Please enter  loan account mumber");
-      }
-
-      if (formData.borrowerNames === "") {
-        throw new Error("Please enter  borrower name");
-      }
-      if (formData.typeOfAsset === "") {
-        throw new Error("Please enter type of asset");
-      }
-      if (formData.purposeOfValuation === "") {
-        throw new Error("Please enter  purpose of valuation");
-      }
-      if (formData.contactNo === "") {
-        throw new Error("Please enter phone mumber");
-      }
-      if (formData.address === "") {
-        throw new Error("Please enter address");
-      }
-      if (formData.latitude === "") {
-        throw new Error("Please enter latitude");
-      }
-      if (formData.longitude === "") {
-        throw new Error("Please enter longitude");
-      }
-      if (formData.jobBranch === "") {
-        throw new Error("Please enter   job branch");
-      }
-      if (formData.instructions === "") {
-        throw new Error("Please enter  instruction");
-      }
-
-      await addDoc(collection(db, "Cases"), formData);
-      toast.success("New Case added successfully", { autoClose: 5000 });
-      clearForm();
-    } catch (error) {
-      toast.error(`${error}`, {
-        autoClose: 5000,
-      });
-    }
+  
   };
 
-  const clearForm = () => {
-    setFormData(initialState);
-    setReload(true);
-  };
 
   useEffect(() => {}, [reload]);
 
@@ -186,92 +74,140 @@ function Finalization() {
         <div>
           <Divider textAlign="left">Details of  Property</Divider><br/>
           <DropDown
-            id=""
+            id="calculation-type"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={CalculationType}
+            value={formData.CalculationType}
             name="Calculation Type"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, CalculationType: value })} />
             <TextFieldComp
-            id=""
+            id="net-mortgage-value-rs"
             width={50}
             name="Net Mortgage Value (Rs)"
-            value={formData.address}
+            value={formData.NetMortgageValueRs}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, NetMortgageValueRs: value })} />
         <TextFieldComp
-            id=""
+            id="net-mortgage-value-in-words"
             width={50}
             name="Net Mortgage Value (In Words)"
-            value={formData.nmv}
+            value={formData.NetMortgageValueInWords}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, nmv: value })} />
+            setValue={(value) => setFormData({ ...formData, NetMortgageValueInWords: value })} />
         <TextFieldComp
-            id=""
+            id="realisable-value-rs"
             width={50}
             name="Realisable Value (Rs)"
-            value={formData.rv}
+            value={formData.RealisableValueRs}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, rv: value })} />
+            setValue={(value) => setFormData({ ...formData, RealisableValueRs: value })} />
          <TextFieldComp
-            id=""
+            id="realisable-value-in-words"
             width={50}
             name="Realisable Value (In Words)"
-            value={formData.address}
+            value={formData.RealisableValueInWords}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, RealisableValueInWords: value })} />
         <TextFieldComp
-            id=""
+            id="rental-per-month"
             width={50}
             name="Rental Per Month"
-            value={formData.address}
+            value={formData.RentalPerMonth}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, RentalPerMonth: value })} />
             <TextFieldComp
-            id=""
+            id="govt-ready-reckoner-rate"
             width={50}
             name="Govt. Ready Reckoner Rate"
-            value={formData.address}
+            value={formData.GovtReadyReckonerRate}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, GovtReadyReckonerRate: value })} />
             <TextFieldComp
-            id=""
+            id="insurable-value"
             width={50}
             name="Insurable Value"
-            value={formData.address}
+            value={formData.InsurableValue}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, InsurableValue: value })} />
             <TextFieldComp
-            id=""
+            id="distress-value"
             width={50}
             name="Distress Value"
-            value={formData.address}
+            value={formData.DistressValue}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, DistressValue: value })} />
         </div>
       </Box><br />
-     
 
       {/*Second box*/}
       <Box noValidate sx={{ mt: 1 }}>
         <div>
           <Divider textAlign="left">Recommendations</Divider><br/>
           <TextFieldComp
-            id=""
+            id="stage-of-construction"
             width={50}
             name="% Stage of Construction"
-            value={formData.address}
+            value={formData.StageOfConstruction}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, StageOfConstruction: value })} />
             <TextFieldComp
-            id=""
+            id="recommendation-stage"
             width={50}
             name="Recommendation Stage"
-            value={formData.address}
+            value={formData.RecommendationStage}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, RecommendationStage: value })} />
         </div>
-      </Box><br/></><Stack
+      </Box><br/>
+      
+       {/*Last addition remark text field*/}
+       <Box noValidate sx={{ mt: 1 }}>
+       <div>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Remarks</TableCell>
+                <TableCell>
+                  <Button variant="text" onClick={() => handleAdd()}>
+                    <Icon color="primary">add_circle</Icon>
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {fields.map((field, idx) => (
+                <TableRow
+                  key={`row-${idx}`}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell align="left">
+                  <TextField
+                      id="remarks"
+                      style = {{width: 1000}}
+                      name="Remarks"
+                      value={formData.Remarks}
+                      isMultilined={false}
+                      setValue={(value) => setFormData({ ...formData, Remarks: value })} />
+                  <Button
+                      variant="text"
+                      color="error"
+                      onClick={() => handleRemove(idx)}
+                    >
+                    <DeleteIcon />
+                  </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </Box><br/><br/>
+
+    <Divider textAlign="left">Declaration</Divider>
+
+      </><Stack
           direction="row"
           justifyContent="center"
           alignItems="flex-start"

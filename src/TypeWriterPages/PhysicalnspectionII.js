@@ -1,104 +1,111 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import Divider from '@mui/material/Divider'
-import { addDoc, collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
-import { db } from "../firebase-config";
-import DatePicker from "../components/DatePicker";
 
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
-const bankNames = [
+const PhysicalStatusOfProject = [
   {
-    id: "HDFC",
-    value: "HDFC",
-  },
-  {
-    id: "SBI",
-    value: "SBI",
-  },
-  {
-    id: "ICICI",
-    value: "ICICI",
+    id: "Complited and Occupied",
+    value: "Complited and Occupied",
   },
 ];
-
-const bankBranchNames = [
+const TypePropertyAsPerApprovals = [
   {
-    id: "Pune",
-    value: "Pune",
-  },
-  {
-    id: "Mumbai",
-    value: "Mumbai",
-  },
-  {
-    id: "Nashik",
-    value: "Nashik",
+    id: "Bungalow",
+    value: "Bungalow",
   },
 ];
-
-const bankEmployeeNames = [
+const PropertyUsageAsPerSiteObervation = [
   {
-    id: "ABC",
-    value: "ABC",
-  },
-  {
-    id: "DEF",
-    value: "DEF",
+    id: "Clinic",
+    value: "Clinic",
   },
 ];
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
-
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
-  
-
-const typeOfAsset = [...bankEmployeeNames];
-const purposeOfValuation = [...bankEmployeeNames];
-const jobBranch = [...bankEmployeeNames];
+const SelectConstructionAsPerPlan = [
+  {
+    id: "Yes",
+    value: "Yes",
+  },
+  {
+    id: "No",
+    value: "No",
+  },
+];
+const DetailsOfCommercialUsage = [
+  {
+    id: "Yes",
+    value: "Yes",
+  },
+  {
+    id: "No",
+    value: "No",
+  },
+];
+const RemarksOnviewFromProperty = [
+  {
+    id: "Garden View",
+    value: "Garden View",
+  },
+];
+const NoOfLifts = [
+  {
+    id: "3",
+    value: "3",
+  },
+];
+const Exterior = [
+  {
+    id: "Good",
+    value: "Good",
+  },
+  {
+    id: "Average",
+    value: "Average",
+  },
+];
+const Interior = [
+  {
+    id: "Good",
+    value: "Good",
+  },
+  {
+    id: "Average",
+    value: "Average",
+  },
+];
+const Fittings = [
+  {
+    id: "Concealed Plumbing and Concealed Elect.",
+    value: "Concealed Plumbing and Concealed Elect.",
+  },
+];
+const Door = [
+  {
+    id: "Wooden Door",
+    value: "Wooden Door",
+  },
+  {
+    id: "Iron Door",
+    value: "Iron Door",
+  },
+];
+const Window = [
+  {
+    id: "Aluminium Sliding",
+    value: "Aluminium Sliding",
+  },
+];
+const MaintenanceLevelOfSocietyProject = [
+  {
+    id: "Good",
+    value: "Good",
+  },
+  {
+    id: "Average",
+    value: "Average",
+  },
+];
 
 const initialState = {
   physicalStatus:"",
@@ -111,11 +118,6 @@ function PhysicalInspectionII() {
   const handleSubmit = async () => {
   };
 
-  const clearForm = () => {
-    setFormData(initialState);
-    setReload(true);
-  };
-
   useEffect(() => {}, [reload]);
 
   return (
@@ -125,173 +127,173 @@ function PhysicalInspectionII() {
         <div>
           <Divider textAlign="left">Details of  Property</Divider><br/>
             <DropDown
-            id=""
+            id="physical-status-of-project"
             width={50}
-            items={bankNames}
-            value={formData.physicalStatus}
+            items={PhysicalStatusOfProject}
+            value={formData.PhysicalStatusOfProject}
             name="Physical Status of Project"
-            setValue={(value) => setFormData({ ...formData, bankName: value })} />
+            setValue={(value) => setFormData({ ...formData, PhysicalStatusOfProject: value })} />
             <TextFieldComp
-            id=""
+            id="stage-of-construction"
             width={50}
             name="% Stage of Construction"
-            value={formData.address}
+            value={formData.StageOfConstruction}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, StageOfConstruction: value })} />
             <DropDown
-            id=""
+            id="type-property-as-per-approvals"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={TypePropertyAsPerApprovals}
+            value={formData.TypePropertyAsPerApprovals}
             name="Type property As Per Approvals"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, TypePropertyAsPerApprovals: value })} />
             <DropDown
-            id=""
+            id="property-usage-as-per-site-obervation"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={PropertyUsageAsPerSiteObervation}
+            value={formData.PropertyUsageAsPerSiteObervation}
             name="Property Usage as per site obervation"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, PropertyUsageAsPerSiteObervation: value })} />
             <DropDown
-            id=""
+            id="select-construction-as-per-plan"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={SelectConstructionAsPerPlan}
+            value={formData.SelectConstructionAsPerPlan}
             name="Select Construction as Per Plan"
             setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
              <TextFieldComp
-            id=""
+            id="violation-observed"
             width={50}
             name="Violation Observed"
-            value={formData.address}
+            value={formData.ViolationObserved}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, ViolationObserved: value })} />
             <DropDown
-            id=""
+            id="details-of-commercial-usage"
             width={50}
-            items={bankBranchNames}
-            value={formData.bankBranchName}
+            items={DetailsOfCommercialUsage}
+            value={formData.DetailsOfCommercialUsage}
             name="Details of Commercial Usage"
-            setValue={(value) => setFormData({ ...formData, bankBranchName: value })} />
+            setValue={(value) => setFormData({ ...formData, DetailsOfCommercialUsage: value })} />
             <TextFieldComp
-            id=""
+            id="floor-no-in-case-of-independent-unit"
             width={50}
             name="Floor No in case of independent Unit"
-            value={formData.address}
+            value={formData.FloorNoInCaseOfIndependentUnit}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, FloorNoInCaseOfIndependentUnit: value })} />
             <TextFieldComp
-            id=""
+            id="no-of-units-per-floor-position-of-units"
             width={50}
             name="No of units per Floor & position of Units"
-            value={formData.address}
+            value={formData.NoOfUnitsPerFloorPositionOfUnits}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, NoOfunitsPerFloorPositionOfUnits: value })} />
             <DropDown
-            id=""
+            id="remarks-on-view-from-property"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={RemarksOnviewFromProperty}
+            value={formData.RemarksOnviewFromProperty}
             name="Remarks on view from property"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, RemarksOnviewFromProperty: value })} />
            <TextFieldComp
-            id=""
+            id="accommodation-of-unit"
             width={50}
             name="Accommodation of Unit"
-            value={formData.address}
+            value={formData.AccommodationOfUnit}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, AccommodationOfUnit: value })} />
              <TextFieldComp
-            id=""
+            id="amenities-available-in-society"
             width={50}
             name="Amenities Available in Society"
-            value={formData.address}
+            value={formData.AmenitiesAvailableInSociety}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, AmenitiesAvailableInSociety: value })} />
              <TextFieldComp
-            id=""
+            id="construction-type"
             width={50}
             name="Construction Type"
-            value={formData.address}
+            value={formData.ConstructionType}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, ConstructionType: value })} />
              <TextFieldComp
-            id=""
+            id="no-of-storeys"
             width={50}
             name="No of Storeys"
-            value={formData.address}
+            value={formData.NoOfStoreys}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, NoOfStoreys: value })} />
             <DropDown
-            id=""
+            id="no-of-lifts"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={NoOfLifts}
+            value={formData.NoOfLifts}
             name="No of Lifts"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, NoOfLifts: value })} />
             <DropDown
-            id="s"
+            id="exterior"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={Exterior}
+            value={formData.Exterior}
             name="Exterior"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, Exterior: value })} />
             <DropDown
-            id=""
+            id="interior"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={Interior}
+            value={formData.Interior}
             name="Interior"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, Interior: value })} />
             <TextFieldComp
-            id=""
+            id="flooring"
             width={50}
             name="Flooring"
-            value={formData.address}
+            value={formData.Flooring}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, Flooring: value })} />
             <DropDown
-            id=""
+            id="fittings"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={Fittings}
+            value={formData.Fittings}
             name="Fittings"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, Fittings: value })} />
             <DropDown
-            id=""
+            id="door"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={Door}
+            value={formData.Door}
             name="Door"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, Door: value })} />
             <DropDown
-            id=""
+            id="window"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={Window}
+            value={formData.Window}
             name="Window"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, Window: value })} />
             <DropDown
-            id=""
+            id="maintenance-level-of-society-project"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={MaintenanceLevelOfSocietyProject}
+            value={formData.MaintenanceLevelOfSocietyProject}
             name="Maintenance Level of Society Project"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, MaintenanceLevelOfSocietyProject: value })} />
             <TextFieldComp
-            id=""
+            id="property-age"
             width={50}
             name="Property Age"
-            value={formData.address}
+            value={formData.PropertyAge}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, PropertyAge: value })} />
             <TextFieldComp
-            id=""
+            id="residual-age"
             width={50}
             name="Residual Age"
-            value={formData.address}
+            value={formData.ResidualAge}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, ResidualAge: value })} />
         </div>
       </Box><br />
      
@@ -301,13 +303,13 @@ function PhysicalInspectionII() {
         <div>
           <Divider textAlign="left">Validation Observations</Divider><br/>
            <TextField
-          id=""
+          id="engineers-remark"
           width={50}
           label="Engineer's Remark"
           multiline
-          value={formData.example}
+          value={formData.EngineersRemark}
           rows={4}
-          setValue={(value) => setFormData({ ...formData, address: value })} 
+          setValue={(value) => setFormData({ ...formData, EngineersRemark: value })} 
         />  
         </div>
       </Box><br/></><Stack

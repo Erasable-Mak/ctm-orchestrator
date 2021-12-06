@@ -1,87 +1,77 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-no-duplicate-props */
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import Divider from '@mui/material/Divider'
-import { addDoc, collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
-import { db } from "../firebase-config";
-import DatePicker from "../components/DatePicker";
-
-import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const bankNames = [
+
+const zoneAsPerCityMasterPlan = [
   {
-    id: "HDFC",
-    value: "HDFC",
-  },
-  {
-    id: "SBI",
-    value: "SBI",
-  },
-  {
-    id: "ICICI",
-    value: "ICICI",
+    id: "Agriculture Zone",
+    value: "Agriculture Zone",
   },
 ];
 
-const bankBranchNames = [
+const InfrastructureoOfTheSurroundingArea = [
   {
-    id: "Pune",
-    value: "Pune",
-  },
-  {
-    id: "Mumbai",
-    value: "Mumbai",
-  },
-  {
-    id: "Nashik",
-    value: "Nashik",
+    id: "Average",
+    value: "Average",
   },
 ];
 
-const bankEmployeeNames = [
+const NeighbourhoodType = [
   {
-    id: "ABC",
-    value: "ABC",
-  },
-  {
-    id: "DEF",
-    value: "DEF",
+    id: "Prime Industrial",
+    value: "Prime Industrial",
   },
 ];
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
+const LocallyConnectiveFromBBD = [
+  {
+    id: "Below Average",
+    value: "Below Average",
+  },
+];
+const ProximityToAmenities = [
+  {
+    id: "Average",
+    value: "Average",
+  },
+];
+const MarketabilityEaseOfSaleability = [
+  {
+    id: "Average",
+    value: "Average",
+  },
+];
+const BoundariesMatching = [
+  {
+    id: "Yes",
+    value: "yes",
+  },
+  {
+    id: "No",
+    value: "No",
+  },
+];
+const PropertyOccupiedOrVacant = [
+  {
+    id: "Occupied",
+    value: "Occupied",
+  },
+];
+const RelationshipOfOccupantWithCustomer = [
+  {
+    id: "Self",
+    value: "Self",
+  },
+];
 
   function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -98,11 +88,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     createData('SouthEast', 356, 16.0, 49, 3.9),
     createData('SouthEast', 356, 16.0, 49, 3.9),
   ];
-  
-
-const typeOfAsset = [...bankEmployeeNames];
-const purposeOfValuation = [...bankEmployeeNames];
-const jobBranch = [...bankEmployeeNames];
 
 const initialState = {
   bankName: "",
@@ -118,6 +103,7 @@ const initialState = {
   longitude: "",
   jobBranch: "",
   instructions: "",
+  InfrastructureoOfTheSurroundingArea:"",
   dateOfInspection: null,
 };
 
@@ -144,84 +130,83 @@ function PhysicalInspectionI() {
       <Box noValidate sx={{ mt: 1 }}>
           <Divider textAlign="left">Legal Documents Details</Divider><br/>
           <DropDown
-            id=""
+            id="zone-as-per-city-master-plan"
             width={50}
-            items={bankNames}
-            value={formData.bankName}
+            items={zoneAsPerCityMasterPlan}
+            value={formData.zoneAsPerCityMasterPlan}
             name="Zone as per City Master Plan (DP)"
-            setValue={(value) => setFormData({ ...formData, bankName: value })} />
+            setValue={(value) => setFormData({ ...formData, zoneAsPerCityMasterPlan: value })} />
           <DropDown
-            id=""
+            id="infrastructure-of-the-surrounding-area"
             width={50}
-            items={bankBranchNames}
-            value={formData.bankBranchName}
+            items={InfrastructureoOfTheSurroundingArea}
+            value={formData.InfrastructureOfTheSurroundingArea}
             name="Infrastructure of the surrounding area"
-            setValue={(value) => setFormData({ ...formData, bankBranchName: value })} />
+            setValue={(value) => setFormData({ ...formData, InfrastructureOfTheSurroundingArea: value })} />
           <DropDown
-            id=""
+            id="neighbourhood-type"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={NeighbourhoodType}
+            value={formData.NeighbourhoodType}
             name="Neighbourhood Type"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, NeighbourhoodType: value })} />
           <DropDown
-            id=""
+            id="locally-connective-from-bbd"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={LocallyConnectiveFromBBD}
+            value={formData.LocallyConnectiveFromBBD}
             name="Locally Connective from BBD"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} /><br />
+            setValue={(value) => setFormData({ ...formData, LocallyConnectiveFromBBD: value })} /><br />
           <DropDown
-            id=""
+            id="proximity-to-amenities"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={ProximityToAmenities}
+            value={formData.ProximityToAmenities}
             name="Proximity to Amenities e.g. School, Mail, etc."
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, ProximityToAmenities: value })} />
           <DropDown
-            id=""
+            id="marketability-ease-of-saleability"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={MarketabilityEaseOfSaleability}
+            value={formData.MarketabilityEaseOfSaleability}
             name="Marketability / Ease of Saleability"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, MarketabilityEaseOfSaleability: value })} />
           <TextFieldComp
-            id=""
+            id="name-of-newest-hospital"
             width={50}
             name="Name of Newest Hospital"
-            value={formData.address}
+            value={formData.NameOfNewestHospital}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, NameOfNewestHospital: value })} />
           <TextFieldComp
-            id=""
+            id="condition-and-width-of-approach-road"
             width={50}
             name="Condition and width of approach road"
-            value={formData.latitude}
+            value={formData.ConditionAndWidthOfApproachRoad}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, latitude: value })} />
+            setValue={(value) => setFormData({ ...formData, ConditionAndWidthOfApproachRoad: value })} />
           <TextFieldComp
-            id=""
+            id="name-of-nearest-bus-stop"
             width={50}
             name="Name of Nearest Bus Stop"
-            value={formData.longitude}
+            value={formData.NameOfNearestBusStop}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, longitude: value })} />
+            setValue={(value) => setFormData({ ...formData, NameOfNearestBusStop: value })} />
           <TextFieldComp
-            id=""
+            id="distance-from-bank-fi-branch"
             width={50}
             name="Distance from Bank/FI Branch"
-            value={formData.loanAcNo}
+            value={formData.DistanceFromBankFIBranch}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, loanAcNo: value })} />
+            setValue={(value) => setFormData({ ...formData, DistanceFromBankFIBranch: value })} />
           <TextFieldComp
-            id=""
-            width={50}
+            id="distance-from-landmark-railway-station"
             width={50}
             name="Distance from Landmark/Railway Station"
-            value={formData.loanAcNo}
+            value={formData.DistanceFromLandmarkRailwayStation}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, loanAcNo: value })} />
-        {/*Seacond box Table*/}
+            setValue={(value) => setFormData({ ...formData, DistanceFromLandmarkRailwayStation: value })} />
+      {/*Seacond box Table*/}
       </Box><br />
       <Box noValidate sx={{ mt: 1 }}>
         <div>
@@ -295,11 +280,11 @@ function PhysicalInspectionI() {
             </Table>
           </TableContainer></div><br />
         <DropDown
-          id="bank-names"
-          items={bankNames}
-          value={formData.bankName}
+          id="boundaries-matching"
+          items={BoundariesMatching}
+          value={formData.BoundariesMatching}
           name="Boundaries Matching"
-          setValue={(value) => setFormData({ ...formData, bankName: value })} />
+          setValue={(value) => setFormData({ ...formData, BoundariesMatching: value })} />
       </Box><br /></>
 
       {/*Thirn box*/}
@@ -307,54 +292,54 @@ function PhysicalInspectionI() {
            
           <Divider textAlign="left">Legal Documents Details</Divider><br/>
           <TextFieldComp
-            id=""
+            id="name-of-person-met-at-site"
             width={50}
-            name="Name of Newest Hospital"
-            value={formData.address}
+            name="Name of Person Met At Site"
+            value={formData.NameOfPersonMetAtSite}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, NameOfPersonMetAtSite: value })} />
           <TextFieldComp
-            id=""
+            id="name-of-society-board"
             width={50}
-            name="Name of Newest Hospital"
-            value={formData.address}
+            name="Name of Society Board"
+            value={formData.NameOfSocietyBoard}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, NameOfSocietyBoard: value })} />
           <DropDown
-            id=""
+            id="property-occupied-or-vacant"
             width={50}
-            items={bankNames}
-            value={formData.bankName}
+            items={PropertyOccupiedOrVacant}
+            value={formData.PropertyOccupiedOrVacant}
             name="Property Occupied or Vacant"
-            setValue={(value) => setFormData({ ...formData, bankName: value })} />
+            setValue={(value) => setFormData({ ...formData, PropertyOccupiedOrVacant: value })} />
           <DropDown
-            id=""
+            id="relationship-of-occupant-with-customer"
             width={50}
-            items={bankBranchNames}
-            value={formData.bankBranchName}
+            items={RelationshipOfOccupantWithCustomer}
+            value={formData.RelationshipOfOccupantWithCustomer}
             name="Relationship of Occupant with Customer"
-            setValue={(value) => setFormData({ ...formData, bankBranchName: value })} />
+            setValue={(value) => setFormData({ ...formData, RelationshipOfOccupantWithCustomer: value })} />
           <TextFieldComp
-            id=""
+            id="name-of-occupant"
             width={50}
             name="Name of Occupant"
-            value={formData.address}
+            value={formData.NameOfOccupant}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, NameOfOccupant: value })} />
           <TextFieldComp
-            id=""
+            id="occupied-since"
             width={50}
             name="Occupied Since"
-            value={formData.latitude}
+            value={formData.OccupiedSince}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, latitude: value })} />
+            setValue={(value) => setFormData({ ...formData, OccupiedSince: value })} />
           <TextFieldComp
-            id=""
+            id="name-of-reported-owner-as-per-ste-info"
             width={50}
             name="Name of Reported Owner as per Site Info"
-            value={formData.longitude}
+            value={formData.NameOfReportedOwnerAsPerSiteInfo}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, longitude: value })} />  
+            setValue={(value) => setFormData({ ...formData, NameOfReportedOwnerAsPerSiteInfo: value })} />  
       </Box><br/></><Stack
           direction="row"
           justifyContent="center"
