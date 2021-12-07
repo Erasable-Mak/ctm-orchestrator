@@ -7,7 +7,6 @@ import {
   maritalStatusOptions,
   typeofUserOptions,
   religionOptions,
-  stateOptions,
 } from "../DropDownOptions/options";
 
 import { Box, Divider, Stack, Button } from "@mui/material";
@@ -201,13 +200,7 @@ function GetUserAndUpdate({ uid, setFlag }) {
             value={formData.address}
             setValue={(value) => setFormData({ ...formData, address: value })}
           />
-          <DropDown
-            id="state"
-            items={stateOptions}
-            value={formData.state}
-            name="State"
-            setValue={(value) => setFormData({ ...formData, state: value })}
-          />
+
           <TextFieldComp
             id="district"
             name="District"

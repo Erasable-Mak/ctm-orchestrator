@@ -1,17 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 
 import { db } from "../firebase-config";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
-
-import {
-  maritalStatusOptions,
-  typeofUserOptions,
-  religionOptions,
-  stateOptions,
-} from "../DropDownOptions/options";
 
 import { Box, Divider, Stack, Button } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -45,9 +36,9 @@ const initialState = {
   employeeInfo: [],
 };
 
-function GetBankDetailsAndUpdate({ uid, setFlag }) {
+function GetBankDetailsAndUpdate({ uid, setFlag, selectedBankData }) {
   // const [data, setData] = useState(null);
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState(selectedBankData);
   const [updateLoading, setUpdateLoading] = useState(false);
 
   const handleUpdate = async () => {
