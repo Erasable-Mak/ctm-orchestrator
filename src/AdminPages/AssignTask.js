@@ -100,6 +100,11 @@ export default function AssignTask() {
       await updateDoc(doc(db, "Cases", caseData[idx].caseId), {
         caseStatus: "Assigned to Valuer",
       });
+
+      const values = [...caseData];
+      values.splice(idx, 1);
+      setCaseData(values);
+
       toast.success("New Case assigned successfully", { autoClose: 5000 });
       // clearForm();
     } catch (error) {
