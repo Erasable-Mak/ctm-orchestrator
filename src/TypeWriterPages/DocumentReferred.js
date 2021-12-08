@@ -176,11 +176,11 @@ function DocumentReferred() {
         />
         <TextFieldComp
           width = "50"
-          id="developer-or-name-seller-name"
-          name="Developer Or Name Seller Name"
-          value={formData.developerOrNameSellerName}
+          id="developer-name-or-seller-name"
+          name="Developer Name / Seller Name"
+          value={formData.developerNameOrSellerName}
           isMultilined={false}
-          setValue={(value) => setFormData({ ...formData, developerOrNameSellerName: value })}
+          setValue={(value) => setFormData({ ...formData, developerNameOrSellerName: value })}
         />
         <br/><br/>
         <Divider textAlign="left">Technical Document Details</Divider><br/>
