@@ -1,121 +1,39 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, Button, Stack, TextField } from "@mui/material";
-import Divider from '@mui/material/Divider'
-import { addDoc, collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
-import { db } from "../firebase-config";
-import DatePicker from "../components/DatePicker";
 
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { padding } from "@mui/system";
 
-const bankNames = [
+const ReportMaker = [
   {
-    id: "HDFC",
-    value: "HDFC",
-  },
-  {
-    id: "SBI",
-    value: "SBI",
-  },
-  {
-    id: "ICICI",
-    value: "ICICI",
+    id: "X",
+    value: "X",
   },
 ];
-
-const bankBranchNames = [
+const ReportChecker = [
   {
-    id: "Pune",
-    value: "Pune",
-  },
-  {
-    id: "Mumbai",
-    value: "Mumbai",
-  },
-  {
-    id: "Nashik",
-    value: "Nashik",
+    id: "Y",
+    value: "Y",
   },
 ];
-
-const bankEmployeeNames = [
+const SubmitTo = [
   {
-    id: "ABC",
-    value: "ABC",
-  },
-  {
-    id: "DEF",
-    value: "DEF",
+    id: "Z",
+    value: "Z",
   },
 ];
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
-    },
-  }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0,
-    },
-  }));
-
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
-  
-
-const typeOfAsset = [...bankEmployeeNames];
-const purposeOfValuation = [...bankEmployeeNames];
-const jobBranch = [...bankEmployeeNames];
+const Status = [
+  {
+    id: "Send report to principle Valuers",
+    value: "Send report to principle Valuers",
+  },
+  {
+    id: "Send report to Release Case",
+    value: "Send report to Release Case",
+  },
+];
 
 const initialState = {
-  bankName: "",
-  bankBranchName: "",
-  bankEmployeeName: "",
-  loanAcNo: "",
-  borrowerNames: [],
-  typeOfAsset: "",
-  purposeOfValuation: "",
-  contactNo: [],
-  address: "",
-  latitude: "",
-  longitude: "",
-  jobBranch: "",
-  instructions: "",
-  dateOfInspection: null,
 };
 
 function CaseStatus() {
@@ -125,10 +43,6 @@ function CaseStatus() {
   const handleSubmit = async () => {
   };
 
-  const clearForm = () => {
-    setFormData(initialState);
-    setReload(true);
-  };
 
   useEffect(() => {}, [reload]);
 
@@ -138,56 +52,56 @@ function CaseStatus() {
       <Box noValidate sx={{ mt: 1 }}>
         <div>
           <TextFieldComp
-            id=""
+            id="reception"
             width={50}
             name="Reception"
-            value={formData.address}
+            value={formData.Reception}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, Reception: value })} />
             <TextFieldComp
-            id=""
+            id="engineer"
             width={50}
             name="Engineer"
-            value={formData.address}
+            value={formData.Engineer}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData, Engineer: value })} />
              <DropDown
-            id=""
+            id="report-maker"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={ReportMaker}
+            value={formData.ReportMaker}
             name="Report Maker"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, ReportMaker: value })} />
              <DropDown
-            id=""
+            id="report-checker"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={ReportChecker}
+            value={formData.ReportChecker}
             name="Report Checker"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, ReportChecker: value })} />
              <DropDown
-            id=""
+            id="submit-to"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={SubmitTo}
+            value={formData.SubmitTo}
             name="Submit To"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, SubmitTo: value })} />
             <TextFieldComp
-            id=""
+            id="fees"
             width={50}
             name="Fees"
-            value={formData.address}
+            value={formData.Fees}
             isMultilined={false}
-            setValue={(value) => setFormData({ ...formData, address: value })} />
+            setValue={(value) => setFormData({ ...formData,Fees: value })} />
              <DropDown
-            id=""
+            id="status"
             width={50}
-            items={bankEmployeeNames}
-            value={formData.bankEmployeeName}
+            items={Status}
+            value={formData.Status}
             name="Status"
-            setValue={(value) => setFormData({ ...formData, bankEmployeeName: value })} />
+            setValue={(value) => setFormData({ ...formData, Status: value })} />
             <TextField
-          id=""
+          id="case-status"
           style={{width:"50ch"}}
           sx={{m:1}}
           label="Case Status"

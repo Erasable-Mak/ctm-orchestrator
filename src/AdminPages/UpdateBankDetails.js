@@ -15,17 +15,21 @@ import {
 } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
-import GetUserAndUpdate from "./GetBankDetailsAndUpdate";
+import GetBankDetailsAndUpdate from "./GetBankDetailsAndUpdate";
 
 export default function UpdateBankDetails() {
   const [data, setData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-
+  let selectedBankData;
   //when flag is true it will render list of users and on false it will render selected user's data
   const [flag, setFlag] = useState(true);
 
   const gotoGetDataAndUpdataPage = (uid) => {
-    console.log("gotoGetDataAndUpdataPage called" + uid);
+    data.forEach((bank) => {
+      if (bank.uid === selectedUser) {
+        selectedBankData = bank;
+      }
+    });
     setSelectedUser(uid);
     setFlag(false);
   };
@@ -33,6 +37,7 @@ export default function UpdateBankDetails() {
   useEffect(() => {
     setData([]);
     try {
+      //getting data of all registered banks
       const getdata = async () => {
         const q = query(collection(db, "Banks"));
 
@@ -90,10 +95,15 @@ export default function UpdateBankDetails() {
               ))}
             </TableBody>
           </Table>
-          {console.log(data)}
         </TableContainer>
       )}
-      {!flag && <GetUserAndUpdate uid={selectedUser} setFlag={setFlag} />}
+      {!flag && (
+        <GetBankDetailsAndUpdate
+          uid={selectedUser}
+          setFlag={setFlag}
+          selectedBankData={selectedBankData}
+        />
+      )}
     </div>
   );
 }

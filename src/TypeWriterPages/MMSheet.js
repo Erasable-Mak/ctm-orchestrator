@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import ResidentialAssets from "./ResidentialAssets";
 import CommercialAssets from "./CommercialAssets";
 
-import {
-  Box,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  
-} from "@mui/material";
+import { Box, Divider, List, ListItem, ListItemText } from "@mui/material";
 
 const MMSheet = () => {
   const [contentName, setcontentName] = useState("Residential Assets");
@@ -33,7 +26,7 @@ const MMSheet = () => {
             <ListItemText primary="Residential Assets" />
           </ListItem>
           <Divider orientation="vertical" flexItem />
-         
+
           <ListItem
             selected={contentName === "Commercial Assets"}
             button
@@ -46,7 +39,6 @@ const MMSheet = () => {
         </List>
       </Box>
       {contentName === "Residential Assets" && <ResidentialAssets />}
-      
       {contentName === "Commercial Assets" && <CommercialAssets />}
     </div>
   );

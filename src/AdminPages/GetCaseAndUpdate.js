@@ -1,60 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 import { db } from "../firebase-config";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
 
 import { Box, Divider, Stack, Button } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
-import DatePicker from "../components/DatePicker";
+
+import MapForAddress from "../components/MapForAddress";
+import { toast } from "react-toastify";
 
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
-
-const bankNames = [
-  {
-    id: "HDFC",
-    value: "HDFC",
-  },
-  {
-    id: "SBI",
-    value: "SBI",
-  },
-  {
-    id: "ICICI",
-    value: "ICICI",
-  },
-];
-
-const bankBranchNames = [
-  {
-    id: "Pune",
-    value: "Pune",
-  },
-  {
-    id: "Mumbai",
-    value: "Mumbai",
-  },
-  {
-    id: "Nashik",
-    value: "Nashik",
-  },
-];
-
-const bankEmployeeNames = [
-  {
-    id: "ABC",
-    value: "ABC",
-  },
-  {
-    id: "DEF",
-    value: "DEF",
-  },
-];
-
-const typeOfAsset = [...bankEmployeeNames];
-const purposeOfValuation = [...bankEmployeeNames];
-const jobBranch = [...bankEmployeeNames];
+import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
+import DatePicker from "../components/DatePicker";
+import {
+  typeOfAssetOptions,
+  purposeOfValuationOptions,
+} from "../DropDownOptions/options";
 
 const initialState = {
   bankName: "",
@@ -66,6 +28,10 @@ const initialState = {
   purposeOfValuation: "",
   contactNo: [],
   address: "",
+  state: "",
+  district: "",
+  locality: "",
+  pincode: "",
   latitude: "",
   longitude: "",
   jobBranch: "",
@@ -73,39 +39,50 @@ const initialState = {
   dateOfInspection: new Date(),
 };
 
+//don't know what this is for --@Ayush look into this
+const jobBranch = [
+  {
+    id: "ABC",
+    value: "ABC",
+  },
+  {
+    id: "DEF",
+    value: "DEF",
+  },
+];
+
 function GetCaseAndUpdate({ uid, setFlag }) {
-  const [data, setData] = useState(null);
   const [formData, setFormData] = useState(initialState);
   const [updateLoading, setUpdateLoading] = useState(false);
+  const [bankData, setBankData] = useState([]);
+  const [bankNames, setBankNames] = useState([]);
+  const [bankBranchNames, setBankBranchNames] = useState([]);
+  const [bankEmployeeNames, setBankEmployeeNames] = useState([]);
 
   const handleUpdate = async () => {
     setUpdateLoading(true);
     //updating case
-    await setDoc(doc(db, "Cases", uid), {
-      bankName: formData.bankName,
-      bankBranchName: formData.bankBranchName,
-      bankEmployeeName: formData.bankEmployeeName,
-      loanAcNo: formData.loanAcNo,
-      borrowerNames: formData.borrowerNames,
-      typeOfAsset: formData.typeOfAsset,
-      purposeOfValuation: formData.purposeOfValuation,
-      contactNo: formData.contactNo,
-      address: formData.address,
-      latitude: formData.latitude,
-      longitude: formData.longitude,
-      jobBranch: formData.jobBranch,
-      instructions: formData.instructions,
-      dateofInspection: formData.dateOfInspection,
-    });
+    await setDoc(doc(db, "Cases", uid), formData);
     setUpdateLoading(false);
     // ----IMPORTANT------------------------------------------
     // after data is actually updated user should get some visual sign of success, and page should be redirected to original page
-    // also there si some problem with date
+    // also there is some problem with date
     // -----------------------------------------------------
   };
 
+  //here we are fetcing data of all banks from database
+  const getBankData = async () => {
+    let temp = [];
+    const q = await collection(db, "Banks");
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      temp.push(doc.data());
+    });
+    setBankData(temp);
+  };
+
   useEffect(() => {
-    setData([]);
+    setFormData(initialState);
     try {
       const getdata = async () => {
         //here we get the data from actual document
@@ -114,13 +91,88 @@ function GetCaseAndUpdate({ uid, setFlag }) {
         setFormData((prev) => ({ ...prev, ...docSnap.data() }));
       };
       getdata();
+      getBankData();
     } catch (err) {
       console.log(err);
     }
-    return () => {
-      setData(null);
-    };
   }, []);
+
+  //this useEffect query for name of banks from fetched documents
+  useEffect(() => {
+    setBankNames([]);
+    setBankBranchNames([]);
+    setBankEmployeeNames([]);
+    try {
+      //from data of banks we are getting only names of banks
+      const temp = [];
+      bankData.forEach((bank) => {
+        if (!temp.includes(bank.bankName)) {
+          temp.push(bank.bankName);
+        }
+      });
+      let temp2 = [];
+      temp.forEach((bankName) => {
+        temp2.push({ id: bankName, value: bankName });
+      });
+      setBankNames(temp2);
+    } catch (error) {
+      console.log(error);
+      toast.error("Can not connect to database due to internet issues!", {
+        autoClose: 5000,
+      });
+    }
+  }, [bankData]);
+
+  // this effect runs when banks name is selected
+  useEffect(() => {
+    setBankBranchNames([]);
+    setBankEmployeeNames([]);
+    try {
+      var temp = [];
+      bankData.forEach((bank) => {
+        if (
+          bank.bankName === formData.bankName &&
+          !bankBranchNames.includes(bank.bankBranchName)
+        ) {
+          temp.push({ id: bank.bankBranchName, value: bank.bankBranchName });
+        }
+      });
+      setBankBranchNames(temp);
+    } catch (error) {
+      console.log(error);
+      toast.error("Can not connect to database due to internet issues!", {
+        autoClose: 5000,
+      });
+    }
+  }, [formData.bankName]);
+
+  // this effect runs when bank branch name is selected
+  useEffect(() => {
+    setBankEmployeeNames([]);
+    try {
+      const getEmployeeNames = async () => {
+        bankData.forEach((bank) => {
+          if (
+            bank.bankName === formData.bankName &&
+            bank.bankBranchName === formData.bankBranchName
+          ) {
+            bank.employeeInfo.forEach((employee, index) => {
+              setBankEmployeeNames((prev) => [
+                ...prev,
+                { id: index, value: employee.empName },
+              ]);
+            });
+          }
+        });
+      };
+      getEmployeeNames();
+    } catch (error) {
+      console.log(error);
+      toast.error("Can not connect to database due to internet issues!", {
+        autoClose: 5000,
+      });
+    }
+  }, [formData.bankBranchName]);
 
   return (
     <div>
@@ -128,7 +180,8 @@ function GetCaseAndUpdate({ uid, setFlag }) {
         Go back
       </Button>
       <Box noValidate sx={{ mt: 1 }}>
-        <div>
+        <Box>
+          {/* for bank information */}
           <Divider textAlign="left">Bank Information</Divider>
           <DropDown
             id="bank-names"
@@ -172,7 +225,7 @@ function GetCaseAndUpdate({ uid, setFlag }) {
           />
           <DropDown
             id="type-of-asset"
-            items={typeOfAsset}
+            items={typeOfAssetOptions}
             name="Type Of Asset"
             value={formData.typeOfAsset}
             setValue={(value) =>
@@ -181,7 +234,7 @@ function GetCaseAndUpdate({ uid, setFlag }) {
           />
           <DropDown
             id="purpose-of-valuation"
-            items={purposeOfValuation}
+            items={purposeOfValuationOptions}
             name="Purpose Of Valuation"
             value={formData.purposeOfValuation}
             setValue={(value) =>
@@ -203,28 +256,58 @@ function GetCaseAndUpdate({ uid, setFlag }) {
               setFormData({ ...formData, dateOfInspection: value })
             }
           />
+        </Box>
+        <Box>
           <Divider textAlign="left">Address</Divider>
+
+          {/* adding button that gives dialog box to locate address on map */}
+          <MapForAddress setFormData={setFormData} />
+
           <TextFieldComp
             id="address"
             name="Address"
             value={formData.address}
-            isMultilined={false}
             setValue={(value) => setFormData({ ...formData, address: value })}
+          />
+          <TextFieldComp
+            id="locality"
+            name="Locality"
+            value={formData.locality}
+            setValue={(value) => setFormData({ ...formData, locality: value })}
+          />
+          <TextFieldComp
+            id="district"
+            name="District"
+            value={formData.district}
+            setValue={(value) => setFormData({ ...formData, district: value })}
+          />
+          <TextFieldComp
+            id="state"
+            name="State"
+            value={formData.state}
+            setValue={(value) => setFormData({ ...formData, state: value })}
+          />
+
+          <TextFieldComp
+            id="pincode"
+            name="Pincode"
+            value={formData.pincode}
+            setValue={(value) => setFormData({ ...formData, pincode: value })}
           />
           <TextFieldComp
             id="latitude"
             name="Latitude"
             value={formData.latitude}
-            isMultilined={false}
             setValue={(value) => setFormData({ ...formData, latitude: value })}
           />
           <TextFieldComp
             id="longitude"
             name="Longitude"
             value={formData.longitude}
-            isMultilined={false}
             setValue={(value) => setFormData({ ...formData, longitude: value })}
           />
+        </Box>
+        <Box>
           <Divider textAlign="left">Additional Information</Divider>
           <DropDown
             id="job-branch"
@@ -242,25 +325,25 @@ function GetCaseAndUpdate({ uid, setFlag }) {
               setFormData({ ...formData, instructions: value })
             }
           />
-          <Divider style={{ margin: "5px" }}></Divider>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="flex-start"
-            spacing={2}
-            style={{ margin: "20px" }}
+        </Box>
+        <Divider style={{ margin: "5px" }}></Divider>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-start"
+          spacing={2}
+          style={{ margin: "20px" }}
+        >
+          <LoadingButton
+            onClick={handleUpdate}
+            loading={updateLoading}
+            loadingIndicator="wait..."
+            variant="contained"
+            color="success"
           >
-            <LoadingButton
-              onClick={handleUpdate}
-              loading={updateLoading}
-              loadingIndicator="wait..."
-              variant="contained"
-              color="success"
-            >
-              Update
-            </LoadingButton>
-          </Stack>
-        </div>
+            Update
+          </LoadingButton>
+        </Stack>
       </Box>
     </div>
   );

@@ -34,17 +34,6 @@ export default function SingleUserInfo() {
     setFlag(false);
   };
 
-  const displayValue = (name, value) => {
-    const values = [];
-
-    if (name === "Borrower Names") {
-      value.map((ele) => values.push(`${ele.title} ${ele.fullName}`));
-    } else if (name === "Contact No") {
-      value.map((ele) => values.push(ele));
-    }
-
-    return values.join("/");
-  };
   useEffect(() => {
     setData([]);
     try {
@@ -73,7 +62,9 @@ export default function SingleUserInfo() {
                 <TableCell>Bank Name</TableCell>
                 <TableCell align="left">Borrower Details</TableCell>
                 <TableCell align="left">Contact</TableCell>
-                <TableCell align="left">Address</TableCell>
+                <TableCell align="left" style={{ maxWidth: "200px" }}>
+                  Address
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -113,7 +104,9 @@ export default function SingleUserInfo() {
                       })}
                     </List>
                   </TableCell>
-                  <TableCell align="left">{row.address}</TableCell>
+                  <TableCell align="left" style={{ maxWidth: "200px" }}>
+                    {row.address}
+                  </TableCell>
                   <TableCell align="left" style={{ padding: "0px" }}>
                     <Button
                       variant="contained"

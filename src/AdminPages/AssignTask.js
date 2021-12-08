@@ -6,6 +6,7 @@ import {
   query,
   addDoc,
   where,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase-config";
 import EditIcon from "@mui/icons-material/Edit";
@@ -47,7 +48,10 @@ export default function AssignTask() {
     try {
       const getdata = async () => {
         //getting data of all cases on page load
-        const q = query(collection(db, "Cases"));
+        const q = query(
+          collection(db, "Cases"),
+          where("caseStatus", "==", "Not Assigned")
+        );
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -63,6 +67,7 @@ export default function AssignTask() {
         });
 
         //getting data of all valuers/field visit officers only, on page load
+        // *** here we will have to fetch address data seperately to get the address of the valuer
         const q2 = query(
           collection(db, "Users"),
           where("typeOfUser", "==", "Field Visit Officer")
@@ -78,7 +83,7 @@ export default function AssignTask() {
       };
 
       getdata();
-      console.log(valuerOptions);
+      console.log({ valuerOptions });
     } catch (err) {
       console.log(err);
     }
@@ -88,10 +93,18 @@ export default function AssignTask() {
     try {
       const finalData = {
         caseId: doc(db, "Cases", caseData[idx].caseId),
-        valuer: doc(db, "Users", "YuwMRMFVinSaRsonWJmOwcDV89q2"),
+        valuer: doc(db, "Users", caseData[idx].valuer),
         dateOfOutward: caseData[idx].dateOfOutward,
       };
       await addDoc(collection(db, "assigned_cases"), finalData);
+      await updateDoc(doc(db, "Cases", caseData[idx].caseId), {
+        caseStatus: "Assigned to Valuer",
+      });
+
+      const values = [...caseData];
+      values.splice(idx, 1);
+      setCaseData(values);
+
       toast.success("New Case assigned successfully", { autoClose: 5000 });
       // clearForm();
     } catch (error) {
@@ -109,7 +122,9 @@ export default function AssignTask() {
             <TableCell>Client details</TableCell>
             <TableCell>Borrow details</TableCell>
             <TableCell>Branch</TableCell>
-            <TableCell align="left">Address</TableCell>
+            <TableCell align="left" style={{ minWidth: "200px" }}>
+              Address
+            </TableCell>
             <TableCell align="left">Date of Inspection</TableCell>
             <TableCell>Date of Outward</TableCell>
             <TableCell align="left">Valuer</TableCell>
@@ -133,7 +148,9 @@ export default function AssignTask() {
                 {displayValue("Contact No", row.contactNo)}
               </TableCell>
               <TableCell align="left">{row.bankBranchName}</TableCell>
-              <TableCell align="left">{row.address}</TableCell>
+              <TableCell align="left" style={{ minWidth: "200px" }}>
+                {row.address}
+              </TableCell>
               <TableCell align="left">
                 {row.dateOfInspection &&
                   new Date(
@@ -159,11 +176,16 @@ export default function AssignTask() {
                 <DropDown
                   id={`${idx}-valuer-options`}
                   items={valuerOptions}
-                  value={row.valuer}
+                  value={row.valuerName}
                   name="Valuer Options"
                   setValue={(value, i = idx) => {
                     const values = [...caseData];
-                    values[i].valuer = value;
+                    values[i].valuerName = value;
+                    valuerOptions.map((option) => {
+                      if (option.value === value) {
+                        values[i].valuer = option.id;
+                      }
+                    });
                     setCaseData(values);
                   }}
                 />

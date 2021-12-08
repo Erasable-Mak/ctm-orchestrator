@@ -22,6 +22,7 @@ import CreateUser from "./CreateUser";
 import UpdateUser from "./UpdateUser";
 import AssignTask from "./AssignTask";
 import UpdateBankDetails from "./UpdateBankDetails";
+import CaseStatus from "./CaseStatus";
 
 import { useAuth } from "../contexts/AuthContext";
 
@@ -157,6 +158,16 @@ export default function Home() {
               <ListItemText primary="Update Banks" />
             </ListItem>
             <Divider />
+            <ListItem
+              selected={contentName === "Case Status"}
+              button
+              onClick={() => {
+                changeContent("Case Status");
+              }}
+            >
+              <ListItemText primary="Case Status" />
+            </ListItem>
+            <Divider />
           </List>
         </Box>
       </Drawer>
@@ -169,6 +180,7 @@ export default function Home() {
         {contentName === "Add Bank Details" && <AddBank />}
         {contentName === "Assign Task" && <AssignTask />}
         {contentName === "Update Banks" && <UpdateBankDetails />}
+        {contentName === "Case Status" && <CaseStatus />}
       </Box>
       </Box>
     </>

@@ -1,24 +1,21 @@
-import react, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import React from "react";
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
 
 import {
   maritalStatusOptions,
   religionOptions,
-  stateOptions,
   typeofUserOptions,
 } from "../DropDownOptions/options";
 import DatePicker from "../components/DatePicker";
@@ -26,6 +23,7 @@ import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
 import AddressAutocomplete from "../components/AddressAutocomplete";
 import GoogleMapReact from "google-map-react";
 import Marker from "../components/Marker";
+import MapForAddress from "../components/MapForAddress";
 
 export default function AddUserData({
   formData,
@@ -34,38 +32,6 @@ export default function AddUserData({
   clearForm,
   submitLoading,
 }) {
-  const [open, setOpen] = useState(false);
-  const [initialLocation, setInitialLocation] = useState({ lat: 0, lng: 0 });
-  const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          var latitude = position.coords.latitude;
-          var longitude = position.coords.longitude;
-          var accuracy = position.coords.accuracy;
-          setInitialLocation({ lat: latitude, lng: longitude });
-          setCurrentLocation({ lat: latitude, lng: longitude });
-        },
-        function error(msg) {
-          alert("Please enable your GPS position feature.");
-        },
-        { maximumAge: 10000, timeout: 5000, enableHighAccuracy: true }
-      );
-    } else {
-      alert("Geolocation API is not supported in your browser.");
-    }
-  }, []);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Box>
       {/* general information */}
@@ -127,60 +93,7 @@ export default function AddUserData({
         </Divider>
 
         {/* adding button that gives dialog box to locate address on map */}
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-        >
-          {/* on button click, dialog box opens */}
-          <Button variant="contained" onClick={handleClickOpen}>
-            Open map
-          </Button>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Subscribe</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Search closest landmark on map to your address.Then select the
-                exact loction with help of marker
-              </DialogContentText>
-              {/* AddressAutocomplete is a react component that autofills address as */}
-              <AddressAutocomplete
-                setCurrentLocation={setCurrentLocation}
-                setFormData={setFormData}
-              />
-            </DialogContent>
-            <div style={{ height: "50vh", width: "100%" }}>
-              <GoogleMapReact
-                bootstrapURLKeys={{
-                  key: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
-                }}
-                defaultCenter={initialLocation}
-                center={currentLocation}
-                defaultZoom={11}
-                margin={[50, 50, 50, 50]}
-                // options={""}
-                // onChange={() => {}}
-                // onChildClick={() => {}}
-                onClick={(e) => {
-                  console.log({ e });
-                  setCurrentLocation({ lat: e.lat, lng: e.lng });
-                  setFormData((prev) => ({
-                    ...prev,
-                    latitude: e.lat,
-                    longitude: e.lng,
-                  }));
-                }}
-              >
-                <Marker lat={currentLocation.lat} lng={currentLocation.lng} />
-              </GoogleMapReact>
-            </div>
-            <DialogActions>
-              <Button onClick={handleClose}>Close</Button>
-              <Button onClick={handleClose}>Done</Button>
-            </DialogActions>
-          </Dialog>
-        </Stack>
+        <MapForAddress setFormData={setFormData} />
 
         <TextFieldComp
           id="address"
