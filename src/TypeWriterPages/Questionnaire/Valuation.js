@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Divider, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import TextFieldComp from "../components/TextFieldComp";
+import TextFieldComp from "../../components/TextFieldComp";
 
 const Valuation = () => {
   return (

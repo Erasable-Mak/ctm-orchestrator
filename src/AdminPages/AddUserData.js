@@ -5,11 +5,6 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
 
@@ -20,9 +15,6 @@ import {
 } from "../DropDownOptions/options";
 import DatePicker from "../components/DatePicker";
 import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
-import AddressAutocomplete from "../components/AddressAutocomplete";
-import GoogleMapReact from "google-map-react";
-import Marker from "../components/Marker";
 import MapForAddress from "../components/MapForAddress";
 
 export default function AddUserData({

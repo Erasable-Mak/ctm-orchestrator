@@ -1,9 +1,8 @@
-// import 'app.css'
 import { Box, Button, Divider, Stack } from "@mui/material";
 import React from "react";
-import DatePicker from "../components/DatePicker";
-import DropDown from "../components/DropDown";
-import TextFieldComp from "../components/TextFieldComp";
+import DatePicker from "../../components/DatePicker";
+import DropDown from "../../components/DropDown";
+import TextFieldComp from "../../components/TextFieldComp";
 
 function TechInitiation() {
   return (

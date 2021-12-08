@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ResidentialAssets from "./ResidentialAssets";
-import CommercialAssets from "./CommercialAssets";
+import ResidentialAssets from "../ResidentialAssets";
+import CommercialAssets from "../CommercialAssets";
 
 import { Box, Divider, List, ListItem, ListItemText } from "@mui/material";
 

@@ -1,26 +1,14 @@
 import React, { useState } from "react";
-import TechInitiation from "./TechInitiation";
-import Images from "./Images";
-import MMSheet from "./MMSheet";
-import DocumentReferred from "./DocumentReferred";
-import Valuation from "./Valuation";
-import PhysicalInspectionI from "./PhysicalnspectionI";
-import PhysicalInspectionII from "./PhysicalnspectionII";
-import CaseStatus from "./CaseStatus";
+import TechInitiation from "./Questionnaire/TechInitiation";
+import Images from "./Questionnaire/Images";
+import MMSheet from "./Questionnaire/MMSheet";
+import DocumentReferred from "./Questionnaire/DocumentReferred";
+import Valuation from "./Questionnaire/Valuation";
+import PhysicalInspectionI from "./Questionnaire/PhysicalnspectionI";
+import PhysicalInspectionII from "./Questionnaire/PhysicalnspectionII";
+import CaseStatus from "./Questionnaire/CaseStatus";
 
-import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Toolbar,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Box, List, ListItem, ListItemText, Divider } from "@mui/material";
 
 const Demo = () => {
   const [contentName, setcontentName] = useState("Tech Initiation");
@@ -31,7 +19,6 @@ const Demo = () => {
 
   return (
     <div>
-      {" "}
       <Box>
         <List sx={{ display: "flex", alignItems: "center" }}>
           <ListItem

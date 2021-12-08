@@ -16,6 +16,7 @@ import DropDown from "../components/DropDown";
 import TextFieldComp from "../components/TextFieldComp";
 import ClickableTextFieldComp from "../components/ClickableTextFieldComp";
 import DatePicker from "../components/DatePicker";
+import MapForAddress from "../components/MapForAddress";
 
 const initialState = {
   name: "",
@@ -194,26 +195,35 @@ function GetUserAndUpdate({ uid, setFlag }) {
           <Divider style={{ margin: "5px" }} textAlign="left">
             Address
           </Divider>
+
+          {/* adding button that gives dialog box to locate address on map */}
+          <MapForAddress setFormData={setFormData} />
+
           <TextFieldComp
             id="address"
             name="Address"
             value={formData.address}
             setValue={(value) => setFormData({ ...formData, address: value })}
           />
-
-          <TextFieldComp
-            id="district"
-            name="District"
-            value={formData.district}
-            setValue={(value) => setFormData({ ...formData, district: value })}
-          />
-
           <TextFieldComp
             id="locality"
             name="Locality"
             value={formData.locality}
             setValue={(value) => setFormData({ ...formData, locality: value })}
           />
+          <TextFieldComp
+            id="district"
+            name="District"
+            value={formData.district}
+            setValue={(value) => setFormData({ ...formData, district: value })}
+          />
+          <TextFieldComp
+            id="state"
+            name="State"
+            value={formData.state}
+            setValue={(value) => setFormData({ ...formData, state: value })}
+          />
+
           <TextFieldComp
             id="pincode"
             name="Pincode"
