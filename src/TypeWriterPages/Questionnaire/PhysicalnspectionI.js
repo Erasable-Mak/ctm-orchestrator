@@ -194,13 +194,13 @@ function PhysicalInspectionI() {
               }
             />
             <TextFieldComp
-              id="name-of-newest-hospital"
+              id="name-of-nearest-hospital"
               width={50}
-              name="Name of Newest Hospital"
-              value={formData.NameOfNewestHospital}
+              name="Name of Nearest Hospital"
+              value={formData.NameOfNearestHospital}
               isMultilined={false}
               setValue={(value) =>
-                setFormData({ ...formData, NameOfNewestHospital: value })
+                setFormData({ ...formData, NameOfNearestHospital: value })
               }
             />
             <TextFieldComp
