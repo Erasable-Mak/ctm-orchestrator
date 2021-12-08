@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db, functions } from "../firebase-config";
 import { collection, query, getDocs } from "firebase/firestore";
 import { httpsCallable } from "@firebase/functions";
+import CircularStatic  from "../components/Loader";
 
 import {
   Table,
@@ -64,6 +65,8 @@ export default function SingleUserInfo() {
   }, []);
 
   return (
+    <>
+    < CircularStatic ></CircularStatic>
     <div>
       {flag && (
         <TableContainer component={Paper}>
@@ -126,5 +129,6 @@ export default function SingleUserInfo() {
       )}
       {!flag && <GetUserAndUpdate uid={selectedUser} setFlag={setFlag} />}
     </div>
+    </>
   );
 }

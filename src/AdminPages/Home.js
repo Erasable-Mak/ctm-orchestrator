@@ -35,8 +35,17 @@ export default function Home() {
   const changeContent = (value) => {
     setcontentName(value);
   };
-
+  const [isLoading, setLoading] = useState(false);
+  const fetchData = () =>
+  {
+    setLoading(true);
+    setTimeout(() =>
+    {
+      setLoading(false);
+    },3500)
+  }
   return (
+    <>
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
@@ -161,6 +170,7 @@ export default function Home() {
         {contentName === "Assign Task" && <AssignTask />}
         {contentName === "Update Banks" && <UpdateBankDetails />}
       </Box>
-    </Box>
+      </Box>
+    </>
   );
 }

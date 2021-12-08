@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DefaultPage from "./DefaultPage";
 import Demo from "./Demo";
+import LiveVisit from "./LiveVisit"
 
 import {
   AppBar,
@@ -92,6 +93,16 @@ export default function Home() {
               <ListItemText primary="DefaultPage" />
             </ListItem>
             <Divider />
+            <ListItem
+              selected={contentName === "LiveVisit"}
+              button
+              onClick={() => {
+                changeContent("LiveVisit");
+              }}
+            >
+              <ListItemText primary="LiveVisit" />
+            </ListItem>
+            <Divider />
           </List>
         </Box>
       </Drawer>
@@ -99,6 +110,7 @@ export default function Home() {
         <Toolbar />
         {contentName === "DefaultPage" && <DefaultPage />}
         {contentName === "Demo" && <Demo />}
+        {contentName === "LiveVisit" && <LiveVisit />}
       </Box>
     </Box>
   );
