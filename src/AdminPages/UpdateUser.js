@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { db, functions } from "../firebase-config";
 import { collection, query, getDocs } from "firebase/firestore";
 import { httpsCallable } from "@firebase/functions";
-import CircularStatic  from "../components/Loader";
+import Loader  from "../components/Loader";
 
 import {
   Table,
@@ -25,7 +25,7 @@ import GetUserAndUpdate from "./GetUserAndUpdate";
 export default function SingleUserInfo() {
   const [data, setData] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-
+  const [progress, setProgress] = useState(true)
   //when flag is true it will render list of users and on false it will render selected user's data
   const [flag, setFlag] = useState(true);
 
@@ -45,9 +45,10 @@ export default function SingleUserInfo() {
         console.log("hi" + error);
       });
   };
-
-  useEffect(() => {
+  
+  useEffect(() =>{  
     setData([]);
+    setProgress(true);
     try {
       const getdata = async () => {
         const q = query(collection(db, "Users"));
@@ -59,6 +60,7 @@ export default function SingleUserInfo() {
       };
 
       getdata();
+      setProgress(false);
     } catch (err) {
       console.log(err);
     }
@@ -66,12 +68,12 @@ export default function SingleUserInfo() {
 
   return (
     <>
-    < CircularStatic ></CircularStatic>
-    <div>
+    
+     <div>
       {flag && (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
+            <TableHead>    
               <TableRow>
                 <TableCell>Name</TableCell>
                 <TableCell align="left">Email</TableCell>
@@ -79,7 +81,8 @@ export default function SingleUserInfo() {
                 <TableCell align="left">Type Of user</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+              {progress === true && < Loader ></Loader> }
+              {progress === false && <TableBody>
               {data.map((row, index) => (
                 <TableRow
                   key={index}
@@ -123,7 +126,7 @@ export default function SingleUserInfo() {
                   </TableCell>
                 </TableRow>
               ))}
-            </TableBody>
+            </TableBody>}
           </Table>
         </TableContainer>
       )}
