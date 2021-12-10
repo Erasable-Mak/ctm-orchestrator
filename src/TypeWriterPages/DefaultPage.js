@@ -1,21 +1,17 @@
 import React from "react";
 // import React from 'react';
-import {Box} from '@mui/material';
-import {Card} from '@mui/material';
-import {CardActions} from '@mui/material';
-import {CardContent} from '@mui/material';
-import {Button} from '@mui/material';
-import {Typography} from '@mui/material';
+import { Box } from "@mui/material";
+import { Card } from "@mui/material";
+import { CardActions } from "@mui/material";
+import { CardContent } from "@mui/material";
+import { Button } from "@mui/material";
+import { Typography } from "@mui/material";
 import "../App.css";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+import SBI from "../Forms/SBI";
+import SBI87 from "../Forms/SBI87";
+
+import Loader from "../components/Loader";
 
 const card = (
   <React.Fragment>
@@ -35,30 +31,26 @@ const card = (
 
 function DefaultPage() {
   return (
-    <div className="card">
-    <Box className="card-box" sx={{ minWidth: 257 }}>
-      <Card variant="outlined">{card}</Card>
+    <Box>
+      <div className="card">
+        <Box className="card-box" sx={{ minWidth: 257 }}>
+          <Card variant="outlined">{card}</Card>
+        </Box>
+        <Box className="card-box" sx={{ minWidth: 257 }}>
+          <Card variant="outlined">{card}</Card>
+        </Box>
+        <Box className="card-box" sx={{ minWidth: 257 }}>
+          <Card variant="outlined">{card}</Card>
+        </Box>
+        <Box className="card-box" sx={{ minWidth: 257 }}>
+          <Card variant="outlined">{card}</Card>
+        </Box>
+      </div>
+      <SBI />
+      <SBI87/>
+      <Loader />
     </Box>
-    <Box className="card-box" sx={{ minWidth: 257 }}>
-      <Card variant="outlined">{card}</Card>
-    </Box>
-    <Box className="card-box" sx={{ minWidth: 257 }}>
-      <Card variant="outlined">{card}</Card>
-    </Box>
-    <Box className="card-box" sx={{ minWidth: 257 }}>
-      <Card variant="outlined">{card}</Card>
-      </Box>
-      </div>)}
-{/* import React, { useEffect, useState } from "react"; */}
-
-{/* function DefaultPage() {
-  return (
-    <div>
-      <h1>this is map</h1>
-
-      <h1>here it ends</h1>
-    </div>
   );
-} */}
+}
 
 export default DefaultPage;
