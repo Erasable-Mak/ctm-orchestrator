@@ -16,6 +16,7 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import GetBankDetailsAndUpdate from "./GetBankDetailsAndUpdate";
+import Loader from "../components/Loader";
 
 export default function UpdateBankDetails() {
   const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ export default function UpdateBankDetails() {
   let selectedBankData;
   //when flag is true it will render list of users and on false it will render selected user's data
   const [flag, setFlag] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const gotoGetDataAndUpdataPage = (uid) => {
     data.forEach((bank) => {
@@ -36,6 +38,7 @@ export default function UpdateBankDetails() {
 
   useEffect(() => {
     setData([]);
+    setIsLoading(true);
     try {
       //getting data of all registered banks
       const getdata = async () => {
@@ -48,6 +51,7 @@ export default function UpdateBankDetails() {
       };
 
       getdata();
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +59,8 @@ export default function UpdateBankDetails() {
 
   return (
     <div>
-      {flag && (
+      {isLoading && <Loader />}
+      {!isLoading && flag && (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>

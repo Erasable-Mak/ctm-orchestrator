@@ -1,5 +1,4 @@
 import React from "react";
-// import React from 'react';
 import { Box } from "@mui/material";
 import { Card } from "@mui/material";
 import { CardActions } from "@mui/material";
@@ -47,8 +46,7 @@ function DefaultPage() {
         </Box>
       </div>
       <SBI />
-      <SBI87/>
-      <Loader />
+      <SBI87 />
     </Box>
   );
 }
