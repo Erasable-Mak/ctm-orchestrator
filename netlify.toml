@@ -1,0 +1,7 @@
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
