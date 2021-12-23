@@ -12,8 +12,10 @@ import {
   Toolbar,
   Typography,
   Button,
+  IconButton,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { makeStyles, useTheme } from "@material-ui/core";
 
 import AddBank from "./AddBank";
 import CreateCase from "./CreateCase";
@@ -25,163 +27,255 @@ import UpdateBankDetails from "./UpdateBankDetails";
 import CaseStatus from "./CaseStatus";
 
 import { useAuth } from "../contexts/AuthContext";
+import clsx from "clsx";
+import { Menu, Close } from "@material-ui/icons";
 
 const drawerWidth = 240;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  appBar: {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: "none",
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: 0,
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: drawerWidth,
+  },
+}));
 
 export default function Home() {
   const [contentName, setcontentName] = useState("Create User");
 
   const { currentUser, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  const classes = useStyles();
 
   const changeContent = (value) => {
     setcontentName(value);
   };
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
   const [isLoading, setLoading] = useState(false);
-  const fetchData = () =>
-  {
+  const fetchData = () => {
     setLoading(true);
-    setTimeout(() =>
-    {
+    setTimeout(() => {
       setLoading(false);
-    },3500)
-  }
+    }, 3500);
+  };
   return (
     <>
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Makarand Rajendra
-          </Typography>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "flex" } }}>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        >
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <Menu />
+            </IconButton>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerClose}
+              edge="start"
+              className={clsx(classes.menuButton, !open && classes.hide)}
+            >
+              <Close />
+            </IconButton>
             <Typography variant="h6" noWrap component="div">
-              {currentUser?.email}
+              Makarand Rajendra
             </Typography>
-            <Button
-              style={{ marginLeft: "10px" }}
-              variant="contained"
-              color="error"
-              startIcon={<LogoutIcon />}
-              onClick={() => logout()}
-            >
-              Logout
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
+            <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: "flex" } }}>
+              <Typography variant="h6" noWrap component="div">
+                {currentUser?.email}
+              </Typography>
+              <Button
+                style={{ marginLeft: "10px" }}
+                variant="contained"
+                color="error"
+                startIcon={<LogoutIcon />}
+                onClick={() => logout()}
+              >
+                Logout
+              </Button>
+            </Box>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="temporary"
+          sx={{
             width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-      >
-        <Toolbar />
-        <Box sx={{ overflow: "auto" }}>
-          <List>
-            <ListItem
-              selected={contentName === "Create Case"}
-              button
-              onClick={() => {
-                changeContent("Create Case");
-              }}
-            >
-              <ListItemText primary="Create Case" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Update Case"}
-              button
-              onClick={() => {
-                changeContent("Update Case");
-              }}
-            >
-              <ListItemText primary="Update Case" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Create User"}
-              button
-              onClick={() => {
-                changeContent("Create User");
-              }}
-            >
-              <ListItemText primary="Create User" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Update User"}
-              button
-              onClick={() => {
-                changeContent("Update User");
-              }}
-            >
-              <ListItemText primary="Update User" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Add Bank Details"}
-              button
-              onClick={() => {
-                changeContent("Add Bank Details");
-              }}
-            >
-              <ListItemText primary="Add Bank Details" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Assign Task"}
-              button
-              onClick={() => {
-                changeContent("Assign Task");
-              }}
-            >
-              <ListItemText primary="Assign Task" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Update Banks"}
-              button
-              onClick={() => {
-                changeContent("Update Banks");
-              }}
-            >
-              <ListItemText primary="Update Banks" />
-            </ListItem>
-            <Divider />
-            <ListItem
-              selected={contentName === "Case Status"}
-              button
-              onClick={() => {
-                changeContent("Case Status");
-              }}
-            >
-              <ListItemText primary="Case Status" />
-            </ListItem>
-            <Divider />
-          </List>
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: "border-box",
+            },
+          }}
+          hideBackdrop
+          open={open}
+          disableScrollLock
+        >
+          <Toolbar />
+          <Box sx={{ overflow: "auto" }}>
+            <List>
+              <ListItem
+                selected={contentName === "Create Case"}
+                button
+                onClick={() => {
+                  changeContent("Create Case");
+                }}
+              >
+                <ListItemText primary="Create Case" />
+              </ListItem>
+              <Divider />
+              <ListItem
+                selected={contentName === "Update Case"}
+                button
+                onClick={() => {
+                  changeContent("Update Case");
+                }}
+              >
+                <ListItemText primary="Update Case" />
+              </ListItem>
+              <Divider />
+              <ListItem
+                selected={contentName === "Create User"}
+                button
+                onClick={() => {
+                  changeContent("Create User");
+                }}
+              >
+                <ListItemText primary="Create User" />
+              </ListItem>
+              <Divider />
+              <ListItem
+                selected={contentName === "Update User"}
+                button
+                onClick={() => {
+                  changeContent("Update User");
+                }}
+              >
+                <ListItemText primary="Update User" />
+              </ListItem>
+              <Divider />
+              <ListItem
+                selected={contentName === "Add Bank Details"}
+                button
+                onClick={() => {
+                  changeContent("Add Bank Details");
+                }}
+              >
+                <ListItemText primary="Add Bank Details" />
+              </ListItem>
+              <Divider />
+              <ListItem
+                selected={contentName === "Assign Task"}
+                button
+                onClick={() => {
+                  changeContent("Assign Task");
+                }}
+              >
+                <ListItemText primary="Assign Task" />
+              </ListItem>
+              <Divider />
+              <ListItem
+                selected={contentName === "Update Banks"}
+                button
+                onClick={() => {
+                  changeContent("Update Banks");
+                }}
+              >
+                <ListItemText primary="Update Banks" />
+              </ListItem>
+              <Divider />
+              <ListItem
+                selected={contentName === "Case Status"}
+                button
+                onClick={() => {
+                  changeContent("Case Status");
+                }}
+              >
+                <ListItemText primary="Case Status" />
+              </ListItem>
+              <Divider />
+            </List>
+          </Box>
+        </Drawer>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: 3 }}
+          className={clsx(classes.content, {
+            [classes.contentShift]: open,
+          })}
+        >
+          <Toolbar />
+          {contentName === "Create Case" && <CreateCase />}
+          {contentName === "Update Case" && <UpdateCase />}
+          {contentName === "Create User" && <CreateUser />}
+          {contentName === "Update User" && <UpdateUser />}
+          {contentName === "Add Bank Details" && <AddBank />}
+          {contentName === "Assign Task" && <AssignTask />}
+          {contentName === "Update Banks" && <UpdateBankDetails />}
+          {contentName === "Case Status" && <CaseStatus />}
         </Box>
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        {contentName === "Create Case" && <CreateCase />}
-        {contentName === "Update Case" && <UpdateCase />}
-        {contentName === "Create User" && <CreateUser />}
-        {contentName === "Update User" && <UpdateUser />}
-        {contentName === "Add Bank Details" && <AddBank />}
-        {contentName === "Assign Task" && <AssignTask />}
-        {contentName === "Update Banks" && <UpdateBankDetails />}
-        {contentName === "Case Status" && <CaseStatus />}
-      </Box>
       </Box>
     </>
   );
