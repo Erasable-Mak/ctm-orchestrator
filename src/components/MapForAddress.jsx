@@ -75,7 +75,7 @@ function MapForAddress({ setFormData }) {
           <div style={{ height: "50vh", width: "100%" }}>
             <GoogleMapReact
               bootstrapURLKeys={{
-                key: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
+                key: "AIzaSyDlBDZSwz8-pN4CLJKxYomYs-k7-wtPZUU",
               }}
               defaultCenter={initialLocation}
               center={currentLocation}

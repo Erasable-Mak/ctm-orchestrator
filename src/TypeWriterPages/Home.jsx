@@ -92,12 +92,8 @@ export default function Home() {
     setcontentName(value);
   };
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const handleDrawer = () => {
+    setOpen(!open);
   };
 
   return (
@@ -111,20 +107,11 @@ export default function Home() {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={handleDrawer}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
+            className={clsx(classes.menuButton)}
           >
-            <Menu />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerClose}
-            edge="start"
-            className={clsx(classes.menuButton, !open && classes.hide)}
-          >
-            <Close />
+            {!open ? <Menu /> : <Close />}
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             Makarand Rajendra
@@ -156,9 +143,8 @@ export default function Home() {
             boxSizing: "border-box",
           },
         }}
-        hideBackdrop
         open={open}
-        disableScrollLock
+        onBackdropClick={() => setOpen(false)}
       >
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
@@ -168,6 +154,7 @@ export default function Home() {
               button
               onClick={() => {
                 changeContent("Demo");
+                setOpen(false);
               }}
             >
               <ListItemText primary="Demo" />
@@ -178,6 +165,7 @@ export default function Home() {
               button
               onClick={() => {
                 changeContent("DefaultPage");
+                setOpen(false);
               }}
             >
               <ListItemText primary="DefaultPage" />
@@ -188,6 +176,7 @@ export default function Home() {
               button
               onClick={() => {
                 changeContent("LiveVisit");
+                setOpen(false);
               }}
             >
               <ListItemText primary="LiveVisit" />

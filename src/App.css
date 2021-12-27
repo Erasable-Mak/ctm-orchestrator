@@ -3,14 +3,14 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-.card{
+.card {
   display: flex;
   align-items: center;
 }
-.card-box{
+.card-box {
   padding: 2%;
 }
-.textboxalignment{
+.textboxalignment {
   padding: 20%;
 }
 

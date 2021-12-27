@@ -98,13 +98,11 @@ export default function Home() {
   const changeContent = (value) => {
     setcontentName(value);
   };
-  const handleDrawerOpen = () => {
-    setOpen(true);
+
+  const handleDrawer = () => {
+    setOpen(!open);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const [isLoading, setLoading] = useState(false);
   const fetchData = () => {
     setLoading(true);
@@ -124,20 +122,11 @@ export default function Home() {
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              onClick={handleDrawerOpen}
+              onClick={handleDrawer}
               edge="start"
-              className={clsx(classes.menuButton, open && classes.hide)}
+              className={clsx(classes.menuButton)}
             >
-              <Menu />
-            </IconButton>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerClose}
-              edge="start"
-              className={clsx(classes.menuButton, !open && classes.hide)}
-            >
-              <Close />
+              {!open ? <Menu /> : <Close />}
             </IconButton>
             <Typography variant="h6" noWrap component="div">
               Makarand Rajendra
@@ -169,9 +158,8 @@ export default function Home() {
               boxSizing: "border-box",
             },
           }}
-          hideBackdrop
           open={open}
-          disableScrollLock
+          onBackdropClick={() => setOpen(false)}
         >
           <Toolbar />
           <Box sx={{ overflow: "auto" }}>
@@ -181,6 +169,7 @@ export default function Home() {
                 button
                 onClick={() => {
                   changeContent("Create Case");
+                  setOpen(false);
                 }}
               >
                 <ListItemText primary="Create Case" />
@@ -191,6 +180,7 @@ export default function Home() {
                 button
                 onClick={() => {
                   changeContent("Update Case");
+                  setOpen(false);
                 }}
               >
                 <ListItemText primary="Update Case" />
@@ -201,6 +191,7 @@ export default function Home() {
                 button
                 onClick={() => {
                   changeContent("Create User");
+                  setOpen(false);
                 }}
               >
                 <ListItemText primary="Create User" />
@@ -211,6 +202,7 @@ export default function Home() {
                 button
                 onClick={() => {
                   changeContent("Update User");
+                  setOpen(false);
                 }}
               >
                 <ListItemText primary="Update User" />
@@ -221,6 +213,7 @@ export default function Home() {
                 button
                 onClick={() => {
                   changeContent("Add Bank Details");
+                  setOpen(false);
                 }}
               >
                 <ListItemText primary="Add Bank Details" />
@@ -231,6 +224,7 @@ export default function Home() {
                 button
                 onClick={() => {
                   changeContent("Assign Task");
+                  setOpen(false);
                 }}
               >
                 <ListItemText primary="Assign Task" />
@@ -241,6 +235,7 @@ export default function Home() {
                 button
                 onClick={() => {
                   changeContent("Update Banks");
+                  setOpen(false);
                 }}
               >
                 <ListItemText primary="Update Banks" />
@@ -251,6 +246,7 @@ export default function Home() {
                 button
                 onClick={() => {
                   changeContent("Case Status");
+                  setOpen(false);
                 }}
               >
                 <ListItemText primary="Case Status" />
