@@ -45,8 +45,8 @@ function DefaultPage() {
           <Card variant="outlined">{card}</Card>
         </Box>
       </div>
-      <SBI />
-      <SBI87 />
+      {/* <SBI />
+      <SBI87 /> */}
     </Box>
   );
 }

@@ -57,7 +57,7 @@ export default function AuthContextProvider({ children }) {
             transform: "translate(-50%,-50%)",
           }}
         >
-          <ChangeCircleOutlinedIcon />
+          <ChangeCircleOutlinedIcon className="rotate" />
           Loading!
         </div>
       </div>

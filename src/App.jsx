@@ -8,6 +8,7 @@ import {
 import "./App.css";
 import AuthContextProvider, { useAuth } from "./contexts/AuthContext";
 import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
+import SBIForm from "./BankForms/sbi";
 
 const AdminHome = lazy(() => import("./AdminPages/Home"));
 const TypeWriterHome = lazy(() => import("./TypeWriterPages/Home"));
@@ -33,6 +34,9 @@ export default function App() {
               <ProtectedRoute exact path="/TypeWriterHome/:Username">
                 <TypeWriterHome />
               </ProtectedRoute>
+              <Route exact path="/form">
+                <SBIForm />
+              </Route>
             </Switch>
           </div>
         </Router>
@@ -71,7 +75,7 @@ const LoadingModal = () => {
           transform: "translate(-50%,-50%)",
         }}
       >
-        <ChangeCircleOutlinedIcon />
+        <ChangeCircleOutlinedIcon className="rotate" />
         Loading!
       </div>
     </div>
