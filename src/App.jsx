@@ -8,10 +8,10 @@ import {
 import "./App.css";
 import AuthContextProvider, { useAuth } from "./contexts/AuthContext";
 import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
-import SBIForm from "./BankForms/sbi";
 
 const AdminHome = lazy(() => import("./AdminPages/Home"));
 const TypeWriterHome = lazy(() => import("./TypeWriterPages/Home"));
+const CheckerPage = lazy(() => import("./CheckerPages/Home"));
 const Login = lazy(() => import("./AdminPages/Login"));
 const OtherUser = lazy(() => import("./AdminPages/OtherUser"));
 
@@ -34,9 +34,9 @@ export default function App() {
               <ProtectedRoute exact path="/TypeWriterHome/:Username">
                 <TypeWriterHome />
               </ProtectedRoute>
-              <Route exact path="/form">
-                <SBIForm />
-              </Route>
+              <ProtectedRoute exact path="/CheckerPage/:Username">
+                <CheckerPage />
+              </ProtectedRoute>
             </Switch>
           </div>
         </Router>

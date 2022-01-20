@@ -7,11 +7,6 @@ import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
 import "../App.css";
 
-import SBI from "../Forms/SBI";
-import SBI87 from "../Forms/SBI87";
-
-import Loader from "../components/Loader";
-
 const card = (
   <React.Fragment>
     <CardContent>
@@ -45,8 +40,6 @@ function DefaultPage() {
           <Card variant="outlined">{card}</Card>
         </Box>
       </div>
-      {/* <SBI />
-      <SBI87 /> */}
     </Box>
   );
 }

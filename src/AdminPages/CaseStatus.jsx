@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  doc,
-  collection,
-  getDocs,
-  query,
-  getDoc,
-  addDoc,
-  where,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, collection, getDocs, query, getDoc } from "firebase/firestore";
 import { db } from "../firebase-config";
-import EditIcon from "@mui/icons-material/Edit";
 import {
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -21,8 +10,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import DatePicker from "../components/DatePicker";
-import DropDown from "../components/DropDown";
 
 const CaseStatus = () => {
   const [data, setData] = useState([]);
@@ -87,7 +74,7 @@ const CaseStatus = () => {
             </TableCell>
             <TableCell align="left">Date of Inspection</TableCell>
             <TableCell>Date of Outward</TableCell>
-            <TableCell align="left">Valuer</TableCell>
+            <TableCell align="left">Field Visit Officer</TableCell>
             <TableCell align="left">Instruction</TableCell>
             <TableCell align="left">Status</TableCell>
           </TableRow>
@@ -98,13 +85,10 @@ const CaseStatus = () => {
               key={`row-${idx}`}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              {/* <TableCell component="th" scope="row"></TableCell> */}
               <TableCell align="left">{row.bankName}</TableCell>
               <TableCell align="left">
-                {/* <Typography variant="bold">Names</Typography> */}
                 {displayValue("Borrower Names", row.borrowerNames)}
                 <br />
-                {/* <Typography variant="bold">Contact No.</Typography> */}
                 {displayValue("Contact No", row.contactNo)}
               </TableCell>
               <TableCell align="left">{row.bankBranchName}</TableCell>

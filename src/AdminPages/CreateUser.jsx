@@ -4,14 +4,7 @@ import { secondaryAuth, db } from "../firebase-config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
-import {
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Box, Stepper, Step, StepLabel } from "@mui/material";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

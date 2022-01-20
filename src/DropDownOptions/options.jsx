@@ -60,8 +60,8 @@ export const religionOptions = [
 ];
 
 export const purposeOfValuationOptions = [
-  { id: "Income tax", value: "Income tax" },
   { id: "Banking/Financial institute", value: "Banking/Financial institute" },
+  { id: "Income tax", value: "Income tax" },
   {
     id: "Banking (Auction/Settlement of dues)",
     value: "Banking (Auction/Settlement of dues)",
@@ -81,4 +81,16 @@ export const typeOfAssetOptions = [
   { id: "Industrial unit", value: "Industrial unit" },
   { id: "Plant & Machinery", value: "Plant & Machinery" },
   { id: "Vehicle", value: "Vehicle" },
+];
+
+export const classificationOfArea1Options = [
+  { id: "High", value: "High" },
+  { id: "Middle", value: "Middle" },
+  { id: "Poor", value: "Poor" },
+];
+
+export const classificationOfArea2Options = [
+  { id: "Urban", value: "Urban" },
+  { id: "Semi Urban", value: "Semi Urban" },
+  { id: "Rural", value: "Rural" },
 ];
