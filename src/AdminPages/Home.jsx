@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+import { useAuth } from "../contexts/AuthContext";
+import clsx from "clsx";
+import { Menu, Close } from "@material-ui/icons";
+
 import {
   AppBar,
   Box,
@@ -15,7 +19,7 @@ import {
   IconButton,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { makeStyles, useTheme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 import AddBank from "./AddBank";
 import CreateCase from "./CreateCase";
@@ -25,10 +29,6 @@ import UpdateUser from "./UpdateUser";
 import AssignTask from "./AssignTask";
 import UpdateBankDetails from "./UpdateBankDetails";
 import CaseStatus from "./CaseStatus";
-
-import { useAuth } from "../contexts/AuthContext";
-import clsx from "clsx";
-import { Menu, Close } from "@material-ui/icons";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -103,13 +103,6 @@ export default function Home() {
     setOpen(!open);
   };
 
-  const [isLoading, setLoading] = useState(false);
-  const fetchData = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 3500);
-  };
   return (
     <>
       <Box sx={{ display: "flex" }}>

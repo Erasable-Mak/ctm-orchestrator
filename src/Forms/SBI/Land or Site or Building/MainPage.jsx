@@ -47,6 +47,7 @@ const initialValue = {
 };
 
 const MainPage = ({ SelectedCaseDetails }) => {
+  console.log(SelectedCaseDetails);
   const [data, setData] = useState(initialValue);
   const [PreviewOn, setPreviewOn] = useState(false);
 
