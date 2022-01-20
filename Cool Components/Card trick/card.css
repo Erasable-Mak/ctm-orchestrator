@@ -1,0 +1,49 @@
+body {
+  background-color: black;
+  color: white;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* due to display: flex all childs in the card list will be by default will be arranged horizontally */
+.card-list {
+  display: flex;
+  padding: 3rem;
+}
+
+.card {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 350px;
+  width: 400px;
+  min-width: 250px;
+  padding: 1.5rem;
+
+  /* box shadow is creating floating effect */
+  border-radius: 16px;
+  background-color: rgb(46, 46, 46);
+  box-shadow: -1rem 0 3rem black;
+
+  /* now transition will take 0.2 sec to finish i.e. transition becomes smooth */
+  transition: 0.2s;
+}
+
+/* on hover selectected card will move vertiacally upward by 15px
+ *1rem = 15px 
+ */
+.card:hover {
+  transform: translateY(-1rem);
+}
+
+/* ~ tilde selects all elements after the one that is currently selected
+ *all cards after the selected card will move towards right by 130 px 
+ */
+.card:hover ~ .card {
+  transform: translateX(130px);
+}
+
+/*all cards except card are shifed towards left by 130px by giving -130 margin-letft*/
+.card:not(:first-child) {
+  margin-left: -130px;
+}
