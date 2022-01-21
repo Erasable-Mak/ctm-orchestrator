@@ -59,7 +59,6 @@ function GetBankDetailsAndUpdate({ uid, setFlag, selectedBankData }) {
     try {
       const getdata = async () => {
         //here we get the data from actual document
-        console.log("get data called");
         const docRef = doc(db, "Banks", uid);
         const docSnap = await getDoc(docRef);
         setFormData((prev) => ({ ...prev, ...docSnap.data() }));
