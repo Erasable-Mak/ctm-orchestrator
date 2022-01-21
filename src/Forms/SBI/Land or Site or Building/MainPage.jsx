@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-
-import Box from "@mui/material/Box";
+import React, { useState, useEffect } from "react";
+import { db } from "../../../firebase-config";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 import jsPDF from "jspdf";
 
-import { Divider, List, ListItem, ListItemText, Grid } from "@mui/material";
+import {
+  Box,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+  Button,
+} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 //input forms
 import General from "../General";
@@ -49,8 +58,8 @@ let initialValue = {
 const MainPage = ({ SelectedCaseDetails }) => {
   console.log(SelectedCaseDetails);
   const [data, setData] = useState(initialValue);
-  const [PreviewOn, setPreviewOn] = useState(false);
   const [contentName, setcontentName] = useState("General");
+  const [updateLoading, setUpdateLoading] = useState(false);
 
   const { DataByFVO, FVODetails, InitialCaseDetails } = SelectedCaseDetails;
   console.log(SelectedCaseDetails);
@@ -87,6 +96,50 @@ const MainPage = ({ SelectedCaseDetails }) => {
   const changeContent = (value) => {
     setcontentName(value);
   };
+
+  //to store data in firebase database
+  const updateData = async () => {
+    setUpdateLoading(true);
+
+    try {
+      await setDoc(
+        doc(
+          db,
+          "Cases",
+          `${InitialCaseDetails.caseId}`,
+          "Final Case Data",
+          "Final_case_data"
+        ),
+        data
+      );
+    } catch (error) {
+      console.log(error);
+    }
+    setUpdateLoading(false);
+  };
+
+  useEffect(() => {
+    try {
+      //getting previously saved data
+      const getData = async () => {
+        const docRef = doc(
+          db,
+          "Cases",
+          `${InitialCaseDetails.caseId}`,
+          "Final Case Data",
+          "Final_case_data"
+        );
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists) {
+          setData(docSnap.data());
+          // setData((prev) =>{ ...prev,...docSnap.data() });
+        }
+      };
+      getData();
+    } catch (error) {
+      console.log({ error });
+    }
+  }, []);
 
   // const getPDF = () => {
   //   const doc = new jsPDF();
@@ -329,6 +382,22 @@ const MainPage = ({ SelectedCaseDetails }) => {
                 <br />
               </Box>
             )}
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            marginTop={2}
+          >
+            <LoadingButton
+              onClick={updateData}
+              loading={updateLoading}
+              loadingIndicator="Saving..."
+              variant="contained"
+              color="success"
+            >
+              Save changes
+            </LoadingButton>
           </Box>
         </Grid>
       </Grid>

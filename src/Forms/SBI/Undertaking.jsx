@@ -139,7 +139,7 @@ const Undertaking = () => {
               Conformity to the “Standards” enshrined for valuation in the
               Part-B of the above handbook to the best of my ability
             </td>
-          </tr>{" "}
+          </tr>
           <tr>
             <td>S.</td>
             <td colSpan="10">
