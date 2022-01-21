@@ -21,7 +21,7 @@ import {
 import LogoutIcon from "@mui/icons-material/Logout";
 import { makeStyles } from "@material-ui/core";
 
-import DefaultPage from "./DefaultPage";
+import LiveVisit from "./LiveVisit";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Home() {
-  const [contentName, setcontentName] = useState("Create User");
+  const [contentName, setcontentName] = useState("Live Visit");
 
   const { currentUser, logout } = useAuth();
   const [open, setOpen] = useState(false);
@@ -151,13 +151,13 @@ export default function Home() {
           <Box sx={{ overflow: "auto" }}>
             <List>
               <ListItem
-                selected={contentName === "DefaultPage"}
+                selected={contentName === "Live Visit"}
                 button
                 onClick={() => {
-                  changeContent("DefaultPage");
+                  changeContent("Live Visit");
                 }}
               >
-                <ListItemText primary="DefaultPage" />
+                <ListItemText primary="Live Visit" />
               </ListItem>
               <Divider />
             </List>
@@ -171,7 +171,7 @@ export default function Home() {
           })}
         >
           <Toolbar />
-          {contentName === "DefaultPage" && <DefaultPage />}
+          {contentName === "Live Visit" && <LiveVisit />}
         </Box>
       </Box>
     </>

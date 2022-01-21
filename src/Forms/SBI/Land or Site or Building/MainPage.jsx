@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../../../firebase-config";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 import jsPDF from "jspdf";
 
@@ -55,7 +55,7 @@ let initialValue = {
   specialRemarks: [""],
 };
 
-const MainPage = ({ SelectedCaseDetails }) => {
+const MainPage = ({ SelectedCaseDetails, setVisitVariables }) => {
   console.log(SelectedCaseDetails);
   const [data, setData] = useState(initialValue);
   const [contentName, setcontentName] = useState("General");
@@ -100,7 +100,6 @@ const MainPage = ({ SelectedCaseDetails }) => {
   //to store data in firebase database
   const updateData = async () => {
     setUpdateLoading(true);
-
     try {
       await setDoc(
         doc(
@@ -130,9 +129,10 @@ const MainPage = ({ SelectedCaseDetails }) => {
           "Final_case_data"
         );
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists) {
+        // console.log(docSnap.data());
+        if (docSnap.exists()) {
           setData(docSnap.data());
-          // setData((prev) =>{ ...prev,...docSnap.data() });
+          setData((prev) => ({ ...prev, ...docSnap.data() }));
         }
       };
       getData();
@@ -140,6 +140,19 @@ const MainPage = ({ SelectedCaseDetails }) => {
       console.log({ error });
     }
   }, []);
+
+  //sending case to cheker for checking
+  const sendToChecker = async () => {
+    try {
+      await updateDoc(doc(db, "Cases", InitialCaseDetails.caseId), {
+        caseStatus: "Checking remaining",
+      });
+      //now go to all cases page
+      setVisitVariables({ tableOn: true });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // const getPDF = () => {
   //   const doc = new jsPDF();
@@ -303,6 +316,7 @@ const MainPage = ({ SelectedCaseDetails }) => {
               >
                 <ListItemText primary="Preview" />
               </ListItem>
+              <Divider orientation="horizontal" flexItem />
             </List>
           </Box>
         </Grid>
@@ -345,7 +359,32 @@ const MainPage = ({ SelectedCaseDetails }) => {
               <ImageSelector data={data} setData={setData} />
             )}
             {contentName === "Preview" && (
-              <Box>
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="center"
+                  padding={5}
+                >
+                  <h3>
+                    Once you click button below, this case will be send to
+                    Checker and you will not be able to make any modifications
+                    to it, unless checker sends it back.
+                  </h3>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={sendToChecker}
+                  >
+                    Finish
+                  </Button>
+                </Box>
                 <GeneralPreview data={data} />
                 <br />
                 <CharacteristicOfSitePreview data={data} />
