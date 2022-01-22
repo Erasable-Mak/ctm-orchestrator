@@ -11,9 +11,8 @@ import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 
 const AdminHome = lazy(() => import("./AdminPages/Home"));
 const TypeWriterHome = lazy(() => import("./TypeWriterPages/Home"));
-const CheckerPage = lazy(() => import("./CheckerPages/Home"));
+const CheckerHome = lazy(() => import("./CheckerPages/Home"));
 const Login = lazy(() => import("./AdminPages/Login"));
-const OtherUser = lazy(() => import("./AdminPages/OtherUser"));
 
 export default function App() {
   return (
@@ -25,17 +24,14 @@ export default function App() {
               <Route exact path="/">
                 <Login />
               </Route>
-              <Route exact path="/OtherUser">
-                <OtherUser />
-              </Route>
               <ProtectedRoute exact path="/AdminHome/:Username">
                 <AdminHome />
               </ProtectedRoute>
               <ProtectedRoute exact path="/TypeWriterHome/:Username">
                 <TypeWriterHome />
               </ProtectedRoute>
-              <ProtectedRoute exact path="/CheckerPage/:Username">
-                <CheckerPage />
+              <ProtectedRoute exact path="/CheckerHome/:Username">
+                <CheckerHome />
               </ProtectedRoute>
             </Switch>
           </div>

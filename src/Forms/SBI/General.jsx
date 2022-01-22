@@ -49,7 +49,7 @@ function General({ data, setData }) {
                 size="small"
                 value={data.dateOfInspection}
                 onChange={(newValue) => {
-                  setData({ ...data, dateOfInspection: newValue });
+                  setData({ ...data, dateOfInspection: newValue.target.value });
                 }}
               />
             </td>
@@ -64,7 +64,7 @@ function General({ data, setData }) {
                 size="small"
                 value={data.dateOfValuation}
                 onChange={(newValue) => {
-                  setData({ ...data, dateOfValuation: newValue });
+                  setData({ ...data, dateOfValuation: newValue.target.value });
                 }}
               />
             </td>
@@ -174,7 +174,11 @@ function General({ data, setData }) {
           <tr>
             <td>6.</td>
             <td colSpan="2">Location of property</td>
-            <td colSpan="10"></td>
+            <td colSpan="10">
+              {data.completeAddress +
+                "\n" +
+                (data.locality ? data.locality : "")}
+            </td>
           </tr>
           <tr>
             <td></td>
@@ -469,7 +473,7 @@ function General({ data, setData }) {
             <td rowSpan="10">13.</td>
           </tr>
           <tr>
-            <td colSpan="2">Boundaried of the property</td>
+            <td colSpan="2">Boundaries of the property</td>
             <td colSpan="10"></td>
           </tr>
           <tr>

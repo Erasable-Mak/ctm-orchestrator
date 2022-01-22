@@ -65,6 +65,7 @@ function Report({
   return (
     <div>
       <Box direction="column-reverse" spacing={2}>
+        {console.log(SelectedCaseDetails)}
         <Button
           variant="contained"
           onClick={() => {

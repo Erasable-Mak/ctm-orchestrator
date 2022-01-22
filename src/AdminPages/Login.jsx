@@ -59,12 +59,11 @@ function Login() {
               history.push(`TypeWriterHome/${user.uid}`);
             } else if (
               docSnap.exists() &&
-              docSnap.data().typeOfUser !== "Admin"
+              docSnap.data().typeOfUser === "Checker"
             ) {
-              //any one other than admin comes here
-              console.log("user is not an admin");
+              //only Checkers allowed
               toast.success("Logged in Successfully", { autoClose: 5000 });
-              history.push(`OtherUser`);
+              history.push(`CheckerHome/${user.uid}`);
             } else {
               //ideally this case shouls never happen but may happen if user have no internet connection
               throw new Error("User not found");

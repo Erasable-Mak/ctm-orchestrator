@@ -83,7 +83,7 @@ function GetUserAndUpdate({ uid, setFlag }) {
         }
       );
     } catch (err) {
-      //do error handling
+      console.log(err);
     }
     setUpdateLoading(false);
   };
@@ -93,7 +93,6 @@ function GetUserAndUpdate({ uid, setFlag }) {
     try {
       const getdata = async () => {
         //here we get the data from actual document
-        console.log("get data called");
         const docRef = doc(db, "Users", uid);
         const docSnap = await getDoc(docRef);
         setFormData((prev) => ({ ...prev, ...docSnap.data() }));
